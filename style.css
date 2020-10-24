@@ -124,10 +124,26 @@ body {
 }
 
 
+#coverIt {
+    display :block;
+    background: white;
+    width: 100px;
+    height: 20px;
+    position: absolute;
+    top:113px;
+    left:155px;
+  
+}
 
-
-
-
-
+#coverIt2 {
+    display :block;
+    background: white;
+    width: 100px;
+    height: 20px;
+    position: absolute;
+    top:137px;
+    left:113px;
+  
+}
 
 
