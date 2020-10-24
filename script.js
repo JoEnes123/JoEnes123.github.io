@@ -3,9 +3,36 @@
 var hiddenCross = document.getElementsByClassName("cross");
 var hiddenPictures = document.getElementsByClassName("picture");
 var hiddenDot = document.getElementsByClassName("dot");
+var cover = document.getElementById("coverIt");
+var cover2 = document.getElementById("coverIt2");
 var score = 0;
 var vidPlus = document.getElementById("plusAnim");
 var vidMinus = document.getElementById("minusAnim");
+var startTime, interval, endTime, timi;
+
+
+function start(){
+    startTime = Date.now();
+    interval = setInterval(function(){
+    timi = Date.now() - startTime;
+    });
+}
+
+function stop () {
+    endTime = timi;
+    clearInterval(interval);
+    document.getElementById("Lasttime").innerHTML = timi/1000;
+    cover2.style.display = "none";
+    if (document.getElementById("Fasttime").innerHTML > timi/1000) {
+        document.getElementById("Fasttime").innerHTML = timi/1000;
+        cover.style.display = "none";
+        
+    }
+    
+}
+
+
+
 
            
 function showFirst(x,waitTime) {
@@ -35,11 +62,12 @@ function showDot (x) {
     if (Math.random() > 0.5)  {
     x[0].style.display = "block";
     window.addEventListener("keydown",checkKeyPressForLeft,false);
+    start();
    
     }
     else {x[1].style.display = "block";
     window.addEventListener("keydown",checkKeyPressForRight,false);
-        
+    start();    
     
          }
     
@@ -47,6 +75,8 @@ function showDot (x) {
 
 function checkKeyPressForLeft(key) {
     if (key.keyCode =="37") {
+           stop();
+           
            addScore();
            hiddenDot[0].style.display = "none";
            vidPlus.style.display = "block";
@@ -67,6 +97,7 @@ function checkKeyPressForLeft(key) {
 
 function checkKeyPressForRight(key) {
     if (key.keyCode =="39") {
+             stop();
              addScore();
              hiddenDot[1].style.display = "none";
              vidPlus.style.display = "block";
@@ -139,10 +170,6 @@ function set () {
     }
 
 set();
-
-
-
-
 
 
 
