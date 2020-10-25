@@ -11,7 +11,17 @@
            <div id= "logo"> Art and Attention Study</div>
         </div>
         <div id= "main">
-            <div id="Scores"> Score: <span id="point">0</span><br>Quickest Time: <span id="Fasttime">1000</span><br>Last Time: <span id="Lasttime">1000</span><br></div>
+            <span class = "buttons">
+            <button style="height:100px;width:200px" onclick="NoGamification()" >NoGamification</button>
+            <button style="height:100px;width:200px" onclick="AllGamification()">AllGamification</button>
+            <button style="height:100px;width:200px" onclick="EnableDisableGamification()">Enable/Disable Gamification</button>
+            <button style="height:100px;width:200px" onclick="SelectGamification()">Select Gamification</button>
+            </span>
+             <span class = "buttonsEnableDisable">
+            <button style="height:100px;width:200px" onclick="EnableGamification()" >EnableGamification</button>
+            <button style="height:100px;width:200px" onclick="DisableGamification()">DisableGamification</button>
+            </span>
+            <span id="stuff"><div id="Scores"> Score: <span id="point">0</span><br>Quickest Time: <span id="Fasttime">1000</span><br>Last Time: <span id="Lasttime">1000</span><br></div></span>
             <div id="coverIt"> </div>
             <div id="coverIt2"> </div>
             <div id="Pic" ><img id="picture1" class="picture hide" src="left.png" width=260px height=390px>
@@ -19,6 +29,9 @@
             
             <video id="plusAnim" class = "hide" width ="500" autoplay><source src="PlusFinalo.mp4" type ="video/mp4"></video>
             <video id="minusAnim" class = "hide" width ="550" autoplay><source src="MinusFinalo.mp4" type ="video/mp4"></video>
+            <video id="recordAnim"  class = "hide" width ="550" autoplay><source src="Record.mp4" type ="video/mp4"></video>   
+            <div id="recordbar1" class = "recordBars"></div> 
+            <div id="recordbar2" class = "recordBars"></div> 
             </div>
             
             <div id="cross1" class="cross hide"></div>
