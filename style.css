@@ -25,6 +25,10 @@ body {
     left:20px;
 }
 
+#stuff {
+    display : none;
+}
+
 .picture {
 }
 
@@ -38,6 +42,33 @@ body {
         position: absolute;
         top: 380px;
         left: 560px;
+}
+
+#recordAnim {
+    position: absolute;
+    top:80px;
+    left:550px;
+}
+
+.recordBars {
+    display : none;
+    background: white;
+    width: 560px;
+    height: 60px;
+}
+
+#recordBar1 {
+    
+    position: absolute;
+    top:80px;
+    left:550px;
+}
+
+#recordBar2 {
+    
+    position: absolute;
+    top:330px;
+    left:550px;
 }
 
 #picture1 {
@@ -56,6 +87,7 @@ body {
 }
 
 #points {
+    display: none;
     font-family:sans-serif;
     font-size: 12px;
     position: absolute;
@@ -64,6 +96,7 @@ body {
 }
 
 #bar {
+  display: none;
   border-radius: 25px;
   background: black;
   width: 550px;
@@ -111,7 +144,7 @@ body {
 }
 
 #dot2 {
-     position: absolute;
+    position: absolute;
     top:430;
     left:1210;
 }
@@ -145,5 +178,34 @@ body {
     left:113px;
   
 }
+
+
+.buttons {
+    display :block;
+    font-size: 400%;
+    position: absolute;
+    top : 405px;
+    left : 398px;
+}
+
+
+.buttonsEnableDisable {
+    display : none;
+    font-size: 400%;
+    position: absolute;
+    top : 405px;
+    left : 616px;
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
