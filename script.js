@@ -29,9 +29,9 @@ function start(){
 function stop () {
     endTime = timi;
     clearInterval(interval);
-    document.getElementById("Lasttime").innerHTML = timi/1000;
+    document.getElementById("Lasttime").innerHTML = endTime/1000;
     cover2.style.display = "none";
-    if (document.getElementById("Fasttime").innerHTML > timi/1000) {
+    if (document.getElementById("Fasttime").innerHTML > endTime/1000) {
         if (GameOn) {
             vidRecord.style.display = "block";
             setTimeout(hideSingle,1750,vidRecord);
@@ -42,7 +42,7 @@ function stop () {
             
             
         }
-        document.getElementById("Fasttime").innerHTML = timi/1000;
+        document.getElementById("Fasttime").innerHTML = endTime/1000;
         cover.style.display = "none";
         
     }
