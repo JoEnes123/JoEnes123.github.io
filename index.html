@@ -4,48 +4,93 @@
 <html> 
     <head>
         <title>Dot probe task</title>
-        <link rel="stylesheet" href="style.css"> 
+        <link rel="stylesheet" href="style.css">  
         </head>
     <body>
+      
         <div id= "top">
            <div id= "logo"> Art and Attention Study</div>
         </div>
         <div id= "main">
             <span class = "buttons">
-            <button style="height:100px;width:200px" onclick="NoGamification()" >NoGamification</button>
-            <button style="height:100px;width:200px" onclick="AllGamification()">AllGamification</button>
+            <button style="height:100px;width:200px" onclick="NoGamification()" >Disable Gamification</button>
+            <button style="height:100px;width:200px" onclick="AllGamification()">Enable Gamification</button>
             <button style="height:100px;width:200px" onclick="EnableDisableGamification()">Enable/Disable Gamification</button>
-            <button style="height:100px;width:200px" onclick="SelectGamification()">Select Gamification</button>
+            <button style="height:100px;width:200px" onclick="SelectGamification()">Choose Game Elements</button>
+            <button style="height:100px;width:200px" id = "TestModus" onclick="TestModus()">Test Mode</button>
             </span>
              <span class = "buttonsEnableDisable">
             <button style="height:100px;width:200px" onclick="EnableGamification()" >Enable Gamification</button>
             <button style="height:100px;width:200px" onclick="DisableGamification()">Disable Gamification</button>
             </span>
-            <span id="stuff"><div id="Scores"> Score: <span id="point">0</span><br>Quickest Time: <span id="Fasttime">1000</span><br>Last Time: <span id="Lasttime">1000</span><br></div></span>
-            <div id="coverIt"> </div>
-            <div id="coverIt2"> </div>
-            <div id="Pic" ><img id="picture1" class="picture hide" src="left.png" width=260px height=390px>
-                           <img id="picture2" class="picture hide" src="right.png" width=260px height=390px> 
+            <div id="score-group">
+               <div id="scores">Points: <span id="point"> 0</span></div>
+                <div id = "scores2">
+                    <div>Quickest Time: <span class = "cover"><span id="Fasttime">1000</span> seconds</span></div>
+                    <div>Last Time: <span class = "cover"><span id="Lasttime">1000</span> seconds</span></div>
+                </div>
+                </div>
             
-            <video id="plusAnim" class = "hide" width ="500" autoplay><source src="PlusFinalo.mp4" type ="video/mp4"></video>
-            <video id="minusAnim" class = "hide" width ="550" autoplay><source src="MinusFinalo.mp4" type ="video/mp4"></video>
-            <video id="recordAnim"  class = "hide" width ="550" autoplay><source src="Record.mp4" type ="video/mp4"></video>   
-            <div id="recordbar1" class = "recordBars"></div> 
-            <div id="recordbar2" class = "recordBars"></div> 
-            </div>
+            <div id="Pic" ><img id="picture11" class="picture1 pictureLeft hide" src="1.1.png" width=260px height=390px>
+                           <img id="picture12" class="picture1 pictureRight hide" src="1.2.png" width=260px height=390px>
+                           <img id="picture21" class="picture2 pictureLeft hide" src="2.1.png" width=260px height=390px>
+                           <img id="picture22" class="picture2 pictureRight hide" src="2.2.png" width=260px height=390px>
+                           <img id="picture31" class="picture3 pictureLeft hide" src="3.1.png" width=260px height=390px>
+                           <img id="picture32" class="picture3 pictureRight hide" src="3.2.png" width=260px height=390px>
+                           <img id="picture41" class="picture4 pictureLeft hide" src="4.1.png" width=260px height=390px>
+                           <img id="picture42" class="picture4 pictureRight hide" src="4.2.png" width=260px height=390px>
+                           <img id="picture51" class="picture5 pictureLeft hide" src="5.1.png" width=260px height=390px>
+                           <img id="picture52" class="picture5 pictureRight hide" src="5.2.png" width=260px height=390px></div>
+            <div id="MyDIV"> </div>
+            <div id= "Time1">New Time Record !!!</div>
+            <div id= "TimeBonus5" class = "Bonus">Time Bonus Achieved: +5 Points</div>
+            <div id= "TimeBonus10" class = "Bonus">Time Bonus Achieved: +10 Points</div>
+            <div id= "TimeBonus30" class = "Bonus">Time Bonus Achieved: +30 Points</div>
+            <div id= "TimeBonus50" class = "Bonus">Time Bonus Achieved: +50 Points</div>
+            <div id= "plus10">+10</div>
+            <div id= "minus10">-10</div>   
+            <video id="plusAnim" class = "hide" width ="650" autoplay><source src="plusElf.mp4" type ="video/mp4"></video>
+            <video id="minusAnim" class = "hide" width ="500" autoplay><source src="MinusFinalo.mp4" type ="video/mp4"></video>
+            <video id="recordAnim" class = "hide" width ="500" autoplay><source src="Record.mp4" type ="video/mp4"></video>
+            <div id = "choose" class = "Selektion" >Which game elements should be active?</div>
+            <span id ="HelpBar1"></span>
+            <span id ="HelpBar2"></span> 
+            <div id ="Zeit" class = "Selektion"><input type="checkbox" id="ZeitBox" > Time</div>
+            <div id ="Punkte" class = "Selektion"><input type="checkbox" id="PunkteBox" > Points</div>
+            <div id = "feedback" class = "Selektion"><input type="checkbox" id="feedbackBox" > Feedback</div>
+            <button id="startButton" class = "Selektion" onclick="StartIt()">Start</button>
+            <span id ="TestOhne">Without game elements</span>
+            <span id ="TestZeit">With time recording</span> 
+            <span id ="TestPunkte">With points</span> 
+            <span id ="TestFeedback">With feedback</span>   
+            <video id="OhneVideo" class ="Tutorials"  width ="1000" autoplay><source src="OhneG1.mp4" type ="video/mp4"></video>   
+            <video id="PunkteVideo" class = "Tutorials" width ="1000" autoplay><source src="MitPunkte.mp4" type ="video/mp4"></video>
+            <video id="ZeitVideo" class = "Tutorials" width ="1000" autoplay><source src="MitZeit.mp4" type ="video/mp4"></video>
+            <video id="FeedbackVideo" class = "Tutorials" width ="1000" autoplay><source src="MitFeedback.mp4" type ="video/mp4"></video>
+            <div class = "circles"><span id ="circle1"></span><span id = "circle2"></span><span id = "circle3"></span><span id = "circle4"></span></div>
+          
+           
+             <button style="height:80px;width:160px" id = "TesteOhne" class = "Testen" onclick="Testen()" >Test</button>
+           <div id="cross1" class="cross  hide"></div>
+            <div id="cross2" class="cross hide"></div> 
+         
+             <div id = "dot1" class="dot hide"></div> 
+             <div  id = "dot2" class="dot hide"></div>
             
-            <div id="cross1" class="cross hide"></div>
-            <div id="cross2" class="cross hide"></div>
-            <div id="dot1" class="dot hide"></div>
-            <div id="dot2" class="dot hide"></div>
-        </div>
-        <div id= "footer">
-            <pre id="Points">+5 Points                +10 Points                +30 Points                 +50 Points</pre>
-            <div id="bar"></div>
-        </div>  
-        
      
+        <div id= "footer">
+         <span class = "points"> <span id = "five" >+5 points</span><span id ="ten" >+10 Punkte</span><span id = "thirty" >+30 points</span><span id = "fifty" >+50 points</span> </span>
+            <div id="bar"></div>
+            <div id="barGreen"></div>
+          
+            
+            
+       
+        </div>
+        </div>
+       
         <script type="text/javascript" src="script.js"></script>
+             
     </body>
 </html>
     
