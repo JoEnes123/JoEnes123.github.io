@@ -1,26 +1,152 @@
-body {
-    font-family: sans-serif;
-    
-    }
-    
-#top {
+html, body, .grid-container { height: 100%; margin: 0; }
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 0.2fr 0.5fr 2.3fr 1fr;
+  gap: 0px 0px;
+}
+
+.topBar { grid-area: 1 / 1 / 2 / 3;
     text-align:center;
+    display:grid;
     background: yellowgreen;
-   
-    
+     }
+
+.ScoreLeft { grid-area: 2 / 1 / 3 / 2;
+/*background-color: chocolate;*/
+display:grid; 
+}
+
+
+.LeftMain { grid-area: 2 / 1 / 5 / 2; 
+/*background-color: teal;*/
+display:grid;
+;
+
+}
+
+.center-main {
+    grid-area:2/1/4/3;
+    display:grid;
+}
+
+.center-bot {
+    grid-area:2/1/5/3;
+    display:grid; /*center zeug auf kind element*/
+}
+
+.middle-center {
+    grid-area:3/1/5/3;
+    display:grid; /*center zeug auf kind element*/
+}
+
+.real-center {
+grid-area:3/1/4/3;
+display:grid;
+
+}
+
+.top-center { grid-area: 2 / 1 / 3 / 3; 
+    display:grid;
+    /*background-color: springgreen;*/
     }
+
+.full {
+grid-area: 1/1/5/3;
+display:grid;
+
+}
+.RightMain { grid-area: 2 / 2 / 5 / 3;
     
+    display:grid;
+    /*background-color: cornflowerblue;*/
+   
+   
+     }
+
+
+.bottomBar { grid-area: 4 / 1 / 5 / 3;
+    display:grid;
+    /*background-color: tomato; */
+   
+}
+        
+
+.posDot {
+    display:none;
+    justify-self: center;
+    align-self: center;
+}
+
+.posDot2 {
+    display : none;
+    justify-self: center;
+    align-self: center;
+}
+
+.posCross {
+    display:none;
+    grid-area:1/1/2/2;
+    justify-self:center;
+    align-self:center;
+}
+
+.posCross2 {
+   display:none;
+    grid-area:1/1/2/2;
+    justify-self:center;
+    align-self:center;
+}
+
+#dot {
+    border-radius: 20px;
+    background: black;
+    width: 40px;
+    height: 40px;
+}
+
+
+#cross1 {
+    background: black;
+     width: 50px;
+    height: 10px;    
+}
+
+#cross2 {
+    background: black;
+    width: 10px;
+    height: 50px;  
+}
+
+  
 #logo {
     color:white;
     font-size: 20px;
-    padding: 20px;
-    
-    
-    }  
+    padding: 10px;
+         }  
 
-#score-group {
-    position: absolute;
-    top:90px;
+
+.GameButtons {
+    display:none;
+    grid-row-start: 2;
+    justify-self: center;
+    z-index: 1;
+    
+}
+
+.EnableDisableButtons {
+    display:none;
+    grid-row-start: 2;
+    justify-self: center;
+    
+}
+
+.positionScore {
+    display:grid;
+    justify-self: start;
+    align-self: center;
+    position: relative;
     left:20px;
 }
 
@@ -39,10 +165,11 @@ body {
 
 
 
-
-#stuff {
-    display: none;
+.cover {
+    display:none;
+    
 }
+
 .picture1 {
 }
 .picture2 {
@@ -54,201 +181,83 @@ body {
 .picture5 {
 }
 
-#plusAnim {
-        position: fixed;
-        z-index: -1;
-        top: 330px;
-        left: 510px;
-}
-
-
-
-
-.recordBars {
-    display : none;
-    background: white;
-    width: 560px;
-    height: 60px;
-}
-
-
-
 .pictureLeft {
-   position: absolute;
-   top:270px;
-   left:300px;
     
+    grid-area:1/1/2/2;
+    justify-self: center;
+    align-self: center;
 }
 
 .pictureRight {
-   position: absolute;
-   top:270px;
-   left:1100px;
-   
+    grid-area:1/1/2/2;
+    justify-self: center;
+    align-self: center;  
 }
-
-
-    
-.points {
-    display: none;
-    font-family:sans-serif;
-    font-size: 12px;
-}
-
-#five {
-position: absolute;
-    top: 765px;
-    left: 665px;
-    
-}
-
-#ten {
-position: absolute;
-    top: 765px;
-    left: 775px;
-}
-
-#thirty {
-position: absolute;
-    top: 765px;
-    left: 885px;
-}
-
-#fifty {
-position: absolute;
-    top: 765px;
-    left: 995px;
-}
-
-#bar {
-  display: none;
-  border-radius: 25px;
-  background: black;
-  width: 550px;
-  height: 7px;
-  position: absolute;
-  left:580px;
-  top:800px;
-}
-
-#barGreen {
-  display: none;
-  border-radius: 25px;
-  background-color: chartreuse;
-  width: 5px;
-  height: 5px;
-  position: absolute;
-  left:582px;
-  top:801px;
-}
-
-.cross {
-    background: black;
-    }
-
-#cross1 {
-    
-    width: 50px;
-    height: 10px;
-    position: absolute;
-    top:460px;
-    left:800px;
-    
-}
-
-
-#cross2 {
-   
-    width: 10px;
-    height: 50px;
-    position: absolute;
-    top:440px;
-    left:820px;
-}
-
-
-#dot1 {
-    position: absolute;
-    top:430;
-    left:410;
-}
-
-#dot2 {
-    position: absolute;
-    top:430;
-    left:1210;
-}
-
-
 
 .hide{
     display: none;
 }
 
-
-.cover {
-    display: none;
-    
-}
-
-
-.buttons {
-    display :block;
-    font-size: 400%;
-    position: absolute;
-    top : 405px;
-    left : 398px;
-}
-
-
-.buttonsEnableDisable {
-    display : none;
-    font-size: 400%;
-    position: absolute;
-    top : 405px;
-    left : 616px;
-}
-
 #Time1 {
-    display: none;
-    color: #3252c4;
-    position: absolute;
-    left: 700px;
-    top: 200px;
+   display:none;
+   grid-area: 1/1/2/2;
+   justify-self:center;
+   align-self:start;
+   color: #3252c4;
     font-size: 110px;
     transform: scale(.1);
+}
+
+#plus10 {
+    display: none;
+    grid-area: 1/1/2/2;
+    justify-self:center;
+    align-self:center;
+    -webkit-text-stroke: 0.5px black;
+    color: #79f145;
+    font-size: 24px;
    
+}
+
+#minus10 {
+    display: none;
+    grid-area: 1/1/2/2;
+    justify-self:center;
+    align-self:center;
+    -webkit-text-stroke: 0.5px black;
+    color: 	#d50909;
+    font-size: 24px;
     
 }
 
-.dot {
-    border-radius: 20px;
-    background: black;
-    width: 40px;
-    height: 40px;
+#plusAnim {
+    display: none;
+    grid-area: 1/1/2/2;
+    position:relative;
+    top:80px;
+    justify-self:center;
+    align-self:center;
 }
 
-
 .Bonus {
+    display:none;
+    grid-area:1/1/2/2;
+    position:relative;
+    top:px;
+    justify-self:center;
+    align-self:center;
     -webkit-text-stroke: 0.5px black;
     color: #e34acd;
-    display: none;
-    position: absolute;
-    top: 490px;
-    left: 660px;
     font-size: 22px;
     
 }
-
 
 #plus10 {
     display: none;
     -webkit-text-stroke: 0.5px black;
     color: #79f145;
     font-size: 24px;
-    position: absolute;
-    top: 450px;
-    left: 805px;
+   
 }
 
 #minus10 {
@@ -256,245 +265,317 @@ position: absolute;
     -webkit-text-stroke: 0.5px black;
     color: 	#d50909;
     font-size: 24px;
-    position: absolute;
-    top: 450px;
-    left: 810px;
+   
 }
-
-
 
 #choose {
+    grid-area:1/1/2/2;
+    justify-self: center;
+    align-self:start;
     font-size: 30px;
-    position: absolute;
-    top: 250px;
-    left: 550px;
-}
-
-#Zeit {
-    font-size: 25px;
-    position: absolute;
-    top: 350px;
-    left: 600px;
-}
-
-#Punkte {
-    font-size: 25px;
-    position: absolute;
-    top: 350px;
-    left: 750px;
-}
-
-#feedback {
-    font-size: 25px;
-    position: absolute;
-    top: 350px;
-    left: 930px;
+   
 }
 
 .Selektion {
-    display: none;
+   display:none;
+   
+}
+
+#Zeit {
+    
+    grid-area:1/1/2/2;
+    justify-self:center;
+    align-self:center;
+    font-size: 25px;
+  
+   
+}
+
+#Punkte {
+    
+    grid-area:1/1/2/2;
+    justify-self:center;
+    align-self:center;
+    font-size: 25px;
+    position:relative;
+    left:-150px;
+   
+    
+}
+
+#feedback {
+    
+    grid-area:1/1/2/2;
+    justify-self:center;
+    align-self:center;
+    font-size: 25px;
+    position:relative;
+    left:150px;
+   
+}
+
+.positionOptions {
+  
 }
 
 #startButton {
-    
+    grid-area:1/1/2/2;
+    justify-self:center;
+    align-self:end;
     font-size: 25px;
-    position: absolute;
-    left:800px;
-    top: 500px;
+   
 }
 
 
-.Testen {
-    font-size: 30px;
-    border-radius: 25px;
-    color: white;
-    background: yellowgreen;
-    border: none;
-    position: absolute;
-    left: 763px;
-    top: 790px;
+
+#five {
+    position: relative;
+    top:30px;
+    left:-130px;
+}
+    
+#ten {
+    position: relative;
+    top:30px;
+    left:-50px;
+}
+    
+#thirty {
+    position: relative;
+    top:30px;
+    left:30px;
+}
+    
+#fifty {
+    position: relative;
+    top:30px;
+    left:110px;
 }
 
-#TesteOhne {
-    display: none
-}
-
-#TestModus {
-    font-size: 20px;
-    border: none;
-    background: yellowgreen;
-    color: white;
-    position: absolute;
-    left: 1000px;
-    top: -300px;
-}
-
-#TestOhne {
+#bar {
     display:none;
-    font-size: 30px;
-    position: absolute;
-    top: 120px;
-    left: 680px;
-}
-
-
-
-#TestZeit {
-    display: none;
-    font-size: 30px;
-    position: absolute;
-    top: 120px;
-    left: 690px;
-}
-
-#TestPunkte {
-    display: none;
-    font-size: 30px;
-    position: absolute;
-    top: 120px;
-    left: 730px;
-}
-
-#TestFeedback {
-    display: none;
-    font-size: 30px;
-    position: absolute;
-    top: 120px;
-    left: 715px;
-}
-
-.Tutorials {
-     position: absolute;
-    top: 180px;
-    left: 350px;
-}
-
-#OhneVideo {
-    display: none;
-   }
-
-#PunkteVideo {
-    display: none;
-   }
-
-
-
-#ZeitVideo {
-     display: none;
-}
-
-
-#PunkteVideo {
-     display: none;
-     z-index: -1;
+    grid-area:4/1/5/3;
+    justify-self: center;
+    align-self: center;
+    border-radius: 25px;
+    background: black;
+    width: 550px;
+    height: 7px;
     
-}
-
-
-
-#FeedbackVideo {
-     display: none;
+  }
+  
+  #barGreen {
+    display:none;
+    grid-area:4/1/5/3;
+    justify-self: center;
+    align-self: center;
+    position: relative;
+    left:-271px;
+    border-radius: 25px;
+    background-color: chartreuse;
+    width: 5px;
+    height: 5px;
     
+  }
+
+  .points {
+    display:none;
+    grid-area:3/1/4/3;
+    justify-self: center;
+    align-self: center;
+    font-family:sans-serif;
+    font-size: 12px;
 }
 
-#HelpBar1 {
-    display: none;
-  background: white;
-  width: 1000px;
-  height: 7px;
-  position: absolute;
-  left:350px;
-  top:180px;
+
+
+
+
+.taskExplain {
+display:none;
 }
 
-#HelpBar2 {
-    display: none;
-  background: white;
-  width: 1000px;
-  height: 10px;
-  position: absolute;
-  left:350px;
-  top:734px;
+.introductionTutorial {
+
 }
 
-.circles {
-    display: none;
+.crossExplain {
+
 }
 
-#circle1 {
-  border: 2px solid black;
-  border-radius: 25px;
-  background: black;
-  width: 14px;
-  height: 14px;
-  position: absolute;
-  left:760px;
-  top:755px;
+.picturesExplain {
+
 }
 
-#circle2 {
- border: 2px solid black;
-  border-radius: 25px;
-  background: white;
-  width: 14px;
-  height: 14px;
-  position: absolute;
-  left:810px;
-  top:755px;
+.dotExplain {
+
 }
 
-#circle3 {
- border: 2px solid black;
-  border-radius: 25px;
-  background: white;
-  width: 14px;
-  height: 14px;
-  position: absolute;
-  left:860px;
-  top:755px;
-}
 
-#circle4 {
- border: 2px solid black;
-  border-radius: 25px;
-  background: white;
-  width: 14px;
-  height: 14px;
-  position: absolute;
-  left:910px;
-  top:755px;
-}
+
+#DotProbeTask {
+    grid-area:1/1/2/2;
+    justify-self: center;
+    align-self: start;
+    font-size: 40px;
+    color:black
+    
  
-
-
-html, body, .grid-container { height: 100%; margin: 0; }
-
-.grid-container {
-  display: grid;
-  grid-template-columns: 1fr 0.7fr 1.6fr 0.7fr 1fr;
-  grid-template-rows: 0.4fr 0.8fr 6fr 0.3fr 0.3fr;
-  gap: 0px 0px;
-  grid-template-areas:
-    "topBar topBar topBar topBar topBar"
-    "scoreBoard . . . ."
-    ". leftSide crosser rightSide ."
-    ". . bottomScore . ."
-    ". . bottomBar . .";
+   
 }
 
-
-
-.leftSide { grid-area: leftSide;
-            place-self: center;
+#IntroText {
+    grid-area:1/1/2/2;
+    justify-self: center;
+    align-self: center;
+    background:white;
+    border: 2px solid black;
+    border-radius:25px;
+    width:400px;
+    height:300px;
+    font-size:20px;
+    padding:10px;
     
-         }
+}
 
-.rightSide { grid-area: rightSide;
-            place-self:center;
-            }
+#okay {
+    grid-area:1/1/2/2;
+    justify-self: center;
+    align-self: end;
+    width:200px;
+    height:100px;
+    position:relative;
+    top:80px;
+}
+
+#Tutorial {
+    grid-area:1/1/2/2;
+    justify-self: center;
+    align-self: start;
+    font-size: 40px;
+    color:black
+    
+ 
+   
+}
+
+#IntroText2 {
+    grid-area:1/1/2/2;
+    justify-self: center;
+    align-self: center;
+    background:white;
+    border: 2px solid black;
+    border-radius:25px;
+    width:400px;
+    height:300px;
+    font-size:20px;
+    padding:10px;
+    
+}
+
+#startTutorial {
+    grid-area:1/1/2/2;
+    justify-self: center;
+    align-self: end;
+    width:200px;
+    height:100px;
+    position:relative;
+    top:80px;
+}
+
+.boxCross1 {
+    grid-area:1/1/2/2;
+    justify-self: center;
+    align-self: center;
+    width: 200px;
+    height: 100px;
+   background-color: yellowgreen;
+    font-size: 20px;
+    color: #fff;
+    padding: 20px;
+    margin: 40px;
+    float: left;
+  }
+
+  .positionCross1 {
+    opacity: 0;
+    position: relative;
+    left:200px;
+    top:40px;
+  }
+  .positionPicture1 {
+    opacity: 0;
+    position: relative;
+    top:40px;
+  }
+
+  .positionDot1 {
+    opacity: 0;
+    position: relative;
+    left:180px;
+    top:40px;
+  }
+
+  #arrowRight{}
 
 
-.crosser {grid-area: rightSide;
-    place-self:center;
-    }
-            
+  .arrow-left:after {
+    content: " ";
+    position: absolute;
+    left: -15px;
+    top: 15px;
+    border-top: 15px solid transparent;
+    border-right: 15px solid yellowgreen;
+    border-left: none;
+    border-bottom: 15px solid transparent;
+  }
+  
+  .arrow-right:after {
+    content: " ";
+    position: absolute;
+    right: -15px;
+    top: 15px;
+    border-top: 15px solid transparent;
+    border-right: none;
+    border-left: 15px solid yellowgreen;
+    border-bottom: 15px solid transparent;
+  }
+
+  #afterCross1 {
+    display:none;
+    opacity:0;
+     grid-area:1/1/2/2;
+    justify-self: center;
+    align-self: end;
+    width:100px;
+    height:50px;
+    z-index: 1;
+    position: relative;
+    top:-10px;
+    background: yellowgreen;
+    border:none;
+    border-radius: 25px;
+    color:white;
+    font-size: 20px;
+   
+}
+
+#afterPicture1 {
+    display:none;
+    opacity:0;
+     grid-area:1/1/2/2;
+    justify-self: center;
+    align-self: end;
+    width:100px;
+    height:50px;
+    z-index: 1;
+    position: relative;
+    top:-10px;
+    background: yellowgreen;
+    border:none;
+    border-radius: 25px;
+    color:white;
+    font-size: 20px;
+   
+}
+
