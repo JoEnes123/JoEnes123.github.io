@@ -1,97 +1,171 @@
-<DOCTYPE html>
-  
-    
-<html> 
+<!DOCTYPE html>
+<html>
     <head>
         <title>Dot probe task</title>
         <link rel="stylesheet" href="style.css">  
-        </head>
-    <body>
-      
-        <div id= "top">
-           <div id= "logo"> Art and Attention Study</div>
-        </div>
-        <div id= "main">
-            <span class = "buttons">
-            <button style="height:100px;width:200px" onclick="NoGamification()" >Disable Gamification</button>
-            <button style="height:100px;width:200px" onclick="AllGamification()">Enable Gamification</button>
-            <button style="height:100px;width:200px" onclick="EnableDisableGamification()">Enable/Disable Gamification</button>
-            <button style="height:100px;width:200px" onclick="SelectGamification()">Choose Game Elements</button>
-            <button style="height:100px;width:200px" id = "TestModus" onclick="TestModus()">Test Mode</button>
-            </span>
-             <span class = "buttonsEnableDisable">
-            <button style="height:100px;width:200px" onclick="EnableGamification()" >Enable Gamification</button>
-            <button style="height:100px;width:200px" onclick="DisableGamification()">Disable Gamification</button>
-            </span>
-            <div id="score-group">
-               <div id="scores">Points: <span id="point"> 0</span></div>
+    </head>
+<body>    
+
+    <div class="grid-container">
+        
+    <div class="topBar">
+            
+              <div id ="logo">Art and Attention Study</div>
+              
+              
+    </div> 
+
+    <div class="ScoreLeft">
+
+            <div class = "positionScore">
+                <div id="scores">Points: <span id="point"> 0</span></div>
                 <div id = "scores2">
-                    <div>Quickest Time: <span class = "cover"><span id="Fasttime">1000</span> seconds</span></div>
-                    <div>Last Time: <span class = "cover"><span id="Lasttime">1000</span> seconds</span></div>
+                <div>Quickest Time: <span class = "cover"><span id="Fasttime">1000</span> seconds</span></div>
+                <div>Last Time: <span class = "cover"><span id="Lasttime">1000</span> seconds</span></div>
                 </div>
-                </div>
-            
-            <div id="Pic" ><img id="picture11" class="picture1 pictureLeft hide" src="1.1.png" width=260px height=390px>
-                           <img id="picture12" class="picture1 pictureRight hide" src="1.2.png" width=260px height=390px>
-                           <img id="picture21" class="picture2 pictureLeft hide" src="2.1.png" width=260px height=390px>
-                           <img id="picture22" class="picture2 pictureRight hide" src="2.2.png" width=260px height=390px>
-                           <img id="picture31" class="picture3 pictureLeft hide" src="3.1.png" width=260px height=390px>
-                           <img id="picture32" class="picture3 pictureRight hide" src="3.2.png" width=260px height=390px>
-                           <img id="picture41" class="picture4 pictureLeft hide" src="4.1.png" width=260px height=390px>
-                           <img id="picture42" class="picture4 pictureRight hide" src="4.2.png" width=260px height=390px>
-                           <img id="picture51" class="picture5 pictureLeft hide" src="5.1.png" width=260px height=390px>
-                           <img id="picture52" class="picture5 pictureRight hide" src="5.2.png" width=260px height=390px></div>
-            <div id="MyDIV"> </div>
-            <div id= "Time1">New Time Record !!!</div>
-            <div id= "TimeBonus5" class = "Bonus">Time Bonus Achieved: +5 Points</div>
-            <div id= "TimeBonus10" class = "Bonus">Time Bonus Achieved: +10 Points</div>
-            <div id= "TimeBonus30" class = "Bonus">Time Bonus Achieved: +30 Points</div>
-            <div id= "TimeBonus50" class = "Bonus">Time Bonus Achieved: +50 Points</div>
-            <div id= "plus10">+10</div>
-            <div id= "minus10">-10</div>   
-            <video id="plusAnim" class = "hide" width ="650" autoplay><source src="plusElf.mp4" type ="video/mp4"></video>
-            <video id="minusAnim" class = "hide" width ="500" autoplay><source src="MinusFinalo.mp4" type ="video/mp4"></video>
-            <video id="recordAnim" class = "hide" width ="500" autoplay><source src="Record.mp4" type ="video/mp4"></video>
-            <div id = "choose" class = "Selektion" >Which game elements should be active?</div>
-            <span id ="HelpBar1"></span>
-            <span id ="HelpBar2"></span> 
-            <div id ="Zeit" class = "Selektion"><input type="checkbox" id="ZeitBox" > Time</div>
-            <div id ="Punkte" class = "Selektion"><input type="checkbox" id="PunkteBox" > Points</div>
-            <div id = "feedback" class = "Selektion"><input type="checkbox" id="feedbackBox" > Feedback</div>
-            <button id="startButton" class = "Selektion" onclick="StartIt()">Start</button>
-            <span id ="TestOhne">Without game elements</span>
-            <span id ="TestZeit">With time recording</span> 
-            <span id ="TestPunkte">With points</span> 
-            <span id ="TestFeedback">With feedback</span>   
-            <video id="OhneVideo" class ="Tutorials"  width ="1000" autoplay><source src="OhneG1.mp4" type ="video/mp4"></video>   
-            <video id="PunkteVideo" class = "Tutorials" width ="1000" autoplay><source src="MitPunkte.mp4" type ="video/mp4"></video>
-            <video id="ZeitVideo" class = "Tutorials" width ="1000" autoplay><source src="MitZeit.mp4" type ="video/mp4"></video>
-            <video id="FeedbackVideo" class = "Tutorials" width ="1000" autoplay><source src="MitFeedback.mp4" type ="video/mp4"></video>
-            <div class = "circles"><span id ="circle1"></span><span id = "circle2"></span><span id = "circle3"></span><span id = "circle4"></span></div>
-          
-           
-             <button style="height:80px;width:160px" id = "TesteOhne" class = "Testen" onclick="Testen()" >Test</button>
-           <div id="cross1" class="cross  hide"></div>
-            <div id="cross2" class="cross hide"></div> 
-         
-             <div id = "dot1" class="dot hide"></div> 
-             <div  id = "dot2" class="dot hide"></div>
-            
-     
-        <div id= "footer">
-         <span class = "points"> <span id = "five" >+5 points</span><span id ="ten" >+10 Punkte</span><span id = "thirty" >+30 points</span><span id = "fifty" >+50 points</span> </span>
-            <div id="bar"></div>
-            <div id="barGreen"></div>
-          
-            
-            
+            </div>
+    </div>
+
+    <div class="ScoreRight"></div>
+
+    <div class="LeftMain">
+                <button style="height:100px;width:200px" class = "GameButtons buttons" onclick="NoGamification()" >Disable Gamification</button>
+                <button style="height:100px;width:200px"  class = "GameButtons buttons" onclick="AllGamification()">Enable Gamification</button>
+                <button style="height:100px;width:200px" class = "EnableDisableButtons buttons" onclick="EnableGamification()" >Enable Gamification</button>
+                <div class = "posDot dot" id = "dot"></div>    
+               
+              
+
+                
+                    <img id="picture11" class="picture1 pictureLeft hide" src="1.1.png" width=260px height=390px> 
+                 
+                    
+        
+    </div>
+    <div class="center-bot">
+        <div class = "posCross cross" id = "cross1"></div> 
+        <div class = "posCross2 cross" id = "cross2"></div>  
+        <video id="plusAnim" class = "hide"  width ="650" autoplay><source src="Kon2.mp4" type ="video/mp4"></video>
+        <div id= "plus10">+10</div>
+        <div id= "minus10">-10</div> 
+        <div id= "TimeBonus5" class = "Bonus">Time Bonus Achieved: +5 Points</div>
+        <div id= "TimeBonus10" class = "Bonus">Time Bonus Achieved: +10 Points</div>
+        <div id= "TimeBonus30" class = "Bonus">Time Bonus Achieved: +30 Points</div>
+        <div id= "TimeBonus50" class = "Bonus">Time Bonus Achieved: +50 Points</div>
        
-        </div>
-        </div>
+        <div class="boxCross1 positionCross1 arrow-left">
+            A cross appears to focus the attention on the middle
+          </div>
+          <button id="afterCross1"  onclick="afterCross1()">Next</button>
+
+          <div class="boxCross1 positionPicture1 ">
+            On the left and right pictures appear as stimuli.
+          </div>
+          <button id="afterPicture1"  onclick="afterPicture1()">Next</button>
+
+          <div class="boxCross1 positionDot1 arrow-right ">
+            On the left or right a dot appears. React as fast as possible by clicking the correct button on the keyboard.
+          </div>
+
+          <img id="arrowRightPic"  src="rightArrow.svg" width=260px height=390px> 
        
-        <script type="text/javascript" src="script.js"></script>
-             
-    </body>
+      
+        
+        </div>
+
+
+    <div class = "center-main">
+       
+        <button id="okay" class = "taskExplain" onclick="okay()">Next</button>
+        <button id="startTutorial" class = "introductionTutorial" onclick="startTutorial()">Start Tutorial</button>
+        
+        
+          
+    </div>
+
+   
+
+    <div class = "middle-center">
+         <div id= "Time1">New Time Record !!!</div>
+
+
+       
+      
+        
+        
+    </div>
+   
+    <div class = "real-center">
+        <div id = "choose" class = "Selektion" >Which game elements should be active?</div>
+        <button id="startButton" class = "Selektion" onclick="StartIt()">Start</button>
+        <div id ="Zeit" class = "Selektion hide"><input type="checkbox" id="ZeitBox"> Time</div>
+        <div id ="Punkte" class = "Selektion hide"><input type="checkbox" id="PunkteBox" > Points</div>
+        <div id = "feedback" class = "Selektion hide"><input type="checkbox" id="feedbackBox" > Feedback</div>
+
+        <div class = "taskExplain" id = "DotProbeTask">Dot Probe Task</div>
+       
+        <div class = "taskExplain" id = "IntroText">
+            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, 
+            sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+            At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, 
+            no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+            sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. 
+            At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, 
+            no sea takimata sanctus est Lorem ipsum dolor sit amet.</div>
+
+        <div class = "introductionTutorial" id = "Tutorial">Tutorial</div>
+        <div class = "introductionTutorial" id = "IntroText2">
+            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, 
+            sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+            At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, 
+            no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+            sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. 
+            At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, 
+            no sea takimata sanctus est Lorem ipsum dolor sit amet.</div>
+
+
+
+            
+
+
+       
+    </div>
+   
+    <div class = "top-center">
+
+    </div>
+
+    <div class = "full">
+        
+    </div>
+
+    <div class="RightMain">
+        <button style="height:100px;width:200px"  class = "GameButtons buttons" onclick="EnableDisableGamification()">Enable/Disable Gamification</button>
+        <button style="height:100px;width:200px" class = "GameButtons buttons" onclick="SelectGamification()">Choose Game Elements</button>
+        <button style="height:100px;width:200px" class = "EnableDisableButtons" onclick="DisableGamification()">Disable Gamification</button>
+        <div class = "posDot2 dot" id = "dot"></div>
+        
+
+        <img id="picture12" class="picture1 pictureRight hide" src="1.2.png" width=260px height=390px> 
+
+        
+        
+
+    </div>
+    
+    <div class="bottomBar">
+
+        <div class = "points"> <span id = "five" >+5 points</span><span id ="ten" >+10 points</span><span id = "thirty" >+30 points</span><span id = "fifty" >+50 points</span> </div>
+        <div id="bar"></div>
+       <div id="barGreen"> </div>
+  </div>
+  <script type="text/javascript" src="script.js"></script>
+
+</body>
 </html>
+</DOCTYPE>
+
+
+
     
-    
+
