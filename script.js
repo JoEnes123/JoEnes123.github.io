@@ -1,4 +1,3 @@
-
 //firework animation + snow canvas confetti
 //send data to google sheets : How to send data to a google spread sheet, fetch url
 //divs für Zeilenumbrüche
@@ -25,32 +24,30 @@ let TesteOhne = document.getElementById("TesteOhne");
 let circles = document.getElementsByClassName("circles");
 let HelpBar1 = document.getElementById("HelpBar1");
 let HelpBar2 = document.getElementById("HelpBar2");
-let vidPlus = document.getElementById("plusAnim");
 let recordBars = document.getElementsByClassName("RecordBars");
 let bar = document.getElementById("bar");
 let barGreen = document.getElementById("barGreen");
 let greenValue = 5;
+let vidPlus = document.getElementById("plusAnim");
 let points = document.getElementsByClassName("points");
 let buttons = document.getElementsByClassName("buttons");
-let buttonsEnableDisable = document.getElementsByClassName("buttonsEnableDisable");
+let buttonsEnableDisable = document.getElementsByClassName("EnableDisableButtons");
 let thePoints = document.getElementById("scores");
 let theTime = document.getElementById("scores2");
 let GameOn;
 let anim = document.getElementById("MyDIV").addEventListener("trigger", goRecord);
 let selectStuff = document.getElementsByClassName("Selektion");
 let element = document.createElement('a');
-let startTime, interval, endTime, timi, zeit, punkte, feedback;
+let tutorialButtons = document.getElementsByClassName("introductionTutorial");
+var startTime, interval, endTime, timi, zeit, punkte, feedback;
 
-class xPictures {
+
+/*class xPictures {
     constructor() {
         this.hiddenPicture1 = document.getElementsByClassName("picture1");
-        this.hiddenPicture2 = document.getElementsByClassName("picture2");
-        this.hiddenPicture3 = document.getElementsByClassName("picture3");
-        this.hiddenPicture4 = document.getElementsByClassName("picture4");
-        this.hiddenPicture5 = document.getElementsByClassName("picture5");
     }
 }
-
+*/
 
 
 
@@ -60,13 +57,54 @@ function goRecord() {
     var pls = document.getElementById("Time1");
     pls.style.display = "block";
     pls.animate([
-   {transform: 'scale(1.0)'}
+   {transform: 'opacity(1.0)'}
 ], 1300);
     
    setTimeout(hideSingle,1300,pls);
 }
+
+function fadeIn(x) {
+   
+    x.animate([{
+        opacity: '0'
+    }, {
+        opacity: '1'
+    }
+    ], {
+        duration: 500,
+        
+    });
+    x.style.opacity=1;
+}
+
+function fadeInAll(x) {
+ for(var i=0;i!=x.length;i++) {
+   fadeIn(x[i]);
+  }
+}
+
+function fadeOut(x) {
+    x.animate([{
+        opacity: '1'
+    }, {
+        opacity: '0'
+    }
+    ], {
+        duration: 500,
+        
+    });
+    x.style.opacity=0;
+}
+
+function fadeOutAll(x) {
+    for(var i=0;i!=x.length;i++) {
+      fadeOut(x[i]);
+   }
+}
+
     
 function goBonusPoints(pointNumber) {
+    
     var pls = document.getElementById(pointNumber);
     pls.style.display = "block";
     pls.animate([
@@ -96,14 +134,10 @@ function TenMove (boolean) {
 }
 
 function selectPictures () {
-    const pic1 = new xPictures().hiddenPicture1;
-    const pic2 = new xPictures().hiddenPicture2;
-    const pic3 = new xPictures().hiddenPicture3;
-    const pic4 = new xPictures().hiddenPicture4;
-    const pic5 = new xPictures().hiddenPicture5;
-    var picArray = [pic1,pic2,pic3,pic4,pic5];
-    var randomElement = picArray[Math.floor(Math.random() * picArray.length)];
-    return randomElement;
+    /*const pic1 = new xPictures().hiddenPicture1;*/
+    /* var randomElement = picArray[Math.floor(Math.random() * picArray.length)];*/
+    let picArray = document.getElementsByClassName("picture1");
+    return picArray;
 }
 
 function start(){
@@ -115,18 +149,17 @@ function start(){
 
 function stop () {
     
-    endTime = timi;
-    clearInterval(interval);
-    document.getElementById("Lasttime").innerHTML = endTime/1000;
-    showArrayInline(cover);
+     clearInterval(interval);
+     document.getElementById("Lasttime").innerHTML = timi/1000;
+     showArrayInline(cover);
     
     
-    if (document.getElementById("Fasttime").innerHTML > endTime/1000) {
+    if (document.getElementById("Fasttime").innerHTML > timi/1000) {
         if (GameOn || zeit) {
             goRecord();
         }
 
-        document.getElementById("Fasttime").innerHTML = endTime/1000;
+        document.getElementById("Fasttime").innerHTML = timi/1000;
         showArrayInline(cover);
        
         
@@ -137,7 +170,7 @@ function stop () {
 
            
 function showFirst(x,waitTime) {
-    vidPlus.load();
+     vidPlus.load();
     for(var i=0;i!=x.length;i++) {
         x[i].style.display = "block";
         setTimeout(hideArray,milliseconds=waitTime,x);
@@ -179,15 +212,19 @@ function showDot (x) {
 
 function checkKeyPressForLeft(key) {
     if (key.keyCode =="37") {
+       
            stop();
            addScore(10);
            purScore += 10;
            hiddenDot[0].style.display = "none";
            if (GameOn || feedback) {vidPlus.style.display = "block";
-           setTimeout(hideSingle,1700,vidPlus);}
+           setTimeout(hideSingle,1500,vidPlus);
+         }
            if (GameOn || punkte) {TenMove(true);}
+           
            if (GameOn || points) {greenValue += 4;
-           barGreen.style.width = greenValue;
+            barGreen.style.width = greenValue;
+            
              if (purScore == 300) {addScore(5); goBonusPoints("TimeBonus5");}
              if (purScore == 600) {addScore(10); goBonusPoints("TimeBonus10");}
              if (purScore == 900) {addScore(30); goBonusPoints("TimeBonus30");}
@@ -209,6 +246,7 @@ function checkKeyPressForLeft(key) {
                      
   }
    window.removeEventListener("keydown",checkKeyPressForLeft,false);
+   
    setTimeout(set,1000,GameOn);
 
 }
@@ -219,12 +257,15 @@ function checkKeyPressForRight(key) {
              addScore(10);
              purScore += 10;
              hiddenDot[1].style.display = "none";
-             if (GameOn || feedback) {vidPlus.style.display = "block";
-             setTimeout(hideSingle,1700,vidPlus);}
-            
-            if (GameOn || punkte) { TenMove(true);}
+             if (GameOn || feedback) {
+                vidPlus.style.display = "block";
+                setTimeout(hideSingle,1500,vidPlus);
+             }
+             
+             if (GameOn || punkte) { TenMove(true);}
+             
              if (GameOn || points) {greenValue += 4;
-             barGreen.style.width = greenValue;
+                barGreen.style.width = greenValue;
              if (purScore == 300) {addScore(5); goBonusPoints("TimeBonus5");}
              if (purScore == 600) {addScore(10); goBonusPoints("TimeBonus10");}
              if (purScore == 900) {addScore(30); goBonusPoints("TimeBonus30");}
@@ -245,6 +286,7 @@ function checkKeyPressForRight(key) {
                       }
     
     window.removeEventListener("keydown",checkKeyPressForRight,false);
+   
     setTimeout(set,1000,GameOn);
 }
 
@@ -277,7 +319,9 @@ function hideSingle(x) {
     x.style.display = "none";
 }
 
-
+function showSingle(x) {
+    x.style.display = "block";
+}
 
 
 function addScore (x) {
@@ -298,6 +342,7 @@ function NoGamification() {
 }
 
 function AllGamification() {
+
   hideArray(buttons);
   bar.style.display = "block";
   barGreen.style.display = "block";
@@ -349,50 +394,76 @@ function DisableGamification() {
 }
 
 
-function TestModus () {
+function startTutorial() {
+    let tutorialButtons = document.getElementsByClassName("introductionTutorial");
+    hideArray(tutorialButtons);
+    setTimeout(explainCross,1000);  
+    setTimeout(showTutorialCross,2000);  
+}
 
-    TestOhne.style.display = "block";
-    OhneVideo.style.display = "block";
-    TesteOhne.style.display = "block";
-    hideArray(buttons);
-    showArray(circles);
+function explainCross() {
+    showArray(hiddenCross);
     
 }
 
+function showTutorialCross () {
+    let positionCross1 = document.getElementsByClassName("positionCross1");
+    let afterCross1 = document.getElementById("afterCross1");
+    showSingle(afterCross1);
+    fadeInAll(positionCross1);
+    fadeIn(afterCross1);
+  }
 
-function Left() {
-    var circle1 = document.getElementById("circle1");
-    var circle2 = document.getElementById("circle2");
-    var circle3 = document.getElementById("circle3");
-    var circle4 = document.getElementById("circle4");
-    if (arrowCount>0) {arrowCount--;}
-    if (arrowCount == 0) {TestOhne.style.display = "block"; TestPunkte.style.display = "none";
-                          OhneVideo.style.display = "block";PunkteVideo.style.display ="none";HelpBar1.style.display ="none";HelpBar2.style.display ="none";circle1.style.background = "black"; circle2.style.background = "white";}
-    if (arrowCount == 1) {TestPunkte.style.display = "block"; TestZeit.style.display = "none";
-                          ZeitVideo.style.display ="none";PunkteVideo.style.display ="block";circle2.style.background = "black"; circle3.style.background = "white";}
-    if (arrowCount == 2) {TestZeit.style.display = "block"; TestFeedback.style.display = "none";
-                          FeedbackVideo.style.display="none";ZeitVideo.style.display="block";circle3.style.background = "black"; circle4.style.background = "white";}
-    
-    
+
+function afterCross1() {
+    hideArray(hiddenCross);
+    let positionCross1 = document.getElementsByClassName("positionCross1");
+    let afterCross1 = document.getElementById("afterCross1");
+    fadeOutAll(positionCross1);
+    fadeOut(afterCross1);
+    hideSingle(afterCross1);
+    setTimeout(explainPictures,1000);
+    setTimeout(showTutorialPictures,2000);
 }
 
-function Right() {
-    var circle1 = document.getElementById("circle1");
-    var circle2 = document.getElementById("circle2");
-    var circle3 = document.getElementById("circle3");
-    var circle4 = document.getElementById("circle4");
-    if (arrowCount<3) {arrowCount++;}
-    if (arrowCount == 1) {TestOhne.style.display = "none"; TestPunkte.style.display = "block";
-                          OhneVideo.style.display="none";PunkteVideo.style.display="block";HelpBar1.style.display ="block";HelpBar2.style.display ="block";circle1.style.background = "white"; circle2.style.background = "black";}
-    if (arrowCount == 2) {TestZeit.style.display ="block";TestPunkte.style.display ="none";
-                          PunkteVideo.style.display="none";ZeitVideo.style.display="block";circle2.style.background = "white"; circle3.style.background = "black";}
-    if (arrowCount == 3) {TestZeit.style.display ="none";TestFeedback.style.display ="block";
-                          ZeitVideo.style.display="none";FeedbackVideo.style.display ="block";circle3.style.background = "white"; circle4.style.background = "black";}
+function explainPictures() {
+    showArray(selectPictures());
+}
+
+function showTutorialPictures() {
+    let positionPicture1 = document.getElementsByClassName("positionPicture1");
+    let afterPicture1 = document.getElementById("afterPicture1");
+    showSingle(afterPicture1);
+    fadeInAll(positionPicture1);
+    fadeIn(afterPicture1);
+}
+
+function afterPicture1() {
+   hideArray(selectPictures());
+   let positionPicture1 = document.getElementsByClassName("positionPicture1");
+   let afterPicture1 = document.getElementById("afterPicture1");
+   fadeOutAll(positionPicture1);
+   fadeOut(afterPicture1);
+   hideSingle(afterPicture1);
+   setTimeout(explainDots,1000);
+   setTimeout(showTutorialDots,2000);
+}
+
+function explainDots () {
+    showSingle(hiddenDot[1]);
+}
+
+function showTutorialDots() {
+    let positionDot1 = document.getElementsByClassName("positionDot1");
+    let afterDot1 = document.getElementById("afterDot1");
+    
+    fadeInAll(positionDot1);
     
 }
 
 
 function set (bool) {
+  
        GameOn = bool;
        setTimeout(showFirst,1000,hiddenCross,1500); //erste Zahl: wielang warten bis start zweite Zahl: wielang anzeigen
        
