@@ -14,13 +14,13 @@ html, body, .grid-container { height: 100%; margin: 0; }
      }
 
 .ScoreLeft { grid-area: 2 / 1 / 3 / 2;
-/*background-color: chocolate;*/
+
 display:grid; 
 }
 
 
 .LeftMain { grid-area: 2 / 1 / 5 / 2; 
-/*background-color: teal;*/
+
 display:grid;
 ;
 
@@ -49,7 +49,7 @@ display:grid;
 
 .top-center { grid-area: 2 / 1 / 3 / 3; 
     display:grid;
-    /*background-color: springgreen;*/
+  
     }
 
 .full {
@@ -60,7 +60,7 @@ display:grid;
 .RightMain { grid-area: 2 / 2 / 5 / 3;
     
     display:grid;
-    /*background-color: cornflowerblue;*/
+    
    
    
      }
@@ -68,18 +68,20 @@ display:grid;
 
 .bottomBar { grid-area: 4 / 1 / 5 / 3;
     display:grid;
-    /*background-color: tomato; */
+    
    
 }
         
 
 .posDot {
     display:none;
+    grid-area:1/1/2/2;
     justify-self: center;
     align-self: center;
 }
 
 .posDot2 {
+    grid-area:1/1/2/2;
     display : none;
     justify-self: center;
     align-self: center;
@@ -127,16 +129,34 @@ display:grid;
          }  
 
 
-.GameButtons {
-    display:none;
+.GameButtons {  /*zeigt Tutorial Optionen*/
+   
     grid-row-start: 2;
     justify-self: center;
+    width:200px;
+    height:100px;
     z-index: 1;
+    background:yellowgreen;
+    border:none;;
+    border-radius: 25px;
+    color:white;
+    font-size: 20px;
     
 }
 
+.buttons {}
+
 .EnableDisableButtons {
+    
     display:none;
+    width:200px;
+    height:100px;
+    z-index: 1;
+    background:yellowgreen;
+    border:none;;
+    border-radius: 25px;
+    color:white;
+    font-size: 20px;
     grid-row-start: 2;
     justify-self: center;
     
@@ -208,6 +228,16 @@ display:grid;
     transform: scale(.1);
 }
 
+#TimeTutorial {
+    display:none;
+    grid-area: 1/1/2/2;
+    justify-self:center;
+    align-self:start;
+    color: #3252c4;
+     font-size: 110px;
+     
+ }
+
 #plus10 {
     display: none;
     grid-area: 1/1/2/2;
@@ -216,6 +246,19 @@ display:grid;
     -webkit-text-stroke: 0.5px black;
     color: #79f145;
     font-size: 24px;
+   
+}
+
+#plus10Tutorial {
+    display:none;
+    grid-area: 1/1/2/2;
+    justify-self:center;
+    align-self:center;
+    -webkit-text-stroke: 0.5px black;
+    color: #79f145;
+    font-size: 24px;
+    position:relative;
+    top:-70px;
    
 }
 
@@ -282,7 +325,7 @@ display:grid;
 }
 
 #Zeit {
-    
+    z-index: 1;
     grid-area:1/1/2/2;
     justify-self:center;
     align-self:center;
@@ -292,7 +335,7 @@ display:grid;
 }
 
 #Punkte {
-    
+    z-index: 1;
     grid-area:1/1/2/2;
     justify-self:center;
     align-self:center;
@@ -304,7 +347,7 @@ display:grid;
 }
 
 #feedback {
-    
+    z-index: 1;
     grid-area:1/1/2/2;
     justify-self:center;
     align-self:center;
@@ -319,10 +362,18 @@ display:grid;
 }
 
 #startButton {
+    width:200px;
+    height:100px;
+    z-index: 1;
+    background:yellowgreen;
+    border:none;;
+    border-radius: 25px;
+    color:white;
+    font-size: 30px;
     grid-area:1/1/2/2;
     justify-self:center;
     align-self:end;
-    font-size: 25px;
+    
    
 }
 
@@ -391,13 +442,37 @@ display:grid;
 
 
 
-.taskExplain {
-display:none;
+.taskExplain { /*Lässt Tutorial ohne Game Elemente erscheinen*/
+opacity:0;
 }
+
+.taskExplainGame {
+opacity:0;
+    }
+
+.taskExplainSelect {
+opacity:0
+            }
+
+.taskExplainEnableDisable {
+opacity:0
+              }
 
 .introductionTutorial {
-
+opacity:0;
 }
+
+.introductionTutorialGame {
+opacity:0;
+    }
+
+.introductionTutorialSelect {
+ opacity:0;
+         }
+
+.introductionTutorialEnableDisable {
+    opacity:0;
+}         
 
 .crossExplain {
 
@@ -413,10 +488,45 @@ display:none;
 
 
 
-#DotProbeTask {
+
+
+.DotProbeTask {
     grid-area:1/1/2/2;
     justify-self: center;
     align-self: start;
+    font-size: 40px;
+    color:black
+}
+
+
+
+
+#okay { /*Macht Tutorial ohne Game Elemente sichtbar*/
+   display:none; 
+   
+}
+
+#okayGame {
+    display:none;
+   
+}
+
+#okaySelect {
+    display:none;
+   
+}
+
+#okayEnableDisable {
+    display:none;
+   
+}
+
+.Tutorial {
+    grid-area:1/1/2/2;
+    justify-self: center;
+    align-self: center;
+    position: relative;
+    top:-250px;
     font-size: 40px;
     color:black
     
@@ -424,7 +534,9 @@ display:none;
    
 }
 
-#IntroText {
+/*KANN ZUSAMMENGEFASST WERDEN*/
+
+.IntroText {
     grid-area:1/1/2/2;
     justify-self: center;
     align-self: center;
@@ -438,49 +550,106 @@ display:none;
     
 }
 
-#okay {
+.IntroText2 {
+    grid-area:1/1/2/2;
+    justify-self: center;
+    align-self: center;
+    background:white;
+    border: 2px solid black;
+    border-radius:25px;
+    width:400px;
+    height:300px;
+    font-size:20px;
+    padding:10px;
+    
+}
+
+.IntroText3 {
+    grid-area:1/1/2/2;
+    justify-self: center;
+    align-self: center;
+    background:white;
+    border: 2px solid black;
+    border-radius:25px;
+    width:400px;
+    height:300px;
+    font-size:20px;
+    padding:10px;
+    
+}
+
+.IntroText4 {
+    grid-area:1/1/2/2;
+    justify-self: center;
+    align-self: center;
+    background:white;
+    border: 2px solid black;
+    border-radius:25px;
+    width:400px;
+    height:300px;
+    font-size:20px;
+    padding:10px;
+    
+}
+
+
+
+
+.startButton {
+
     grid-area:1/1/2/2;
     justify-self: center;
     align-self: end;
     width:200px;
     height:100px;
+    z-index: 1;
+    background:yellowgreen;
+    border:none;;
+    border-radius: 25px;
+    color:white;
+    font-size: 20px;
     position:relative;
-    top:80px;
+    top:100px;
+
 }
 
-#Tutorial {
-    grid-area:1/1/2/2;
-    justify-self: center;
-    align-self: start;
-    font-size: 40px;
-    color:black
-    
- 
-   
-}
-
-#IntroText2 {
-    grid-area:1/1/2/2;
-    justify-self: center;
-    align-self: center;
-    background:white;
-    border: 2px solid black;
-    border-radius:25px;
-    width:400px;
-    height:300px;
-    font-size:20px;
-    padding:10px;
-    
-}
 
 #startTutorial {
-    grid-area:1/1/2/2;
-    justify-self: center;
-    align-self: end;
-    width:200px;
-    height:100px;
-    position:relative;
-    top:80px;
+    display:none;
+   
+}
+
+#startTutorialGame {
+    display:none;
+   }
+
+#startTutorialSelect {
+    display:none;
+}
+
+#startTutorialEnableDisable {
+    display:none;
+}
+
+
+#afterGetPoints {
+    display:none;
+}
+
+#afterExplainPoints {
+    display:none;
+}
+
+#afterExplainScore {
+    display:none;
+}
+
+#afterExplainBar {
+    display:none;
+}
+
+#afterExplainRecord {
+    display:none;
 }
 
 .boxCross1 {
@@ -510,14 +679,61 @@ display:none;
   }
 
   .positionDot1 {
+    display:none;
     opacity: 0;
     position: relative;
-    left:180px;
+    left:-200px;
     top:40px;
   }
 
+    .positionPlusZehn1 {
+    opacity:0;
+    position: relative;
+    left:250px;
+    top:-23px;
+    }
+
+    .positionScore1 {
+        opacity:0;
+        position: relative;
+        left:-400px;
+        top:-320px;
+    }
+
+    .positionBar1 {
+        opacity:0;
+        position: relative;
+        top:280px;
+        left:-230px;
+    }
+
+    .positionRecord1 {
+        opacity:0;
+        position: relative;
+        top:-100px;
+        left:-230px;
+    }
+
+    .positionTime1 {
+        opacity:0; 
+        position: relative;
+        top:-320px;
+        left:-400px;
+    }
+
   #arrowRight{}
 
+
+  .arrow-top:after {
+    content: " ";
+    position: absolute;
+    right: 30px;
+    top: -15px;
+    border-top: none;
+    border-right: 15px solid transparent;
+    border-left: 15px solid transparent;
+    border-bottom: 15px solid yellowgreen;
+  }
 
   .arrow-left:after {
     content: " ";
@@ -541,41 +757,274 @@ display:none;
     border-bottom: 15px solid transparent;
   }
 
+  .arrow-bottom:after {
+    content: " ";
+    position: absolute;
+    right: 30px;
+    bottom: -15px;
+    border-top: 15px solid yellowgreen;
+    border-right: 15px solid transparent;
+    border-left: 15px solid transparent;
+    border-bottom: none;
+  }
+
+  .nextButton {
+   opacity:0;
+   grid-area:1/1/2/2;
+   justify-self: center;
+   align-self: end;
+   width:100px;
+   height:50px;
+   z-index: 1;
+   position: relative;
+   top:-90px;
+   background: yellowgreen;
+   border:none;
+   border-radius: 25px;
+   color:white;
+   font-size: 20px;
+
+  }
+
+
+  .haken {
+      opacity:0;
+      grid-area:1/1/2/2;
+      justify-self:center;
+      align-self:end;
+      position: relative;
+      top:-90px;
+     
+     
+  }
+
+
   #afterCross1 {
     display:none;
-    opacity:0;
-     grid-area:1/1/2/2;
-    justify-self: center;
-    align-self: end;
-    width:100px;
-    height:50px;
-    z-index: 1;
-    position: relative;
-    top:-10px;
-    background: yellowgreen;
-    border:none;
-    border-radius: 25px;
-    color:white;
-    font-size: 20px;
+    
    
 }
 
 #afterPicture1 {
     display:none;
-    opacity:0;
-     grid-area:1/1/2/2;
+   
+   
+}
+
+#practise1 {
+    display:none;
+    
+}
+
+#startTask {
+    display:none;
+}
+
+#practiseSelect {
+    display:none;
+    
+}
+
+#practiseSelect0 {
+    display:none;
+    
+}
+
+#nowWithGame {
+    display:none;
+    
+}
+
+#practise2 {
+    display:none;
+    
+}
+
+#practisePointsPhase {
+    display:none;
+    
+}
+
+#practiseTimePhase {
+    display:none;
+    
+}
+
+#practiseFeedbackPhase {
+    display:none;
+    
+}
+    
+
+#arrowRightPic {
+    display:none;
+    opacity: 0;
+    grid-area:1/1/2/2;
     justify-self: center;
-    align-self: end;
-    width:100px;
-    height:50px;
-    z-index: 1;
+    align-self:center;
     position: relative;
-    top:-10px;
-    background: yellowgreen;
-    border:none;
+    left:-100px;
+    top:300px;
+
+}
+
+#goodJob {
+    opacity:0;
+    grid-area:1/1/2/2;
+    justify-self:center;
+    align-self:center;
+    font-size: 35px;
+    color:black;
+    text-align: center;
+    width:400px;
+    height:80px;
+    z-index: 1;
+    
+    
+}
+
+#startText {
+    opacity:0;
+    grid-area:1/1/2/2;
+    justify-self:center;
+    align-self:center;
+    font-size: 35px;
+    color:black;
+    text-align: center;
+    width:400px;
+    height:80px;
+    z-index: 1;
+}
+
+#goodJobSelect {
+    opacity:0;
+    grid-area:1/1/2/2;
+    justify-self:center;
+    align-self:center;
+    font-size: 35px;
+    color:black;
+    text-align: center;
+    width:400px;
+    height:80px;
+    z-index: 1;
+    
+}
+
+#goodJobSelect0 {
+    opacity:0;
+    grid-area:1/1/2/2;
+    justify-self:center;
+    align-self:center;
+    font-size: 35px;
+    color:black;
+    text-align: center;
+    width:400px;
+    height:80px;
+    z-index: 1;
+    
+}
+
+#goodJobEnableDisable {
+    opacity:0;
+    grid-area:1/1/2/2;
+    justify-self:center;
+    align-self:center;
+    font-size: 35px;
+    color:black;
+    text-align: center;
+    width:400px;
+    height:80px;
+    z-index: 1;
+    
+}
+
+#goodJobEnableDisableSelect {
+    opacity:0;
+    grid-area:1/1/2/2;
+    justify-self:center;
+    align-self:center;
+    position: relative;
+    top:-100px;
+    font-size: 35px;
+    color:black;
+    text-align: center;
+    width:400px;
+    height:80px;
+    z-index: 1;
+    
+}
+
+.decideScreen {}
+
+#nowPractise {
+    opacity:0;
+    grid-area:1/1/2/2;
+    justify-self:center;
+    align-self:center;
+    font-size: 35px;
+    color:black;
+    text-align: center;
+    width:400px;
+    height:80px;
+    z-index: 1;
+    
+}
+
+#nowPractisePoints {
+    opacity:0;
+    grid-area:1/1/2/2;
+    justify-self:center;
+    align-self:center;
+    font-size: 35px;
+    color:black;
+    text-align: center;
+    width:400px;
+    height:80px;
+    z-index: 1;
+    
+}
+
+.selectOptions { /*Einzel Tutorials aktivieren*/
+    opacity:0;
+    grid-area:1/1/2/2;
+    justify-self:center;
+    align-self:start;
+    position: relative;
+}
+
+#practisePointButton {}
+
+#practiseTimeButton {}
+
+#practiseFeedbackButton {}
+
+#pointHaken {}
+
+#timeHaken {}
+
+#feedbackHaken {}
+
+.selectNames {
+    
+    top:150px;
+    font-size:25px;
+}
+
+.selectPic {
+    
+   top:250px;
+}
+
+.selectButton {
+    display:none;
+    width:200px;
+    height:100px;
+    z-index: 1;
+    background:yellowgreen;
+    border:none;;
     border-radius: 25px;
     color:white;
     font-size: 20px;
-   
+    top:600px;
 }
 
