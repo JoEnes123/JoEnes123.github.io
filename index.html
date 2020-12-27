@@ -1,298 +1,87 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Dot probe task</title>
-        <link rel="stylesheet" href="style.css">  
-    </head>
-<body>    
-
-    <div class="grid-container">
-        
-    <div class="topBar">
-            
-              <div id ="logo">Art and Attention Study</div>
-              
-              
-    </div> 
-
-    <div class="ScoreLeft">
-
-            <div class = "positionScore">
-                <div id="scores">Points: <span id="point"> 0</span></div>
-                <div id = "scores2">
-                <div>Quickest Time: <span class = "cover"><span id="Fasttime">1000</span> seconds</span></div>
-                <div>Last Time: <span class = "cover"><span id="Lasttime">1000</span> seconds</span></div>
-                </div>
-            </div>
-    </div>
-
-    <div class="ScoreRight"></div>
-
-    <div class="LeftMain">
-                <button style="height:100px;width:200px" class = "GameButtons buttons" onclick="NoGamificationTut()" >Disable Gamification</button>
-                <button style="height:100px;width:200px"  class = "GameButtons buttons" onclick="AllGamificationTut()">Enable Gamification</button>
-                <button style="height:100px;width:200px" class = "EnableDisableButtons DecideScreen" onclick="EnableGamification()" >Enable Gamification</button>
-                <div class = "posDot dot" id = "dot"></div>    
-               
-                <div class = "selectNames selectOptions">Points</div>
-
-                <button  class = "selectOptions selectButton" id = "practisePointButton" onclick="practisePoints()">Practise Points</button>
-
-                <img  class="haken" id = "pointHaken" src="haken.jpg" width=200px height=200px> 
-
-                <img  class="selectPic selectOptions" src="Bildschirmfoto 2020-11-30 um 11.28.23.png" width=400px height=250px> 
-
-                
-                 <img id="picture11" class="picture1 pictureLeft hide" src="1.1.png" width=260px height=390px> 
-                 
-                
-                    
-        
-    </div>
-    <div class="center-bot">
-        <div class = "posCross cross" id = "cross1"></div> 
-        <div class = "posCross2 cross" id = "cross2"></div>  
-        <video id="plusAnim" class = "hide"  width ="650" autoplay><source src="Kon2.mp4" type ="video/mp4"></video>
-        <div id= "plus10">+10</div>
-        <div id= "plus10Tutorial">+10</div>
-        <div id= "minus10">-10</div> 
-        <div id= "TimeBonus5" class = "Bonus">Time Bonus Achieved: +5 Points</div>
-        <div id= "TimeBonus10" class = "Bonus">Time Bonus Achieved: +10 Points</div>
-        <div id= "TimeBonus30" class = "Bonus">Time Bonus Achieved: +30 Points</div>
-        <div id= "TimeBonus50" class = "Bonus">Time Bonus Achieved: +50 Points</div>
-       
-        <div class="boxCross1 positionCross1 arrow-left">
-            A cross appears to focus the attention on the middle
-          </div>
-          <button class = "nextButton" id="afterCross1"  onclick="afterCross1()">Next</button>
-
-          <div class="boxCross1 positionPicture1 ">
-            On the left and right pictures appear as stimuli.
-          </div>
-          <button class = "nextButton" id="afterPicture1"  onclick="afterPicture1()">Next</button>
-
-
-          <div id = "goodJob">Good! Now practise a while</div>
-
-          <div id = "startText">Good! Now you can start the task!</div>
-
-          <button class = "nextButton" id="practiseSelect"  onclick="beforeSelektionAppears1()">Next</button>
-
-          <button class = "nextButton" id="practiseSelect0"  onclick="beforeSelektionAppears0()">Next</button>
-
-          <div id = "goodJobSelect0">Good! Now practise a while</div>
-
-          <div id = "goodJobSelect">Good! Now you will experience the different game elements</div>
-
-          <div id = "goodJobEnableDisable">Good! Now you will experience the task with Game Elements</div>
-
-          <div id = "goodJobEnableDisableSelect"  class = "DecideScreen">Good! Now by choosing your prefered configuration the task starts</div>
-
-          <button class = "nextButton" id="nowWithGame"  onclick="nowWithGame()">Next</button>
-
-          <button class = "nextButton" id="practise1"  onclick="practise1()">Practise</button>
-
-          <button class = "nextButton" id="startTask"  onclick="startTask()">Start Task</button>
-
-          <div class="boxCross1 positionPlusZehn1 arrow-left ">
-            You earn points for correct answers!
-          </div>
-
-          <button class = "nextButton" id="afterGetPoints"  onclick="afterGetPoints()">Next</button>
-
-          <div class="boxCross1 positionScore1 arrow-left ">
-            Here you can see your score!
-          </div>
-
-          <button class = "nextButton" id="afterExplainPoints"  onclick="afterExplainPoints()">Next</button>
-
-          <div class="boxCross1 positionBar1 arrow-bottom ">
-            You can get extra points by reaching the marks!
-          </div>
-
-          <button class = "nextButton" id="afterExplainScore"  onclick="afterExplainScore()">Next</button>
-
-          <div class="boxCross1 positionRecord1 arrow-top ">
-            The animation appears for reaching a new best reaction time!
-          </div>
-
-          <button class = "nextButton" id="afterExplainBar"  onclick="afterExplainBar()">Next</button>
-       
-          <div class="boxCross1 positionTime1 arrow-left ">
-            Here you can see your last time and your quickest time!
-          </div>
-
-          <button class = "nextButton" id="afterExplainRecord"  onclick="afterExplainRecord()">Next</button>
-
-          <div id = "nowPractise">Now practise a while</div>
-
-          <div id = "nowPractisePoints">Now you can practise this configuration a while</div>
-
-          <button class = "nextButton" id="practise2"  onclick="practise2()">Practise</button>
-
-          <button class = "nextButton" id="practisePointsPhase"  onclick="practisePointsPhase()">Practise</button>
-
-          <button class = "nextButton" id="practiseTimePhase"  onclick="practiseTimePhase()">Practise</button>
-
-          <button class = "nextButton" id="practiseFeedbackPhase"  onclick="practiseFeedbackPhase()">Practise</button>
-
-         
-      
-        
-        </div>
-
-
-    <div class = "center-main">
-       
-        <button id="okay" class = "taskExplain startButton" onclick="okay()">Next</button>
-
-        <button id="okayGame" class = "taskExplainGame startButton" onclick="okayGame()">Next</button>
-
-        <button id="okaySelect" class = "taskExplainSelect startButton" onclick="okaySelect()">Next</button>
-
-        <button id="okayEnableDisable" class = "taskExplainEnableDisable startButton" onclick="okayEnableDisable()">Next</button>
-        
-        <div class = "selectNames selectOptions">Time</div>
-
-        <button  class = "selectOptions selectButton" id = "practiseTimeButton"onclick="practiseTime()">Practise Time</button>
-
-       
-
-        <img  class="selectPic selectOptions" src="Bildschirmfoto 2020-11-30 um 11.28.23.png" width=400px height=250px> 
-
-       
-        
-        
-          
-    </div>
-
-   
-
-    <div class = "middle-center">
-         <div id= "Time1">New Time Record !!!</div>
-
-         <div id= "TimeTutorial">New Time Record !!!</div>
-
-         
-         <img  class="haken" id = "timeHaken" src="haken.jpg" width=200px height=200px> 
-      
-        
-        
-    </div>
-   
-    <div class = "real-center">
-        <div id = "choose" class = "Selektion" >Which game elements should be active?</div>
-        <button id="startButton" class = "Selektion" onclick="StartIt()">Start</button>
-        <div id ="Zeit" class = "Selektion "><input type="checkbox" id="ZeitBox"> Time</div>
-        <div id ="Punkte" class = "Selektion "><input type="checkbox" id="PunkteBox" > Points</div>
-        <div id = "feedback" class = "Selektion "><input type="checkbox" id="feedbackBox" > Feedback</div>
-
-        <div class = "taskExplain DotProbeTask">Dot Probe Task</div>
-
-        <div class = "taskExplainGame DotProbeTask">Dot Probe Task</div>
-       
-        <div class = "taskExplain IntroText">
-            Hier wird der Task erklaert</div>
-        
-         <div class = "taskExplainGame IntroText">
-             Hier wird der Task mit Gamification erklaert</div>
-
-        <div class = "introductionTutorial Tutorial">Tutorial</div>
-
-        <div class = "introductionTutorialGame Tutorial">Tutorial</div>
-
-        <div class = "introductionTutorial IntroText2">
-            Hier wird erklaert wie das Tutorial aufgebaut ist</div>
-
-        <div class = "introductionTutorialGame IntroText3">
-            Hier wird erklaert wie das Tutorial mit Game Elementen aufgebaut ist</div>
-
-       <div class = "taskExplainSelect DotProbeTask">Dot Probe Task</div>
-
-       <div class = "taskExplainSelect IntroText2">
-                Hier wird der Task mit Selektion erklaert</div>
-
-         <div class = "introductionTutorialSelect Tutorial">Tutorial</div>
-
-       <div class = "introductionTutorialSelect IntroText2">
-                Hier wird erklaert wie das Tutorial mit Selection aufgebaut ist</div>
-
-        <div class = "taskExplainEnableDisable IntroText4">
-                Hier wird der Task mit Enable/Disable erklaert</div>         
-            
-       <div class = "taskExplainEnableDisable DotProbeTask">Dot Probe Task</div>        
-
-       <div class = "introductionTutorialEnableDisable Tutorial">Tutorial</div>
-
-       <div class = "introductionTutorialEnableDisable IntroText4">
-        Hier wird erklaert wie das Tutorial mit Enable/Disable aufgebaut ist</div>
-       
-            
-
-
-            <button id="startTutorial" class = "introductionTutorial startButton" onclick="startTutorial()">Start Tutorial</button>
-
-            <button id="startTutorialGame" class = "introductionTutorialGame startButton" onclick="startTutorialGame()">Start Tutorial</button>
-
-            <button id="startTutorialSelect" class = "introductionTutorialSelect startButton" onclick="startTutorialSelect()">Start Tutorial</button>
-
-            <button id="startTutorialEnableDisable" class = "introductionTutorialEnableDisable startButton" onclick="startTutorialEnableDisable()">Start Tutorial</button>
-
-
-
-            
-
-
-       
-    </div>
-   
-    <div class = "top-center">
-
-    </div>
-
-    <div class = "full">
-        
-    </div>
-
-    <div class="RightMain">
-        <button style="height:100px;width:200px"  class = "GameButtons buttons" onclick="EnableDisableGamificationTut()">Enable/Disable Gamification</button>
-        <button style="height:100px;width:200px" class = "GameButtons buttons" onclick="SelectGamificationTut()">Choose Game Elements</button>
-        <button style="height:100px;width:200px" class = "EnableDisableButtons DecideScreen" onclick="DisableGamification()">Disable Gamification</button>
-        <div class = "posDot2 dot" id = "dot"></div>
-        <div class="boxCross1 positionDot1 arrow-right ">
-            On the left or right a dot appears. React as fast as possible by clicking the correct button on the keyboard.
-          </div>
-
-          <img id="arrowRightPic"  src="rightArrow.svg" width=100px height=100px> 
-
-        <img id="picture12" class="picture1 pictureRight hide" src="1.2.png" width=260px height=390px> 
-
-        <div class = "selectNames selectOptions">Feedback</div>
-
-        <button  class = "selectOptions selectButton" id = "practiseFeedbackButton"onclick="practiseFeedback()">Practise Feedback</button>
-
-        <img  class="haken" id = "feedbackHaken" src="haken.jpg" width=200px height=200px> 
-
-        <img  class="selectPic selectOptions" src="Bildschirmfoto 2020-11-30 um 11.28.23.png" width=400px height=250px> 
-
-        
-        
-
-    </div>
-    
-    <div class="bottomBar">
-
-        <div class = "points"> <span id = "five" >+5 points</span><span id ="ten" >+10 points</span><span id = "thirty" >+30 points</span><span id = "fifty" >+50 points</span> </div>
-        <div id="bar"></div>
-       <div id="barGreen"> </div>
-  </div>
-  <script type="text/javascript" src="script.js"></script>
-
-</body>
+    <script>
+     function makeApiCall() {
+       var params = {
+         // The ID of the spreadsheet to retrieve data from.
+         // The ID of the spreadsheet to update.
+         spreadsheetId: '1J-uhJHFRqqYK5Z8uMD4JBm9YJE881eEcTgUsoh9iDvw',  // TODO: Update placeholder value.
+
+         // The A1 notation of the values to retrieve.
+         range: 'A1:Z1000',  // TODO: Update placeholder value.
+         // The A1 notation of the values to update.
+         range: 'A1',  // TODO: Update placeholder value.
+
+         // How values should be represented in the output.
+         // The default render option is ValueRenderOption.FORMATTED_VALUE.
+         //valueRenderOption: '',  // TODO: Update placeholder value.
+         // How the input data should be interpreted.
+         valueInputOption: 'USER_ENTERED',  // TODO: Update placeholder value.
+       };
+
+         // How dates, times, and durations should be represented in the output.
+         // This is ignored if value_render_option is
+         // FORMATTED_VALUE.
+         // The default dateTime render option is [DateTimeRenderOption.SERIAL_NUMBER].
+         //dateTimeRenderOption: '',  // TODO: Update placeholder value.
+       var valueRangeBody = {
+         // TODO: Add desired properties to the request body. All existing properties
+         // will be replaced.
+         "values": [
+     [
+       "Simon"
+     ],
+     [
+       "110"
+     ]
+   ]
+
+
+       };
+
+       var request = gapi.client.sheets.spreadsheets.values.get(params);
+       var request = gapi.client.sheets.spreadsheets.values.update(params, valueRangeBody);
+       request.then(function(response) {
+         // TODO: Change code below to process the `response` object:
+         console.log(response.result);
+ @@ -49,10 +57,8 @@
+       // TODO: Authorize using one of the following scopes:
+       //   'https://www.googleapis.com/auth/drive'
+       //   'https://www.googleapis.com/auth/drive.file'
+       //   'https://www.googleapis.com/auth/drive.readonly'
+       //   'https://www.googleapis.com/auth/spreadsheets'
+       //   'https://www.googleapis.com/auth/spreadsheets.readonly'
+       var SCOPE = 'https://www.googleapis.com/auth/spreadsheets.readonly';
+       var SCOPE = 'https://www.googleapis.com/auth/spreadsheets';
+
+       gapi.client.init({
+         'apiKey': API_KEY,
+        'clientId': CLIENT_ID,
+        'scope': SCOPE,
+        'discoveryDocs': ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
+      }).then(function() {
+        gapi.auth2.getAuthInstance().isSignedIn.listen(updateSignInStatus);
+        updateSignInStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+      });
+    }
+    function handleClientLoad() {
+      gapi.load('client:auth2', initClient);
+    }
+    function updateSignInStatus(isSignedIn) {
+      if (isSignedIn) {
+        makeApiCall();
+      }
+    }
+    function handleSignInClick(event) {
+      gapi.auth2.getAuthInstance().signIn();
+    }
+    function handleSignOutClick(event) {
+      gapi.auth2.getAuthInstance().signOut();
+    }
+    </script>
+    <script async defer src="https://apis.google.com/js/api.js"
+      onload="this.onload=function(){};handleClientLoad()"
+      onreadystatechange="if (this.readyState === 'complete') this.onload()">
+    </script>
+    <button id="signin-button" onclick="handleSignInClick()">Sign in</button>
+    <button id="signout-button" onclick="handleSignOutClick()">Sign out</button>
+  </body>
 </html>
-</DOCTYPE>
-
-
-
-    
-
