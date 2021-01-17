@@ -44,20 +44,36 @@ let HelpBar2 = document.getElementById("HelpBar2");
 let recordBars = document.getElementsByClassName("RecordBars");
 let bar = document.getElementById("bar");
 let barGreen = document.getElementById("barGreen");
-let greenValue = 1;
+let barIndicate = document.getElementsByClassName("barIndicate");
+let greenValue = 5;
 let greenPosition = -271;
 let vidPlus = document.getElementById("plusAnim");
+let vidMinus = document.getElementById("minusAnim");
 let points = document.getElementsByClassName("points");
 let buttons = document.getElementsByClassName("buttons");
 let buttonsEnableDisable = document.getElementsByClassName("DecideScreen");
 let thePoints = document.getElementById("scores");
 let theTime = document.getElementById("scores2");
 let GameOn;
-let anim = document.getElementById("MyDIV").addEventListener("trigger", goRecord);
+//let anim = document.getElementById("MyDIV").addEventListener("trigger", goRecord);
 let selectStuff = document.getElementsByClassName("Selektion");
 let element = document.createElement('a');
 let tutorialButtons = document.getElementsByClassName("introductionTutorial");
 var startTime, interval, endTime, timi, zeit, feedback;
+let counterTaskEnds = 0;
+
+let trackData = false;
+let NoGamificationOn = false;
+let AllGamificationOn = false;
+let EnableGamificationOn = false;
+let DisableGamificationOn = false;
+let SelectGameFeature1On = false;
+let SelectGameFeature2On = false;
+let SelectGameFeature3On = false;
+
+let Samples = [];
+let currentCorrect = null;
+let currentTime = null;
 
 
 /*class xPictures {
@@ -66,6 +82,8 @@ var startTime, interval, endTime, timi, zeit, feedback;
     }
 }
 */
+
+
 
 function resetTime () {
     document.getElementById("Lasttime").innerHTML = 0;
@@ -214,7 +232,9 @@ function stop () {
 
      document.getElementById("Lasttime").innerHTML = timi/1000;
      showArrayInline(cover);
-    
+     if (trackData) {
+        counterTaskEnds++;
+        writeData(currentCorrect,timi/1000);}
     
     if (document.getElementById("Fasttime").innerHTML > timi/1000 || document.getElementById("Fasttime").innerHTML == 0) {
         if (GameOn || zeit) {
@@ -232,7 +252,13 @@ function stop () {
 
            
 function showFirst(x,waitTime) {
+    if (counterTaskEnds > 4) {
+        let theEnd = document.getElementById("theEnd");
+        setTimeout(fadeIn,2000,theEnd);
+        sendJson();}
+    else {
      vidPlus.load();
+     vidMinus.load();
     for(var i=0;i!=x.length;i++) {
         x[i].style.display = "block";
         setTimeout(hideArray,milliseconds=waitTime,x);
@@ -240,6 +266,7 @@ function showFirst(x,waitTime) {
         
     }
     setTimeout(showSecond,1500,selectPictures(),500);
+    }
 }
 
 function showSecond(x,waitTime) {
@@ -281,15 +308,19 @@ function showDot (x) {
 
 
 function checkKeyPressForLeft(key) {
+    let vidPlus = document.getElementById("plusAnim");
   
     if (key.keyCode =="37") {
-       
+           currentCorrect = "Yes";
            stop();
            addScore(10);
            purScore += 10;
            hiddenDot[0].style.display = "none";
-           if (GameOn || feedback) {vidPlus.style.display = "block";
-           setTimeout(hideSingle,1500,vidPlus);
+           if (GameOn || feedback) {
+          
+           vidPlus.style.display = "block";
+           setTimeout(hideSingle,2300,vidPlus);
+           
          }
         
            if (GameOn || punkte) {TenMove(true);}
@@ -307,11 +338,18 @@ function checkKeyPressForLeft(key) {
            
            
   else if (key.keyCode =="39") {  
+           currentCorrect = "No";
+           currentTime = 0;
+           if (trackData) {
+               counterTaskEnds++;
+               writeData(currentCorrect,currentTime);}
            subtractScore();
            subtractGreenBar();
            purScore -= 10;
            hiddenDot[0].style.display = "none";
            if (GameOn || punkte) {
+           vidMinus.style.display = "block";
+           setTimeout(hideSingle,2300,vidMinus); 
            TenMove(false);}
            if (greenValue > 5 && (GameOn || punkte)) {
             
@@ -327,10 +365,7 @@ countTest++;
  //Bedingung bei Selektion
 
   if (beforeSelektionAppears && checkTest()) {
-    resetScore();
-    purScore = 0;
-    resetTime();  
-    resetGreenBar();
+   
     let practiseSelect = document.getElementById("practiseSelect");
     let goodJobSelect = document.getElementById ("goodJobSelect");
     setTimeout(showSingle,2000,practiseSelect);
@@ -340,10 +375,7 @@ countTest++;
   }
 //Bedingung mit EnableDisable
   else if (disableTest && checkTest()) {
-      resetScore();
-      purScore = 0;
-      resetTime();
-      resetGreenBar();
+     
       let goodJobEnableDisable = document.getElementById("goodJobEnableDisable");
       let nowWithGame = document.getElementById("nowWithGame");
       disableTest = false;
@@ -356,10 +388,7 @@ countTest++;
     
     EnableDisableGamification();}
   else if (test && checkTest()) {      
-    resetScore();
-    purScore = 0;
-    resetTime();  
-    resetGreenBar();       //Bedingung ohne Game
+         //Bedingung ohne Game
     let startTask = document.getElementById("startTask");
     let startText = document.getElementById("startText");
     
@@ -378,14 +407,18 @@ countTest++;
 }
 
 function checkKeyPressForRight(key) {
+    
+ 
     if (key.keyCode =="39") {
+            currentCorrect = "Yes";
              stop();
              addScore(10);
              purScore += 10;
              hiddenDot[1].style.display = "none";
              if (GameOn || feedback) {
+                
                 vidPlus.style.display = "block";
-                setTimeout(hideSingle,1500,vidPlus);
+                setTimeout(hideSingle,2300,vidPlus);
              }
              
              if (GameOn || punkte) { TenMove(true);}
@@ -395,19 +428,26 @@ function checkKeyPressForRight(key) {
                addGreenBar();
 
 
-             if (purScore == 300) {addScore(5); goBonusPoints("TimeBonus5");}
-             if (purScore == 600) {addScore(10); goBonusPoints("TimeBonus10");}
-             if (purScore == 900) {addScore(30); goBonusPoints("TimeBonus30");}
-             if (purScore == 1200) {addScore(50); goBonusPoints("TimeBonus50");}
+             if (purScore == 250) {addScore(5); goBonusPoints("TimeBonus5");}
+             if (purScore == 500) {addScore(10); goBonusPoints("TimeBonus10");}
+             if (purScore == 750) {addScore(30); goBonusPoints("TimeBonus30");}
+             if (purScore == 1000) {addScore(50); goBonusPoints("TimeBonus50");}
                        }
                                     }
              
      else if (key.keyCode =="37") {  
+            currentCorrect = "No";
+            currentTime = 0;
+            if (trackData) {
+                counterTaskEnds++;
+                writeData(currentCorrect,currentTime);}
             subtractScore();
             subtractGreenBar();
             purScore -= 10;
             hiddenDot[1].style.display = "none";
             if (GameOn || punkte) {
+            vidMinus.style.display = "block";
+            setTimeout(hideSingle,2300,vidMinus);
             TenMove(false);}
             if (greenValue > 5 && (GameOn || punkte)) {
           
@@ -421,10 +461,7 @@ function checkKeyPressForRight(key) {
     countTest++;
 
     if (beforeSelektionAppears && checkTest()) {
-        resetScore();
-        purScore = 0;
-        resetTime();
-        resetGreenBar();
+        
         let practiseSelect = document.getElementById("practiseSelect");
         let goodJobSelect = document.getElementById ("goodJobSelect");
         setTimeout(showSingle,2000,practiseSelect);
@@ -434,10 +471,7 @@ function checkKeyPressForRight(key) {
       }
 
     else if (disableTest && checkTest()) { 
-    resetScore();
-    purScore = 0;
-    resetTime();
-    resetGreenBar();
+   
     let goodJobEnableDisable = document.getElementById("goodJobEnableDisable");
     let nowWithGame = document.getElementById("nowWithGame");
     disableTest = false;
@@ -448,10 +482,7 @@ function checkKeyPressForRight(key) {
     else if (enableDisableEndTest && checkTest()) {EnableDisableGamification();}
 
     else if (test && checkTest()) {
-    resetScore();
-    purScore = 0;
-    resetTime();
-    resetGreenBar();
+   
     let startTask = document.getElementById("startTask");
     let startText = document.getElementById("startText");
    
@@ -530,8 +561,8 @@ function subtractGreenBar () {
 }
 
 function resetGreenBar () {
-            greenValue = 1;
-            greenPosition = 271;
+            greenValue = 5;
+            greenPosition = -271;
             let valueString = String(greenValue).concat("px");
             let positionString = String(greenPosition).concat("px");
             barGreen.style.width = valueString;
@@ -539,6 +570,7 @@ function resetGreenBar () {
 }
 
 function NoGamificationTut() {
+    NoGamificationOn = true; //indicates the condition for later tracking
     let okay = document.getElementById("okay");
     let taskExplain = document.getElementsByClassName("taskExplain");
     fadeInAll(taskExplain);
@@ -547,6 +579,11 @@ function NoGamificationTut() {
 }
 
 function startTask () {
+    trackData = true; //start tracking the data
+    resetScore();
+    purScore = 0;
+    resetTime();  
+    resetGreenBar();
     let startTask = document.getElementById("startTask");
     let startText = document.getElementById("startText");
     hideSingle(startTask);
@@ -563,6 +600,10 @@ function NoGamification() {
 }
 
 function AllGamificationTut() {
+  
+   if (!EnableGamificationOn)  {AllGamificationOn = true;} //indicates the condition for later tracking
+  
+    
     let okayGame = document.getElementById("okayGame");
     let taskExplainGame = document.getElementsByClassName("taskExplainGame");
     fadeInAll(taskExplainGame);
@@ -571,10 +612,47 @@ function AllGamificationTut() {
     
 }
 
-function AllGamification() {
+function sendJson () {
+  
+   // Sending and receiving data in JSON format using POST method
+    var data = JSON.stringify({
+        WithoutGamification: NoGamificationOn,
+        WithGamificaion: AllGamificationOn,
+        EnableGamification: EnableGamificationOn,
+        DisableGamification: DisableGamificationOn,
+        GamificationFeature1: SelectGameFeature1On,
+        GamificationFeature2: SelectGameFeature2On,
+        GamificationFeature3: SelectGameFeature3On,
+        Samples: Samples
+    });
 
+    var xhr = new XMLHttpRequest();
+    var url = "http://dotprobetask.de/receiver.php";
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            console.log("Server Antwort: ", xhr.response, "\n");
+            if (xhr.status === 200) {
+                alert("geht");
+            } else {
+                alert("ging nicht");
+            }
+        }
+    };
+    console.log("Sent");
+
+    xhr.send(data);
+}
+
+function writeData(x,y) {
+    Samples.push([x,y]);
+}
+
+function AllGamification() {
   bar.style.display = "block";
   barGreen.style.display = "block";
+  showArray(barIndicate);
   showArray(points);
   thePoints.style.display = "block";
   theTime.style.display = "block";
@@ -598,6 +676,7 @@ function EnableDisableGamification() {
     enableDisableEndTest = false;
     setTimeout(hideSingle,1000,bar);
     setTimeout(hideSingle,1000,barGreen);
+    setTimeout(hideArray,1000,barIndicate);
     setTimeout(hideArray,1000,points);
     setTimeout(hideSingle,1000,thePoints);
     setTimeout(hideSingle,1000,theTime);
@@ -635,7 +714,7 @@ zeit = zeitbox.checked;
 punkte = punktebox.checked;
 feedback = effektbox.checked;
 hideArray(selectStuff);
-if (punkte) {bar.style.display = "block"; barGreen.style.display = "block"; showArray(points); thePoints.style.display = "block";}    
+if (punkte) {bar.style.display = "block"; barGreen.style.display = "block"; showArray(points); thePoints.style.display = "block"; showArray(barIndicate);}    
 if (zeit) {theTime.style.display = "block";}    
 set(false);
 }
@@ -643,6 +722,8 @@ set(false);
                      
 
 function EnableGamification() {
+    trackData = true;
+    EnableGamificationOn = true; //indicates the condition for later tracking
     hideArray(buttonsEnableDisable);
     fadeOutAll(buttonsEnableDisable);
     
@@ -650,6 +731,8 @@ function EnableGamification() {
 }
 
 function DisableGamification() {
+    trackData = true;
+    DisableGamificationOn = true; //indicates the condition for later tracking
     hideArray(buttonsEnableDisable);
     fadeOutAll(buttonsEnableDisable);
     NoGamification();
@@ -745,6 +828,7 @@ function showTutorialDots() {
 
 
 function checkKeyPressForRightTutorial1(key) {
+   
     if (key.keyCode == '39' && enableTest) {       
          stop();
          enableTest = false;
@@ -753,11 +837,14 @@ function checkKeyPressForRightTutorial1(key) {
         let plusZehn = document.getElementById("plus10Tutorial");
         let plusZehnPosition = document.getElementsByClassName("positionPlusZehn1");
         let afterGetPoints = document.getElementById("afterGetPoints");
+        
         addScore(10);
         addGreenBar();
         hideSingle(hiddenDot[1]);
         goRecord();
         TenMove(true);
+        vidPlus.style.display = "block";
+        setTimeout(hideSingle,2300,vidPlus);
         setTimeout(showSingle,1300,newTimeRecord);
         setTimeout(showSingle,1300,plusZehn);
         setTimeout(fadeInAll,2000,plusZehnPosition);
@@ -796,6 +883,7 @@ else if (key.keyCode== "39" && (practiseFeedbackBool)) {activateFeedback();}
             }
         }
     else if (key.keyCode =="39" && gameTut) {
+        
         stop();
         window.removeEventListener("keydown",checkKeyPressForRightTutorial1,false);
         let positionDot1 = document.getElementsByClassName("positionDot1");
@@ -804,12 +892,18 @@ else if (key.keyCode== "39" && (practiseFeedbackBool)) {activateFeedback();}
         let plusZehn = document.getElementById("plus10Tutorial");
         let plusZehnPosition = document.getElementsByClassName("positionPlusZehn1");
         let afterGetPoints = document.getElementById("afterGetPoints");
+        let dotStand = document.getElementById("DotsStand");
+        let vidPlusShort = document.getElementById("plusAnimShort");
+        
         fadeOutAll(positionDot1);
         fadeOut(arrowRightPic);
         hideSingle(hiddenDot[1]);
         addScore(10);
         addGreenBar();
         goRecord();
+        vidPlusShort.style.display = "block";
+        setTimeout(showSingle,1950,dotStand);
+        setTimeout(hideSingle,2000,vidPlusShort);
         TenMove(true);
         setTimeout(showSingle,1300,newTimeRecord);
         setTimeout(showSingle,1300,plusZehn);
@@ -830,6 +924,7 @@ function activatePoints() {
     let plusZehn = document.getElementById("plus10Tutorial");
     let plusZehnPosition = document.getElementsByClassName("positionPlusZehn1");
     let afterGetPoints = document.getElementById("afterGetPoints");
+    
     hideSingle(hiddenDot[1]);
     TenMove(true);
     setTimeout(showSingle,1300,plusZehn);
@@ -902,6 +997,7 @@ function startTutorialGame () {
     setTimeout(showTutorialCross,2000);
     showSingle(bar);
     showSingle(barGreen);
+    showArray(barIndicate);
     showArray(points);
     showSingle(thePoints);
     showSingle(theTime);
@@ -946,6 +1042,8 @@ function afterExplainScore () {
         let afterExplainScore = document.getElementById("afterExplainScore");
         let nowPractisePoints = document.getElementById("nowPractisePoints");
         let practisePointsPhase = document.getElementById("practisePointsPhase");
+        let dotStand = document.getElementById("DotsStand");
+        hideSingle(dotStand);
         fadeOut(plusZehn);
         fadeOutAll(positionBar1);
         fadeOut(afterExplainScore);
@@ -1033,9 +1131,12 @@ else {
     let practise2 = document.getElementById ("practise2");
     let newTimeRecord = document.getElementById("TimeTutorial");
     let plusZehn = document.getElementById("plus10Tutorial");
+    let dotStand = document.getElementById("DotsStand");
+    hideSingle(dotStand);
 
     hideSingle(bar);
     hideSingle(barGreen);
+    hideArray(barIndicate);
     hideArray(points);
     hideSingle(thePoints);
     hideSingle(theTime);
@@ -1084,6 +1185,10 @@ function startTutorialEnableDisable() {
 }
 
 function nowWithGame() {
+    resetScore();
+    purScore = 0;
+    resetTime();
+    resetGreenBar();
     let goodJobEnableDisable = document.getElementById("goodJobEnableDisable");
     let nowWithGame = document.getElementById("nowWithGame");
     fadeOut(goodJobEnableDisable);
@@ -1095,9 +1200,10 @@ function nowWithGame() {
     showSingle(theTime);
     showSingle(bar);
     showSingle(barGreen);
+    showArray(barIndicate);
     showArray(points);
     showSingle(thePoints);
-    setTimeout(showFirst,1000,hiddenCross,1500);
+    setTimeout(showFirst,1300,hiddenCross,1500);
 }
 
 
@@ -1138,9 +1244,10 @@ function practisePoints () {
    practisePointsBool = true;
    showSingle(bar);
    showSingle(barGreen);
+   showArray(barIndicate);
    showArray(points);
    showSingle(thePoints);
-   setTimeout(showFirst,1000,hiddenCross,1500);
+   setTimeout(showFirst,1300,hiddenCross,1500);
 }
 
 function practisePointsPhase () {
@@ -1169,7 +1276,7 @@ function practiseTime () {
     hideArray(selectButton);
     practiseTimeBool = true;
     showSingle(theTime);
-    setTimeout(showFirst,1000,hiddenCross,1500);
+    setTimeout(showFirst,1300,hiddenCross,1500);
  }
 
  function practiseTimePhase () {
@@ -1200,6 +1307,10 @@ function beforeSelektionAppears0() {
 }
 
 function beforeSelektionAppears1() {  
+    resetScore();
+    purScore = 0;
+    resetTime();
+    resetGreenBar();
     let practiseSelect = document.getElementById("practiseSelect");
     let goodJobSelect = document.getElementById("goodJobSelect");
     fadeOut(goodJobSelect);
@@ -1232,6 +1343,7 @@ function backToSelection () {
     
     hideSingle(bar);
     hideSingle(barGreen);
+    hideArray(barIndicate);
     hideArray(points);
     hideSingle(thePoints);
     hideSingle(theTime);
@@ -1256,6 +1368,7 @@ function showGreen () {
 
   bar.style.display = "block";
   barGreen.style.display = "block";
+  showArray(barIndicate);
   showArray(points);
 }
 
@@ -1273,7 +1386,7 @@ barGreen.style.left = "-268.8px";
 function set (bool) {
     
        GameOn = bool;
-       setTimeout(showFirst,1000,hiddenCross,1500); //erste Zahl: wielang warten bis start zweite Zahl: wielang anzeigen
+       setTimeout(showFirst,1300,hiddenCross,1500); //erste Zahl: wielang warten bis start zweite Zahl: wielang anzeigen
        
     }
 
@@ -1284,3 +1397,4 @@ function set (bool) {
 //AIzaSyBfz67Qoq8tPbNnuOKNs2Fm90c8bCh0ndY :API KEY
 
 //1J-uhJHFRqqYK5Z8uMD4JBm9YJE881eEcTgUsoh9iDvw :SPREADSHEET ID 
+
