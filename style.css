@@ -125,6 +125,7 @@ display:grid;
 #logo {
     color:white;
     font-size: 20px;
+    font-family: Helvetica, Sans-Serif;
     padding: 10px;
          }  
 
@@ -141,10 +142,15 @@ display:grid;
     border-radius: 25px;
     color:white;
     font-size: 20px;
+    font-family: Helvetica, Sans-Serif;
     
 }
 
-.buttons {}
+.buttons {
+    position: relative;
+    left:0px;
+    top:-100px;
+}
 
 .EnableDisableButtons {
     
@@ -157,6 +163,7 @@ display:grid;
     border-radius: 25px;
     color:white;
     font-size: 20px;
+    font-family: Helvetica, Sans-Serif;
     grid-row-start: 2;
     justify-self: center;
     
@@ -173,11 +180,13 @@ display:grid;
 #scores {
     display: none;
     font-size: 20px;
+    font-family: Helvetica, Sans-Serif;
 }
 
 #scores2 {
     display: none;
     font-size: 20px;
+    font-family: Helvetica, Sans-Serif;
 }
 #scores2 > div {
     white-space: nowrap;
@@ -225,6 +234,7 @@ display:grid;
    align-self:start;
    color: #3252c4;
     font-size: 110px;
+    font-family: Helvetica, Sans-Serif;
     transform: scale(.1);
 }
 
@@ -235,6 +245,7 @@ display:grid;
     align-self:start;
     color: #3252c4;
      font-size: 110px;
+     font-family: Helvetica, Sans-Serif;
      
  }
 
@@ -246,6 +257,7 @@ display:grid;
     -webkit-text-stroke: 0.5px black;
     color: #79f145;
     font-size: 24px;
+    font-family: Helvetica, Sans-Serif;
    
 }
 
@@ -257,6 +269,7 @@ display:grid;
     -webkit-text-stroke: 0.5px black;
     color: #79f145;
     font-size: 24px;
+    font-family: Helvetica, Sans-Serif;
     position:relative;
     top:-70px;
    
@@ -270,10 +283,45 @@ display:grid;
     -webkit-text-stroke: 0.5px black;
     color: 	#d50909;
     font-size: 24px;
+    font-family: Helvetica, Sans-Serif;
     
 }
 
 #plusAnim {
+    
+    display: none;
+    grid-area: 1/1/2/2;
+    position:relative;
+    top:80px;
+    left:30px;
+    justify-self:center;
+    align-self:center;
+}
+
+#plusAnimShort {
+    
+    display: none;
+    grid-area: 1/1/2/2;
+    position:relative;
+    top:80px;
+    left:30px;
+    justify-self:center;
+    align-self:center;
+}
+
+#DotsStand {
+    
+    display: none;
+    grid-area: 1/1/2/2;
+    position:relative;
+    top:80px;
+    left:30px;
+    justify-self:center;
+    align-self:center;
+}
+
+#minusAnim {
+    
     display: none;
     grid-area: 1/1/2/2;
     position:relative;
@@ -286,12 +334,13 @@ display:grid;
     display:none;
     grid-area:1/1/2/2;
     position:relative;
-    top:px;
+    top:50px;
     justify-self:center;
     align-self:center;
     -webkit-text-stroke: 0.5px black;
     color: #e34acd;
     font-size: 22px;
+    font-family: Helvetica, Sans-Serif;
     
 }
 
@@ -300,6 +349,7 @@ display:grid;
     -webkit-text-stroke: 0.5px black;
     color: #79f145;
     font-size: 24px;
+    font-family: Helvetica, Sans-Serif;
    
 }
 
@@ -308,6 +358,7 @@ display:grid;
     -webkit-text-stroke: 0.5px black;
     color: 	#d50909;
     font-size: 24px;
+    font-family: Helvetica, Sans-Serif;
    
 }
 
@@ -316,6 +367,7 @@ display:grid;
     justify-self: center;
     align-self:start;
     font-size: 30px;
+    font-family: Helvetica, Sans-Serif;
    
 }
 
@@ -330,6 +382,7 @@ display:grid;
     justify-self:center;
     align-self:center;
     font-size: 25px;
+    font-family: Helvetica, Sans-Serif;
   
    
 }
@@ -340,6 +393,7 @@ display:grid;
     justify-self:center;
     align-self:center;
     font-size: 25px;
+    font-family: Helvetica, Sans-Serif;
     position:relative;
     left:-150px;
    
@@ -352,6 +406,7 @@ display:grid;
     justify-self:center;
     align-self:center;
     font-size: 25px;
+    font-family: Helvetica, Sans-Serif;
     position:relative;
     left:150px;
    
@@ -370,6 +425,7 @@ display:grid;
     border-radius: 25px;
     color:white;
     font-size: 30px;
+    font-family: Helvetica, Sans-Serif;
     grid-area:1/1/2/2;
     justify-self:center;
     align-self:end;
@@ -382,13 +438,13 @@ display:grid;
 #five {
     position: relative;
     top:30px;
-    left:-130px;
+    left:-75px;
 }
     
 #ten {
     position: relative;
     top:30px;
-    left:-50px;
+    left:-30px;
 }
     
 #thirty {
@@ -400,7 +456,7 @@ display:grid;
 #fifty {
     position: relative;
     top:30px;
-    left:110px;
+    left:76px;
 }
 
 #bar {
@@ -416,6 +472,7 @@ display:grid;
   }
   
   #barGreen {
+    z-index: 1;
     display:none;
     grid-area:4/1/5/3;
     justify-self: center;
@@ -429,12 +486,44 @@ display:grid;
     
   }
 
+#line5 {
+    position: relative;
+    left:-161px;
+}
+
+#line10 {
+    position: relative;
+    left:-51px;
+}
+
+#line30 {
+    position: relative;
+    left:59px;
+}
+
+#line50 {
+    position: relative;
+    left:169px;
+}
+
+  .barIndicate {
+    
+    grid-area:4/1/5/3;
+    justify-self: center;
+    align-self: center;
+    border-radius: 25px;
+    background-color: white;
+    width: 2px;
+    height: 5px;
+    
+  }
+
   .points {
     display:none;
     grid-area:3/1/4/3;
     justify-self: center;
     align-self: center;
-    font-family:sans-serif;
+    font-family: Helvetica, Sans-Serif;
     font-size: 12px;
 }
 
@@ -495,6 +584,7 @@ opacity:0;
     justify-self: center;
     align-self: start;
     font-size: 40px;
+    font-family: Helvetica, Sans-Serif;
     color:black
 }
 
@@ -528,6 +618,7 @@ opacity:0;
     position: relative;
     top:-250px;
     font-size: 40px;
+    font-family: Helvetica, Sans-Serif;
     color:black
     
  
@@ -560,6 +651,7 @@ opacity:0;
     width:400px;
     height:300px;
     font-size:20px;
+    font-family: Helvetica, Sans-Serif;
     padding:10px;
     
 }
@@ -574,6 +666,7 @@ opacity:0;
     width:400px;
     height:300px;
     font-size:20px;
+    font-family: Helvetica, Sans-Serif;
     padding:10px;
     
 }
@@ -588,6 +681,7 @@ opacity:0;
     width:400px;
     height:300px;
     font-size:20px;
+    font-family: Helvetica, Sans-Serif;
     padding:10px;
     
 }
@@ -608,6 +702,7 @@ opacity:0;
     border-radius: 25px;
     color:white;
     font-size: 20px;
+    font-family: Helvetica, Sans-Serif;
     position:relative;
     top:100px;
 
@@ -658,8 +753,9 @@ opacity:0;
     align-self: center;
     width: 200px;
     height: 100px;
-   background-color: yellowgreen;
+    background-color: yellowgreen;
     font-size: 20px;
+    font-family: Helvetica, Sans-Serif;
     color: #fff;
     padding: 20px;
     margin: 40px;
@@ -682,6 +778,7 @@ opacity:0;
     display:none;
     opacity: 0;
     position: relative;
+    font-size: 18px !important;
     left:-200px;
     top:40px;
   }
@@ -783,6 +880,7 @@ opacity:0;
    border-radius: 25px;
    color:white;
    font-size: 20px;
+   font-family: Helvetica, Sans-Serif;
 
   }
 
@@ -874,6 +972,7 @@ opacity:0;
     justify-self:center;
     align-self:center;
     font-size: 35px;
+    font-family: Helvetica, Sans-Serif;
     color:black;
     text-align: center;
     width:400px;
@@ -889,6 +988,7 @@ opacity:0;
     justify-self:center;
     align-self:center;
     font-size: 35px;
+    font-family: Helvetica, Sans-Serif;
     color:black;
     text-align: center;
     width:400px;
@@ -902,6 +1002,22 @@ opacity:0;
     justify-self:center;
     align-self:center;
     font-size: 35px;
+    font-family: Helvetica, Sans-Serif;
+    color:black;
+    text-align: center;
+    width:400px;
+    height:80px;
+    z-index: 1;
+    
+}
+
+#theEnd {
+    opacity:0;
+    grid-area:1/1/2/2;
+    justify-self:center;
+    align-self:center;
+    font-size: 35px;
+    font-family: Helvetica, Sans-Serif;
     color:black;
     text-align: center;
     width:400px;
@@ -916,6 +1032,7 @@ opacity:0;
     justify-self:center;
     align-self:center;
     font-size: 35px;
+    font-family: Helvetica, Sans-Serif;
     color:black;
     text-align: center;
     width:400px;
@@ -930,6 +1047,7 @@ opacity:0;
     justify-self:center;
     align-self:center;
     font-size: 35px;
+    font-family: Helvetica, Sans-Serif;
     color:black;
     text-align: center;
     width:400px;
@@ -946,6 +1064,7 @@ opacity:0;
     position: relative;
     top:-100px;
     font-size: 35px;
+    font-family: Helvetica, Sans-Serif;
     color:black;
     text-align: center;
     width:400px;
@@ -962,6 +1081,7 @@ opacity:0;
     justify-self:center;
     align-self:center;
     font-size: 35px;
+    font-family: Helvetica, Sans-Serif;
     color:black;
     text-align: center;
     width:400px;
@@ -976,6 +1096,7 @@ opacity:0;
     justify-self:center;
     align-self:center;
     font-size: 35px;
+    font-family: Helvetica, Sans-Serif;
     color:black;
     text-align: center;
     width:400px;
@@ -990,6 +1111,7 @@ opacity:0;
     justify-self:center;
     align-self:start;
     position: relative;
+    
 }
 
 #practisePointButton {}
@@ -1008,11 +1130,12 @@ opacity:0;
     
     top:150px;
     font-size:25px;
+    font-family: Helvetica, Sans-Serif;
 }
 
 .selectPic {
     
-   top:250px;
+   top:350px;
 }
 
 .selectButton {
@@ -1025,6 +1148,7 @@ opacity:0;
     border-radius: 25px;
     color:white;
     font-size: 20px;
+    font-family: Helvetica, Sans-Serif;
     top:600px;
 }
 
