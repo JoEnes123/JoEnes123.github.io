@@ -178,12 +178,20 @@ display:grid;
 }
 
 #scores {
+    border-color: brown;
+    border-width: thick;
+    border-style: none;
     display: none;
     font-size: 20px;
     font-family: Helvetica, Sans-Serif;
 }
 
+
+
 #scores2 {
+    border-color: cornflowerblue;
+    border-width: thick;
+    border-style: none;
     display: none;
     font-size: 20px;
     font-family: Helvetica, Sans-Serif;
@@ -239,6 +247,9 @@ display:grid;
 }
 
 #TimeTutorial {
+    border-color: cornflowerblue;
+    border-width: thick;
+    border-style: none;
     display:none;
     grid-area: 1/1/2/2;
     justify-self:center;
@@ -262,6 +273,9 @@ display:grid;
 }
 
 #plus10Tutorial {
+    border-color: brown;
+    border-width: thick;
+    border-style: none;
     display:none;
     grid-area: 1/1/2/2;
     justify-self:center;
@@ -310,7 +324,9 @@ display:grid;
 }
 
 #DotsStand {
-    
+    border-color: plum;
+    border-width: thick;
+    border-style: none;
     display: none;
     grid-area: 1/1/2/2;
     position:relative;
@@ -460,7 +476,8 @@ display:grid;
 }
 
 #bar {
-    display:none;
+ 
+   display:none;
     grid-area:4/1/5/3;
     justify-self: center;
     align-self: center;
@@ -484,6 +501,20 @@ display:grid;
     width: 5px;
     height: 5px;
     
+  }
+
+  #barBox {
+    display: none;
+    border-color: brown;
+    border-width: thick;
+    border-style: none;
+    grid-area:1/1/2/2;
+    justify-self: center;
+    align-self: center;
+    width: 600px;
+    height: 65px;
+    position: relative;
+    top:418px;
   }
 
 #line5 {
@@ -731,6 +762,10 @@ opacity:0;
     display:none;
 }
 
+#realAfterGetPoints {
+    display:none;
+}
+
 #afterExplainPoints {
     display:none;
 }
@@ -784,27 +819,40 @@ opacity:0;
   }
 
     .positionPlusZehn1 {
+    background-color: brown;
     opacity:0;
     position: relative;
-    left:250px;
-    top:-23px;
+    left:190px;
+    top:-28px;
+    }
+
+    .positionConfetti {
+        background-color: plum;
+        opacity: 0;
+        position: relative;
+        top:100px;
+        left:-450px;
+
     }
 
     .positionScore1 {
+        background-color: brown;
         opacity:0;
         position: relative;
-        left:-400px;
-        top:-320px;
+        left:-380px;
+        top:-390px;
     }
 
     .positionBar1 {
+        background-color: brown;
         opacity:0;
         position: relative;
-        top:280px;
+        top:270px;
         left:-230px;
     }
 
     .positionRecord1 {
+        background-color: cornflowerblue;
         opacity:0;
         position: relative;
         top:-100px;
@@ -812,16 +860,17 @@ opacity:0;
     }
 
     .positionTime1 {
+        background-color: cornflowerblue;
         opacity:0; 
         position: relative;
-        top:-320px;
-        left:-400px;
+        top:-250px;
+        left:-700px;
     }
 
   #arrowRight{}
 
 
-  .arrow-top:after {
+  .arrow-topBlue:after {
     content: " ";
     position: absolute;
     right: 30px;
@@ -829,9 +878,10 @@ opacity:0;
     border-top: none;
     border-right: 15px solid transparent;
     border-left: 15px solid transparent;
-    border-bottom: 15px solid yellowgreen;
+    border-bottom: 15px solid cornflowerblue;
   }
 
+ 
   .arrow-left:after {
     content: " ";
     position: absolute;
@@ -839,6 +889,17 @@ opacity:0;
     top: 15px;
     border-top: 15px solid transparent;
     border-right: 15px solid yellowgreen;
+    border-left: none;
+    border-bottom: 15px solid transparent;
+  }
+
+  .arrow-leftBrown:after {
+    content: " ";
+    position: absolute;
+    left: -15px;
+    top: 15px;
+    border-top: 15px solid transparent;
+    border-right: 15px solid brown;
     border-left: none;
     border-bottom: 15px solid transparent;
   }
@@ -854,12 +915,34 @@ opacity:0;
     border-bottom: 15px solid transparent;
   }
 
+  .arrow-rightBlack:after {
+    content: " ";
+    position: absolute;
+    right: -15px;
+    top: 15px;
+    border-top: 15px solid transparent;
+    border-right: none;
+    border-left: 15px solid plum;
+    border-bottom: 15px solid transparent;
+  }
+
   .arrow-bottom:after {
     content: " ";
     position: absolute;
     right: 30px;
     bottom: -15px;
     border-top: 15px solid yellowgreen;
+    border-right: 15px solid transparent;
+    border-left: 15px solid transparent;
+    border-bottom: none;
+  }
+
+  .arrow-bottomBrown:after {
+    content: " ";
+    position: absolute;
+    right: 30px;
+    bottom: -15px;
+    border-top: 15px solid brown;
     border-right: 15px solid transparent;
     border-left: 15px solid transparent;
     border-bottom: none;
