@@ -829,27 +829,35 @@ function showTutorialDots() {
 
 function checkKeyPressForRightTutorial1(key) {
    
-    if (key.keyCode == '39' && enableTest) {       
+    if (key.keyCode == '39' && enableTest || key.keyCode =="39" && gameTut) {       
          stop();
-         enableTest = false;
-        window.removeEventListener("keydown",checkKeyPressForRightTutorial1,false);
-        let newTimeRecord = document.getElementById("TimeTutorial");
-        let plusZehn = document.getElementById("plus10Tutorial");
-        let plusZehnPosition = document.getElementsByClassName("positionPlusZehn1");
-        let afterGetPoints = document.getElementById("afterGetPoints");
-        
-        addScore(10);
-        addGreenBar();
-        hideSingle(hiddenDot[1]);
-        goRecord();
-        TenMove(true);
-        vidPlus.style.display = "block";
-        setTimeout(hideSingle,2300,vidPlus);
-        setTimeout(showSingle,1300,newTimeRecord);
-        setTimeout(showSingle,1300,plusZehn);
-        setTimeout(fadeInAll,2000,plusZehnPosition);
-        setTimeout(fadeIn,2000,afterGetPoints);
-        showSingle(afterGetPoints);}
+         if (enableTest) {enableTest = false;}
+         window.removeEventListener("keydown",checkKeyPressForRightTutorial1,false);
+         let positionDot1 = document.getElementsByClassName("positionDot1");
+         let arrowRightPic = document.getElementById("arrowRightPic");
+         let newTimeRecord = document.getElementById("TimeTutorial");
+         let plusZehn = document.getElementById("plus10Tutorial");
+         let afterGetPoints = document.getElementById("afterGetPoints");
+         let dotStand = document.getElementById("DotsStand");
+         let vidPlusShort = document.getElementById("plusAnimShort");
+         let positionConfetti = document.getElementsByClassName("positionConfetti");
+         
+         fadeOutAll(positionDot1);
+         if (gameTut) {fadeOut(arrowRightPic)}; //Pfeiltasten Animation wird nur bei reiner Gamificaiton abgespielt, da Nutzer bei Enable/Disable den Ablauf schon kennen 
+         hideSingle(hiddenDot[1]);
+         addScore(10);
+         addGreenBar();
+         goRecord();
+         vidPlusShort.style.display = "block";
+         setTimeout(showSingle,1950,dotStand);
+         setTimeout(hideSingle,2000,vidPlusShort);
+         TenMove(true);
+         setTimeout(showSingle,1300,newTimeRecord);
+         setTimeout(showSingle,1300,plusZehn);
+         setTimeout(fadeInAll,2000,positionConfetti);
+         dotStand.style.borderStyle = "solid";
+         setTimeout(fadeIn,2000,afterGetPoints);
+         showSingle(afterGetPoints);}
 
 else if (key.keyCode== "39" && (practisePointsBool)) {activatePoints();}
 else if (key.keyCode== "39" && (practiseTimeBool)) {activateTime();}
@@ -857,6 +865,7 @@ else if (key.keyCode== "39" && (practiseFeedbackBool)) {activateFeedback();}
 
 
     else if (key.keyCode =="39" && (gameTut == false)) {
+        
         stop();
         window.removeEventListener("keydown",checkKeyPressForRightTutorial1,false);
         let positionDot1 = document.getElementsByClassName("positionDot1");
@@ -882,38 +891,7 @@ else if (key.keyCode== "39" && (practiseFeedbackBool)) {activateFeedback();}
                fadeIn(goodJob);
             }
         }
-    else if (key.keyCode =="39" && gameTut) {
-        
-        stop();
-        window.removeEventListener("keydown",checkKeyPressForRightTutorial1,false);
-        let positionDot1 = document.getElementsByClassName("positionDot1");
-        let arrowRightPic = document.getElementById("arrowRightPic");
-        let newTimeRecord = document.getElementById("TimeTutorial");
-        let plusZehn = document.getElementById("plus10Tutorial");
-        let plusZehnPosition = document.getElementsByClassName("positionPlusZehn1");
-        let afterGetPoints = document.getElementById("afterGetPoints");
-        let dotStand = document.getElementById("DotsStand");
-        let vidPlusShort = document.getElementById("plusAnimShort");
-        
-        fadeOutAll(positionDot1);
-        fadeOut(arrowRightPic);
-        hideSingle(hiddenDot[1]);
-        addScore(10);
-        addGreenBar();
-        goRecord();
-        vidPlusShort.style.display = "block";
-        setTimeout(showSingle,1950,dotStand);
-        setTimeout(hideSingle,2000,vidPlusShort);
-        TenMove(true);
-        setTimeout(showSingle,1300,newTimeRecord);
-        setTimeout(showSingle,1300,plusZehn);
-        setTimeout(fadeInAll,2000,plusZehnPosition);
-        setTimeout(fadeIn,2000,afterGetPoints);
-        showSingle(afterGetPoints);
 
-        //greenBar Animation
-        
-    }
 }
 
 function activatePoints() {
@@ -1004,16 +982,37 @@ function startTutorialGame () {
 
 }
 
+function beforeAfterGetPoints () {
+
+     let plusZehnPosition = document.getElementsByClassName("positionPlusZehn1");
+     let realAfterGetPoints = document.getElementById("realAfterGetPoints");
+     let dotStand = document.getElementById("DotsStand");
+     let plus10Tutorial = document.getElementById("plus10Tutorial");
+
+     dotStand.style.borderStyle = "none";
+     plus10Tutorial.style.borderStyle = "solid";
+     fadeInAll(plusZehnPosition);
+     showSingle(realAfterGetPoints);
+    
+}
+
 function afterGetPoints () {
 
     let plusZehnPosition = document.getElementsByClassName("positionPlusZehn1");
     let afterGetPoints = document.getElementById("afterGetPoints");
     let positionScore1 = document.getElementsByClassName ("positionScore1");
+    let scoreWidth = document.getElementById("scores");
     let afterExplainPoints = document.getElementById ("afterExplainPoints")
-    fadeOutAll(plusZehnPosition);
+    let scores = document.getElementById("scores");
+    let plus10Tutorial = document.getElementById("plus10Tutorial");
+
+   // fadeOutAll(plusZehnPosition);
     fadeOut(afterGetPoints);
     hideSingle(afterGetPoints);
+    plus10Tutorial.style.borderStyle = "none";
+    scores.style.borderStyle = "solid";
     fadeInAll(positionScore1);
+    scoreWidth.style.borderWidth = 3;
     fadeIn(afterExplainPoints);
     showSingle(afterExplainPoints);
     
@@ -1026,10 +1025,16 @@ function afterExplainPoints () {
     let afterExplainScore = document.getElementById("afterExplainScore");
     let positionScore1 = document.getElementsByClassName ("positionScore1");
     let positionBar1 = document.getElementsByClassName ("positionBar1");
-    fadeOutAll(positionScore1);
+    let barBox = document.getElementById("barBox");
+    let scores = document.getElementById("scores");
+   
+    scores.style.borderStyle = "none";
+    //fadeOutAll(positionScore1);
     fadeOut(afterExplainPoints);
     hideSingle(afterExplainPoints);
+    barBox.style.borderStyle = "solid";
     fadeInAll(positionBar1);
+    showSingle(barBox);
     fadeIn(afterExplainScore);
     showSingle(afterExplainScore);
 
@@ -1045,7 +1050,7 @@ function afterExplainScore () {
         let dotStand = document.getElementById("DotsStand");
         hideSingle(dotStand);
         fadeOut(plusZehn);
-        fadeOutAll(positionBar1);
+        //fadeOutAll(positionBar1);
         fadeOut(afterExplainScore);
         hideSingle(afterExplainScore);
         fadeIn(nowPractisePoints);
@@ -1056,7 +1061,7 @@ function afterExplainScore () {
     else if (practiseTimeBool) {
         let positionRecord1 = document.getElementsByClassName("positionRecord1");
         let afterExplainScore = document.getElementById("afterExplainScore");
-        fadeOutAll(positionRecord1);
+        //fadeOutAll(positionRecord1);
         fadeOut(afterExplainScore);
         hideSingle(afterExplainScore);
         setTimeout(afterExplainBar,500);
@@ -1065,12 +1070,19 @@ function afterExplainScore () {
     }
     
      else{
+    
     let afterExplainBar = document.getElementById("afterExplainBar");
     let afterExplainScore = document.getElementById("afterExplainScore");
     let positionRecord1 = document.getElementsByClassName ("positionRecord1");
     let positionBar1 = document.getElementsByClassName ("positionBar1");
-    fadeOutAll(positionBar1);
+    let barBox = document.getElementById("barBox");
+    let timeTutorial = document.getElementById("TimeTutorial");
+    barBox.style.borderStyle = "none";
+    timeTutorial.style.borderStyle = "solid";
+    hideSingle(barBox);
+    //fadeOutAll(positionBar1);
     fadeOut(afterExplainScore);
+   
     hideSingle(afterExplainScore);
     fadeInAll(positionRecord1);
     fadeIn(afterExplainBar);
@@ -1083,8 +1095,10 @@ function afterExplainBar () {
 if (practiseTimeBool) {
     let positionTime1 = document.getElementsByClassName ("positionTime1");
     let afterExplainRecord = document.getElementById("afterExplainRecord");
+    let scores2 = document.getElementById("scores2");
     
     
+    scores2.style.borderStyle = "solid";
     fadeInAll(positionTime1);
     fadeIn(afterExplainRecord);
     showSingle(afterExplainRecord);
@@ -1096,7 +1110,11 @@ else {
     let afterExplainRecord = document.getElementById("afterExplainRecord");
     let positionRecord1 = document.getElementsByClassName ("positionRecord1");
     let positionTime1 = document.getElementsByClassName ("positionTime1");
-    fadeOutAll(positionRecord1);
+    let scores2 = document.getElementById("scores2");
+    let timeTutorial = document.getElementById("TimeTutorial");
+    
+    timeTutorial.style.borderStyle = "none";
+    scores2.style.borderStyle = "solid";
     fadeOut(afterExplainBar);
     hideSingle(afterExplainBar);
     fadeInAll(positionTime1);
@@ -1113,8 +1131,16 @@ function afterExplainRecord () {
         let afterExplainRecord = document.getElementById("afterExplainRecord");
         let nowPractisePoints = document.getElementById("nowPractisePoints");
         let practiseTimePhase = document.getElementById("practiseTimePhase");
+        let scores2 = document.getElementById("scores2");
 
+        scores2.style.borderStyle = "none";
         fadeOutAll(positionTime1);
+        fadeOutAll(positionBar1);
+        fadeOutAll(positionScore1);
+        fadeOutAll(positionRecord1);
+        fadeOutAll(plusZehnPosition);
+
+
         fadeOut(newTimeRecord);
         fadeOut(afterExplainRecord);
         hideSingle(afterExplainRecord);
@@ -1127,13 +1153,21 @@ function afterExplainRecord () {
 else {
     let afterExplainRecord = document.getElementById("afterExplainRecord");
     let positionTime1 = document.getElementsByClassName ("positionTime1");
+    let positionBar1 = document.getElementsByClassName ("positionBar1");
+    let positionScore1 = document.getElementsByClassName ("positionScore1");
+    let positionRecord1 = document.getElementsByClassName ("positionRecord1");
+    let plusZehnPosition = document.getElementsByClassName ("positionPlusZehn1");
     let nowPractise = document.getElementById ("nowPractise");
     let practise2 = document.getElementById ("practise2");
     let newTimeRecord = document.getElementById("TimeTutorial");
     let plusZehn = document.getElementById("plus10Tutorial");
     let dotStand = document.getElementById("DotsStand");
-    hideSingle(dotStand);
+    let positionConfetti = document.getElementsByClassName("positionConfetti");
+    let scores2 = document.getElementById("scores2");
 
+    scores2.style.borderStyle = "none";
+     hideArray(positionConfetti);
+    hideSingle(dotStand);
     hideSingle(bar);
     hideSingle(barGreen);
     hideArray(barIndicate);
@@ -1144,6 +1178,11 @@ else {
     hideSingle(plusZehn);
 
     fadeOutAll(positionTime1);
+    fadeOutAll(positionBar1);
+    fadeOutAll(positionScore1);
+    fadeOutAll(positionRecord1);
+    fadeOutAll(plusZehnPosition);
+
     fadeOut(afterExplainRecord);
     hideSingle(afterExplainRecord);
     fadeIn(nowPractise);
