@@ -18,7 +18,7 @@
     <div class="ScoreLeft">
     
             <div class = "positionScore">
-                <div id="scores">Points: <span id="point"> 0</span></div>
+                <div id="scores" >Points: <span id="point"> 0</span></div>
                 <div id = "scores2">
                 <div>Quickest Time: <span class = "cover"><span id="Fasttime">1000</span> seconds</span></div>
                 <div>Last Time: <span class = "cover"><span id="Lasttime">1000</span> seconds</span></div>
@@ -50,6 +50,8 @@
         
     </div>
     <div class="center-bot">
+      <div id ="barBox"></div>
+
         <div class = "posCross cross" id = "cross1"></div> 
         <div class = "posCross2 cross" id = "cross2"></div>  
         <video plays-inline id="plusAnim" class = "hide"  width ="650" autoplay><source src="NewpositiveDots.mp4" type ="video/mp4"></video>
@@ -100,31 +102,37 @@
 
           <button class = "nextButton" id="startTask"  onclick="startTask()">Start Task</button>
 
-          <div class="boxCross1 positionPlusZehn1 arrow-left ">
+          <div class="boxCross1 positionPlusZehn1 arrow-leftBrown ">
             You earn points for correct answers!
           </div>
 
-          <button class = "nextButton" id="afterGetPoints"  onclick="afterGetPoints()">Next</button>
+          <div class="boxCross1 positionConfetti arrow-rightBlack ">
+            Confetti will celebreate your correct input!
+          </div>
 
-          <div class="boxCross1 positionScore1 arrow-left ">
+          <button class = "nextButton" id="afterGetPoints"  onclick="beforeAfterGetPoints()">Next</button>
+
+          <button class = "nextButton" id="realAfterGetPoints"  onclick="afterGetPoints()">Next</button>
+
+          <div class="boxCross1 positionScore1 arrow-leftBrown ">
             Here you can see your score!
           </div>
 
           <button class = "nextButton" id="afterExplainPoints"  onclick="afterExplainPoints()">Next</button>
 
-          <div class="boxCross1 positionBar1 arrow-bottom ">
+          <div class="boxCross1 positionBar1 arrow-bottomBrown ">
             You can get extra points by reaching the marks!
           </div>
 
           <button class = "nextButton" id="afterExplainScore"  onclick="afterExplainScore()">Next</button>
 
-          <div class="boxCross1 positionRecord1 arrow-top ">
+          <div class="boxCross1 positionRecord1 arrow-topBlue ">
             The animation appears for reaching a new best reaction time!
           </div>
 
           <button class = "nextButton" id="afterExplainBar"  onclick="afterExplainBar()">Next</button>
        
-          <div class="boxCross1 positionTime1 arrow-left ">
+          <div class="boxCross1 positionTime1 arrow-topBlue ">
             Here you can see your last time and your quickest time!
           </div>
 
@@ -294,6 +302,7 @@
         <div class = "points"> <span id = "five" >+5 points</span><span id ="ten" >+10 points</span><span id = "thirty" >+30 points</span><span id = "fifty" >+50 points</span> </div>
         <div id="bar"></div>
        <div id="barGreen"> </div>
+       
        <div id = "line5" class ="barIndicate"> </div> <div id = "line10" class ="barIndicate"> </div> <div id = "line30" class ="barIndicate"> </div> <div id = "line50" class ="barIndicate"> </div>
   </div>
   <script type="text/javascript" src="script.js"></script>
