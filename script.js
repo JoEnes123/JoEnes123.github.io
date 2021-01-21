@@ -892,12 +892,7 @@ function selectNo () {
         else {  //wenn basics nicht erklärt : erkläre Basics gefolgt von einem Übungsversuch, dann weiter
           
             
-            for(var i=0;i!=hiddenCross.length;i++) {
-                hiddenCross[i].style.display = "block";
-            }
-            setTimeout(fadeInAll,1000,positionCross1); //zeige Erklärung
-            setTimeout(showSingle,1000,afterCross1); //next button zu Bildererklärung 
-            setTimeout(fadeIn,1000,afterCross1);
+            startTutorial();
             basicsExplained = true; //anzeigen dass Basics ab jetzt nicht mehr erklärt werden müssen
 
         }
