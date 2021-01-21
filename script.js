@@ -27,14 +27,14 @@ var selectionTest = false;
 var disableTest = false;
 var enableTest = false;
 var enableDisableEndTest = false;
-var beforeSelektionAppears = false;
+var gameSelect = false;
 var punkte = false;
 var practisePointsBool = false;
-var pointsExplained = false;
+//var pointsExplained = false;
 var practiseFeedbackBool = false;
-var feedbackExplained = false;
+//var feedbackExplained = false;
 var practiseTimeBool = false;
-var timeExplained = false;
+//var timeExplained = false;
 let FeedbackVideo = document.getElementById("FeedbackVideo");
 let right = document.getElementById("right");
 let TesteOhne = document.getElementById("TesteOhne");
@@ -75,6 +75,18 @@ let Samples = [];
 let currentCorrect = null;
 let currentTime = null;
 
+let possibleFunctions = [1,2,3,4,5,6,7,8]; //Um Bedingugen im Tutorial zu shufflen
+
+let basicsExplained = false; //trackt ob die Grundfunktionalitäten bereits textuel erklärt wurden
+let pointsExplained = false; //trackt ob das Punkteelement bereits textuel erklärt wurde
+let timeExplained = false; //trackt ob das Zeitelement bereits textuel erklärt wurde
+let feedbackExplained = false; //trackt ob das Feedbackelement bereits textuel erklärt wurde
+
+let noGameTutEnd = 0; //bestimmt wo es nach Beendigung des Tutorials ohne Game Elemente weitergeht (1-4 möglich entsprechend der 4.Conditions) -> erstmal nur 4 relevant
+let noGameState = true; //false wenn NoGamificaiton zur einmaligen Demonstration vor dem Tutorial gezeigt wird, sonst true
+let allGameState = true; //false wenn AllGamificaiton zur einmaligen Demonstration vor dem Tutorial gezeigt wird, sonst true
+
+//let partOfCond4 = false; //wenn true, zeigt dass Tutorial Teil der 4. Condition ist und entsprechend zu dieser Auswahl zurückgekehrt werden muss
 
 /*class xPictures {
     constructor() {
@@ -97,7 +109,7 @@ function resetScore () {
 
 function checkTest () {
    
-    if (countTest >1) {return true;}
+    if (countTest >0) {return true;}
     else {return false;}
 }
 
@@ -111,6 +123,14 @@ function fadeOutAllIfVisible (x) {
         if (x[i].style.opacity == 0) {}
         else {fadeOut(x[i]);}
     }
+}
+
+function playVideo(video) {
+
+    video.style.display = "block";
+    video.load();
+    video.play();
+   // setTimeout(hideSingle,2300,video);
 }
 
 function goRecord() {
@@ -210,6 +230,25 @@ function TenMove (boolean) {
    setTimeout(hideSingle,1300,pls);
     }
 }
+
+function shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+  
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+  
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+  
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+  
+    return array;
+  }
 
 function selectPictures () {
     /*const pic1 = new xPictures().hiddenPicture1;*/
@@ -311,6 +350,21 @@ function checkKeyPressForLeft(key) {
     let vidPlus = document.getElementById("plusAnim");
   
     if (key.keyCode =="37") {
+           if (noGameState == false) { //Teil des noGame Tutorials -> weiter zur Übungsphase
+                alert("hier1");
+                let practise1 = document.getElementById("practise1");
+                let goodJob = document.getElementById("goodJob");
+                fadeIn(practise1);
+                fadeIn(goodJob);
+                showSingle(practise1);
+               //wenn ich practise so aufrufe verschwindet der Hinweisetext nur sofort und wird nicht angezeigt
+                noGameState = false; 
+                hideSingle(hiddenDot[0]);
+               return;
+           } 
+           
+
+       else {
            currentCorrect = "Yes";
            stop();
            addScore(10);
@@ -318,8 +372,8 @@ function checkKeyPressForLeft(key) {
            hiddenDot[0].style.display = "none";
            if (GameOn || feedback) {
           
-           vidPlus.style.display = "block";
-           setTimeout(hideSingle,2300,vidPlus);
+            playVideo(vidPlus);
+            setTimeout(hideSingle,2300,vidPlus);
            
          }
         
@@ -335,7 +389,7 @@ function checkKeyPressForLeft(key) {
              if (purScore == 1000) {addScore(50); goBonusPoints("TimeBonus50");}
             }
                                   }
-           
+                                }
            
   else if (key.keyCode =="39") {  
            currentCorrect = "No";
@@ -348,7 +402,7 @@ function checkKeyPressForLeft(key) {
            purScore -= 10;
            hiddenDot[0].style.display = "none";
            if (GameOn || punkte) {
-           vidMinus.style.display = "block";
+           playVideo(vidMinus);
            setTimeout(hideSingle,2300,vidMinus); 
            TenMove(false);}
            if (greenValue > 5 && (GameOn || punkte)) {
@@ -364,18 +418,23 @@ countTest++;
 
  //Bedingung bei Selektion
 
-  if (beforeSelektionAppears && checkTest()) {
+  if (gameSelect && checkTest()) {
    
-    let practiseSelect = document.getElementById("practiseSelect");
     let goodJobSelect = document.getElementById ("goodJobSelect");
-    setTimeout(showSingle,2000,practiseSelect);
-    setTimeout(fadeIn,2000,practiseSelect);
-    setTimeout(fadeIn,2000,goodJobSelect);
-    beforeSelektionAppears = false;
+    let startTutorialGame = document.getElementById("startTutorialGame");
+    setTimeout(fadeIn,2000,goodJobSelect); //Informiert dass jetzt die Game Version demonstriert wird (Select)
+    setTimeout(fadeIn,2000,startTutorialGame);
+    setTimeout(showSingle,2000,startTutorialGame); //Button um das Gamification Tutorial zu starten (Select)
+    gameSelect = false;
+    
+    
+    
   }
 //Bedingung mit EnableDisable
   else if (disableTest && checkTest()) {
-     
+      
+   
+   
       let goodJobEnableDisable = document.getElementById("goodJobEnableDisable");
       let nowWithGame = document.getElementById("nowWithGame");
       disableTest = false;
@@ -385,17 +444,38 @@ countTest++;
   }
 
   else if (enableDisableEndTest && checkTest()) {
-    
-    EnableDisableGamification();}
+    if (noGameTutEnd == 4) { //All Game Tutorial beendet, kehre zurück zu Select Game und weitere durchzuführen
+        
+        possibleFunctions.shift(); //All Game kann aus Liste der 8 entfernt werde
+        removeGameStuff(); //enferne game elemente um dann selectWhichNext() aufzurufen wo das nächste Tutorial gestartet wird
+        return; //Funktion kann verlassen werden
+    }
+    EnableDisableGamification();} //wird nur in Enable/Disbale aufgerufen
+
   else if (test && checkTest()) {      
          //Bedingung ohne Game
+        
+        if (noGameTutEnd == 4) { //No Game Tutorial beendet, kehre zurück zu Select Game und weitere durchzuführen
+        alert(noGameState);
+        possibleFunctions.shift(); //No Game kann aus Liste der 8 entfernt werde
+        selectWhichNext(); //nächstes Tutorial wird gestartet
+        return; //Funktion kann verlassen werden
+    }
+
+    else { //starte Task mit voller Gamification
+    if (noGameTutEnd == 4) {
+        possibleFunctions.shift(); //All Game kann aus Liste der 8 entfernt werde
+        
+        removeGameStuff(); //enferne game elemente um dann selectWhichNext() aufzurufen wo das nächste Tutorial gestartet wird
+        return; //Funktion kann verlassen werden
+    }
     let startTask = document.getElementById("startTask");
     let startText = document.getElementById("startText");
-    
     setTimeout(showSingle,2000,startTask);
     setTimeout(fadeIn,2000,startTask);
     setTimeout(fadeIn,2000,startText);
-   }
+
+   } }
    else if (selectionTest && checkTest()) {  
           //Bedingung mit Selektion
         setTimeout(backToSelection,2000);
@@ -410,6 +490,22 @@ function checkKeyPressForRight(key) {
     
  
     if (key.keyCode =="39") {
+
+             if (noGameState == false) { //Teil des noGame Tutorials -> weiter zur Übungsphase
+                alert("hier2");
+                let practise1 = document.getElementById("practise1");
+                let goodJob = document.getElementById("goodJob");
+                fadeIn(practise1);
+                fadeIn(goodJob);
+                showSingle(practise1);
+               //wenn ich practise so aufrufe verschwindet der HInweisetext nur sofort und wird nicht angezeigt
+                noGameState = false;
+                hideSingle(hiddenDot[1]);
+               return;
+       } 
+      
+
+      else
             currentCorrect = "Yes";
              stop();
              addScore(10);
@@ -417,7 +513,7 @@ function checkKeyPressForRight(key) {
              hiddenDot[1].style.display = "none";
              if (GameOn || feedback) {
                 
-                vidPlus.style.display = "block";
+                playVideo(vidPlus);
                 setTimeout(hideSingle,2300,vidPlus);
              }
              
@@ -446,7 +542,7 @@ function checkKeyPressForRight(key) {
             purScore -= 10;
             hiddenDot[1].style.display = "none";
             if (GameOn || punkte) {
-            vidMinus.style.display = "block";
+            playVideo(vidMinus);
             setTimeout(hideSingle,2300,vidMinus);
             TenMove(false);}
             if (greenValue > 5 && (GameOn || punkte)) {
@@ -460,36 +556,62 @@ function checkKeyPressForRight(key) {
    
     countTest++;
 
-    if (beforeSelektionAppears && checkTest()) {
+    if (gameSelect && checkTest()) {
         
-        let practiseSelect = document.getElementById("practiseSelect");
+       
         let goodJobSelect = document.getElementById ("goodJobSelect");
-        setTimeout(showSingle,2000,practiseSelect);
-        setTimeout(fadeIn,2000,practiseSelect);
-        setTimeout(fadeIn,2000,goodJobSelect);
-        beforeSelektionAppears = false;
+        let startTutorialGame = document.getElementById("startTutorialGame");
+        setTimeout(fadeIn,2000,goodJobSelect); //Informiert dass jetzt die Game Version demonstriert wird (Select)
+        setTimeout(fadeIn,2000,startTutorialGame);
+        setTimeout(showSingle,2000,startTutorialGame); //Button um das Gamification Tutorial zu starten (Select)
+        gameSelect = false;
+        
       }
 
     else if (disableTest && checkTest()) { 
-   
-    let goodJobEnableDisable = document.getElementById("goodJobEnableDisable");
-    let nowWithGame = document.getElementById("nowWithGame");
-    disableTest = false;
-    fadeIn(goodJobEnableDisable);
-    fadeIn(nowWithGame);
-    showSingle(nowWithGame);}
+    
+               
+               
+                let goodJobEnableDisable = document.getElementById("goodJobEnableDisable");
+                let nowWithGame = document.getElementById("nowWithGame");
+                disableTest = false;
+                fadeIn(goodJobEnableDisable);
+                fadeIn(nowWithGame);
+                showSingle(nowWithGame);}
 
-    else if (enableDisableEndTest && checkTest()) {EnableDisableGamification();}
+    else if (enableDisableEndTest && checkTest()) {
+        if (noGameTutEnd == 4) { //All Game Tutorial beendet, kehre zurück zu Select Game und weitere durchzuführen
+                    
+            possibleFunctions.shift(); //All Game kann aus Liste der 8 entfernt werde
+            removeGameStuff(); //enferne game elemente um dann selectWhichNext() aufzurufen wo das nächste Tutorial gestartet wird
+            return; //Funktion kann verlassen werden
+        }
+            EnableDisableGamification();} //wird nur in Enable/Disable aufgerufen
 
     else if (test && checkTest()) {
    
-    let startTask = document.getElementById("startTask");
-    let startText = document.getElementById("startText");
    
-    setTimeout(showSingle,2000,startTask);
-    setTimeout(fadeIn,2000,startTask);
-    setTimeout(fadeIn,2000,startText);
-    }
+
+            if (noGameTutEnd == 4) { //No Game Tutorial beendet, kehre zurück zu Select Game und weitere durchzuführen
+                alert(noGameState);
+                possibleFunctions.shift(); //No Game kann aus Liste der 8 entfernt werde
+                selectWhichNext(); //nächstes Tutorial wird gestartet
+                return; //Funktion kann verlassen werden
+            }
+            else { //starte Task mit voller Gamification
+                if (noGameTutEnd == 4) {
+                    possibleFunctions.shift(); //All Game kann aus Liste der 8 entfernt werde
+                   
+                    removeGameStuff(); //enferne game elemente um dann selectWhichNext() aufzurufen wo das nächste Tutorial gestartet wird
+                    return; //Funktion kann verlassen werden
+                }
+            let startTask = document.getElementById("startTask");
+            let startText = document.getElementById("startText");
+            setTimeout(showSingle,2000,startTask);
+            setTimeout(fadeIn,2000,startTask);
+            setTimeout(fadeIn,2000,startText);
+            } }
+
     else if (selectionTest && checkTest()) {
         
          setTimeout(backToSelection,2000);
@@ -671,7 +793,7 @@ function EnableDisableGamificationTut() {
       
   }
 
-function EnableDisableGamification() {
+function EnableDisableGamification() { //Entscheidung zwischen Version 1 und 2 wird eingeleitet
     test = false;
     enableDisableEndTest = false;
     setTimeout(hideSingle,1000,bar);
@@ -689,13 +811,178 @@ function EnableDisableGamification() {
     
 }
 
-function SelectGamificationTut() {
-    let okaySelect = document.getElementById("okaySelect");
+function removeGameStuff () {
+    setTimeout(hideSingle,1000,bar);
+    setTimeout(hideSingle,1000,barGreen);
+    setTimeout(hideArray,1000,barIndicate);
+    setTimeout(hideArray,1000,points);
+    setTimeout(hideSingle,1000,thePoints);
+    setTimeout(hideSingle,1000,theTime);
+    setTimeout(resetTime,1000);
+    setTimeout(resetScore,1000);
+    setTimeout(resetGreenBar,1000);
+    purScore = 0;
+    setTimeout(selectWhichNext,2000);
+}
+
+function SelectGamificationTut() { //startet 4. Condition mit Erklärung der Task
+    shuffle(possibleFunctions);
+    hideArray(buttons);
+    selectWhichNext();
+   /* let okaySelect = document.getElementById("okaySelect");      //Muss später wieder eingebunden werden, erklärt Task und Tutorial
     let taskExplainSelect = document.getElementsByClassName("taskExplainSelect");
     fadeInAll(taskExplainSelect);
     showSingle(okaySelect);
-    hideArray(buttons);
+   */
 }
+
+function selectWhichNext () { //bestimmt welche select Funktion als nächstes aufgerufen wird
+
+alert(possibleFunctions);
+if (possibleFunctions.length == 0) {partOfCond4 = false;} else {partOfCond4 = true;} //solange true: gibt noch offene Tutorials für Bedingungen also muss in diese Auswahl zurückgekehrt werden
+//setTimeout(selectNoIntro,800); //klappt
+setTimeout(selectAllIntro,800);
+/*if (possibleFunctions[0] == 1) {selectNoIntro();}
+if (possibleFunctions[0] == 2) {selectAllIntro();}
+if (possibleFunctions[0] == 3) {selectPointsIntro();}
+if (possibleFunctions[0] == 4) {selectTimeIntro();}
+if (possibleFunctions[0] == 5) {selectFeedbackIntro();}
+if (possibleFunctions[0] == 6) {selectPointsTimeIntro();}
+if (possibleFunctions[0] == 7) {selectPointsFeedbackIntro();}
+if (possibleFunctions[0] == 8) {selectTimeFeedbackIntro();}*/
+
+
+
+} 
+
+function selectNoIntro () { //select ohne game elemente
+    let introSelectNo = document.getElementById("selectNoIntro");
+    let introSelectNoButton = document.getElementById("selectNoIntroButton");
+
+    fadeIn(introSelectNo);
+    fadeIn(introSelectNoButton);
+    showSingle(introSelectNoButton);
+   
+}
+
+function selectNoDelay () { //delay damit Kreuz nicht sofort nach Intro erscheint
+
+    let introSelectNo = document.getElementById("selectNoIntro");
+    let introSelectNoButton = document.getElementById("selectNoIntroButton");
+    fadeOut(introSelectNo); //Text und Button der Intro verschwinden lassen
+    fadeOut(introSelectNoButton);
+    hideSingle(introSelectNoButton);
+    setTimeout(selectNo,1000);
+}
+
+function selectNo () {
+   
+    let positionCross1 = document.getElementsByClassName("positionCross1");
+    let afterCross1 = document.getElementById("afterCross1");
+
+    
+    noGameTutEnd = 4; //bestimmt, dass nach Beendigung des Tutorials ohne Game Elemente in die 4.Condition (Select) zurückgekehrt wird
+
+    if (basicsExplained == true) { //wenn basics bereits erklärt : zeige Task einmal gefolgt von einem Übungsversuch, dann weiter
+        noGameState = false; //Zeige an dass jetzt das Tutorial kommt
+        //setTimeout(hideArray,milliseconds=1500,hiddenCross); 
+        NoGamification();
+        
+    }
+        else {  //wenn basics nicht erklärt : erkläre Basics gefolgt von einem Übungsversuch, dann weiter
+          
+            noGameState = false; //Zeige an dass jetzt das Tutorial kommt
+            for(var i=0;i!=hiddenCross.length;i++) {
+                hiddenCross[i].style.display = "block";
+            }
+            setTimeout(fadeInAll,1000,positionCross1); //zeige Erklärung
+            setTimeout(showSingle,1000,afterCross1); //next button zu Bildererklärung 
+            setTimeout(fadeIn,1000,afterCross1);
+            basicsExplained = true; //anzeigen dass Basics ab jetzt nicht mehr erklärt werden müssen
+
+        }
+    
+    
+}
+
+
+function selectAllIntro () { //select mit game elemente
+    let introSelectAll = document.getElementById("selectAllIntro");
+    let introSelectAllButton = document.getElementById("selectAllIntroButton");
+
+    fadeIn(introSelectAll);
+    fadeIn(introSelectAllButton);
+    showSingle(introSelectAllButton);
+   
+}
+
+function selectAllDelay () { //delay damit Kreuz nicht sofort nach Intro erscheint
+
+    let introSelectAll = document.getElementById("selectAllIntro");
+    let introSelectAllButton = document.getElementById("selectAllIntroButton");
+    fadeOut(introSelectAll); //Text und Button der Intro verschwinden lassen
+    fadeOut(introSelectAllButton);
+    hideSingle(introSelectAllButton);
+    setTimeout(selectAll,1000);
+}
+
+
+function selectAll () { //select mit allen drei game elementen 
+   noGameTutEnd = 4;
+
+   if (basicsExplained == true) { //wenn basics bereits erklärt : zeige Task einmal gefolgt von einem Übungsversuch, dann weiter
+    allGameState = false; //Zeige an dass jetzt das Tutorial kommt
+    nowWithGame();
+    
+}
+    else {  //wenn basics nicht erklärt : erkläre Basics gefolgt von einem Übungsversuch, dann weiter
+      
+        allGameState = false; //Zeige an dass jetzt das Tutorial kommt
+        startTutorialGame();
+        basicsExplained = true; //anzeigen dass Basics ab jetzt nicht mehr erklärt werden müssen
+
+    }
+
+   
+    
+}
+
+function selectPoints () { //select mit punkten
+    alert("points");
+    possibleFunctions.shift();
+    selectWhichNext();
+}
+
+function selectTime () { //select mit Zeit
+    alert("time");
+    possibleFunctions.shift();
+    selectWhichNext();
+}
+
+function selectFeedback () { //select mit Feedback
+    alert("feedback");
+    possibleFunctions.shift();
+    selectWhichNext();
+}
+
+function selectPointsTime () { //select mit Punkten und Zeit
+    alert("pointstime");
+    possibleFunctions.shift();
+    selectWhichNext();
+}
+
+function selectPointsFeedback () { //select mit Punkten und Feedback
+    alert("pointsfeedback");
+    possibleFunctions.shift();
+    selectWhichNext();
+}
+
+function selectTimeFeedback () { //select mit Zeit und Feedback
+    alert("timefeedback");
+    possibleFunctions.shift();
+    selectWhichNext();
+}
+
 
 function SelectGamification() {
 var selectStuff = document.getElementsByClassName("Selektion");
@@ -703,6 +990,8 @@ showArray(selectStuff);
 
 
 }
+
+
 
 function StartIt() {
 
@@ -764,63 +1053,63 @@ function explainCross() {
     
 }
 
-function showTutorialCross () {
+function showTutorialCross () { //leitet Tutorial ohne Gamification mit Zeigen des Kreuzes ein
     let positionCross1 = document.getElementsByClassName("positionCross1");
     let afterCross1 = document.getElementById("afterCross1");
-    showSingle(afterCross1);
-    fadeInAll(positionCross1);
+    showSingle(afterCross1); //Next Button um die Bilder anzuzeigen
+    fadeInAll(positionCross1); //Text erklärt die Funktion des Kreuzes
     fadeIn(afterCross1);
   }
 
 
-function afterCross1() {
+function afterCross1() { //erklärt Bilder im Tutorial ohne Gamificaiton 
     hideArray(hiddenCross);
     let positionCross1 = document.getElementsByClassName("positionCross1");
     let afterCross1 = document.getElementById("afterCross1");
     fadeOutAll(positionCross1);
     fadeOut(afterCross1);
     hideSingle(afterCross1);
-    setTimeout(explainPictures,1000);
-    setTimeout(showTutorialPictures,2000);
+    setTimeout(explainPictures,1000); //Zeigt Beispielbilder an
+    setTimeout(showTutorialPictures,2000); //erklärt Bieispielbilder
 }
 
 function explainPictures() {
     showArray(selectPictures());
 }
 
-function showTutorialPictures() {
+function showTutorialPictures() { //erklärt Beispielbilder
     let positionPicture1 = document.getElementsByClassName("positionPicture1");
     let afterPicture1 = document.getElementById("afterPicture1");
     showSingle(afterPicture1);
-    fadeInAll(positionPicture1);
-    fadeIn(afterPicture1);
+    fadeInAll(positionPicture1);//Text erklärt die Funktion der Beispielbilder
+    fadeIn(afterPicture1); //Next Button um den Dot anzuzeigen
 }
 
-function afterPicture1() {
+function afterPicture1() {//erklärt den Dot im Tutorial ohne Gamification
    hideArray(selectPictures());
    let positionPicture1 = document.getElementsByClassName("positionPicture1");
    let afterPicture1 = document.getElementById("afterPicture1");
    fadeOutAll(positionPicture1);
    fadeOut(afterPicture1);
    hideSingle(afterPicture1);
-   setTimeout(explainDots,1000);
-   setTimeout(showTutorialDots,2000);
+   setTimeout(explainDots,1000); //zeigt rechten Dot an 
+   setTimeout(showTutorialDots,2000); //erklärt Dot
 }
 
 function explainDots () {
     showSingle(hiddenDot[1]);
 }
 
-function showTutorialDots() {
+function showTutorialDots() {//erklärt Dot
     let positionDot1 = document.getElementsByClassName("positionDot1");
     let arrowRightPic = document.getElementById("arrowRightPic");
-    showArray(positionDot1);
-    showSingle(arrowRightPic);
-    fadeInAll(positionDot1);
+    showArray(positionDot1); //Text erklärt Funktion des Dots
+    showSingle(arrowRightPic); //Animation fordert zum Tastendruck auf
+    fadeInAll(positionDot1); 
     fadeIn(arrowRightPic);
-    scaleIt(arrowRightPic);
-    window.addEventListener("keydown",checkKeyPressForRightTutorial1,false);
-    start();
+    scaleIt(arrowRightPic); //bewirkt Animation
+    window.addEventListener("keydown",checkKeyPressForRightTutorial1,false); //warte auf Druck der rechten Pfeiltaste, hier gehts danach weiter
+    start(); //starte Zeitmessung
 }
 
 
@@ -848,9 +1137,10 @@ function checkKeyPressForRightTutorial1(key) {
          addScore(10);
          addGreenBar();
          goRecord();
-         vidPlusShort.style.display = "block";
-         setTimeout(showSingle,1950,dotStand);
-         setTimeout(hideSingle,2000,vidPlusShort);
+         playVideo(vidPlusShort);
+         // vidPlusShort.style.display = "block";
+          setTimeout(showSingle,1950,dotStand);
+          setTimeout(hideSingle,2000,vidPlusShort);
          TenMove(true);
          setTimeout(showSingle,1300,newTimeRecord);
          setTimeout(showSingle,1300,plusZehn);
@@ -872,24 +1162,16 @@ else if (key.keyCode== "39" && (practiseFeedbackBool)) {activateFeedback();}
         let arrowRightPic = document.getElementById("arrowRightPic");
         let practise1 = document.getElementById("practise1");
         let goodJob = document.getElementById ("goodJob");
-        let practiseSelect0 = document.getElementById("practiseSelect0");
-        let goodJobSelect0 = document.getElementById ("goodJobSelect0");
         addScore(10);
         addGreenBar();
         fadeOutAll(positionDot1);
         fadeOut(arrowRightPic);
         hideSingle(hiddenDot[1]);
 
-        if (gameSelect) {
- 
-            showSingle(practiseSelect0);
-            fadeIn(practiseSelect0);
-            fadeIn(goodJobSelect0);
-             }
-        else { showSingle(practise1);
-               fadeIn(practise1);
-               fadeIn(goodJob);
-            }
+        showSingle(practise1);
+        fadeIn(practise1); //Button um Übungsphase ohne Gamification zu starten
+        fadeIn(goodJob); 
+            
         }
 
 }
@@ -944,32 +1226,42 @@ function activateFeedback() {
   
 }
 
-function practise1 () {
+function practise1 () { //Übungsphase ohne Gamification
     let practise1 = document.getElementById("practise1");
     let goodJob = document.getElementById ("goodJob");
     hideSingle(practise1);
     fadeOut(practise1);
     fadeOut(goodJob);
-    test = true;    
-    NoGamification();
+    test = true; //zeigt dass die Übungsphase läuft
+    NoGamification(); //startet Test (basierend auf Anzeige der Übungsphase um rechtzeitig zu stoppen)
 }
 
 //TUTORIAL MIT GAMIFICATION
 
 function okayGame() {
     gameTut = true;
-    let introductionTutorialGame = document.getElementsByClassName("introductionTutorialGame");
+    let introductionTutorialGame = document.getElementsByClassName("introductionTutorialGame"); 
     let taskExplainGame = document.getElementsByClassName("taskExplainGame");
     let okayGame = document.getElementById("okayGame");
     let startTutorialGame = document.getElementById("startTutorialGame");
     hideSingle(okayGame);
-    showSingle(startTutorialGame);
-    fadeInAll(introductionTutorialGame);
-    fadeOutAll(taskExplainGame);
+    showSingle(startTutorialGame); //Button um Tutorial zu starten
+    fadeInAll(introductionTutorialGame); //erklärt Tutorial mit Game Elementen
+    fadeOutAll(taskExplainGame); //lässt Beschreibung des Task verschwinden
 }
 
 function startTutorialGame () {
+    
+    let goodJobSelect = document.getElementById ("goodJobSelect");
     let tutorialButtonsGame = document.getElementsByClassName("introductionTutorialGame");
+    resetScore();
+    resetTime();
+
+    if (noGameTutEnd != 4) { //Nicht Teil der 4.Condition also muss der vorherige Erklärungstext ausgeblendet werden
+        hideSingle(goodJobSelect);
+        fadeOut(goodJobSelect);
+    }
+    
     hideArray(tutorialButtonsGame);
     setTimeout(explainCross,1000);  
     setTimeout(showTutorialCross,2000);
@@ -985,13 +1277,19 @@ function startTutorialGame () {
 function beforeAfterGetPoints () {
 
      let plusZehnPosition = document.getElementsByClassName("positionPlusZehn1");
-     let realAfterGetPoints = document.getElementById("realAfterGetPoints");
+     let positionConfetti = document.getElementsByClassName("positionConfetti");
      let dotStand = document.getElementById("DotsStand");
      let plus10Tutorial = document.getElementById("plus10Tutorial");
+     let afterGetPoints = document.getElementById("afterGetPoints");
+     let realAfterGetPoints = document.getElementById("realAfterGetPoints");
 
+     fadeOutAll(positionConfetti);
+     fadeOut(afterGetPoints);
+     hideSingle(afterGetPoints);
      dotStand.style.borderStyle = "none";
      plus10Tutorial.style.borderStyle = "solid";
      fadeInAll(plusZehnPosition);
+     fadeIn(realAfterGetPoints);
      showSingle(realAfterGetPoints);
     
 }
@@ -999,16 +1297,16 @@ function beforeAfterGetPoints () {
 function afterGetPoints () {
 
     let plusZehnPosition = document.getElementsByClassName("positionPlusZehn1");
-    let afterGetPoints = document.getElementById("afterGetPoints");
+    let realAfterGetPoints = document.getElementById("realAfterGetPoints");
     let positionScore1 = document.getElementsByClassName ("positionScore1");
     let scoreWidth = document.getElementById("scores");
     let afterExplainPoints = document.getElementById ("afterExplainPoints")
     let scores = document.getElementById("scores");
     let plus10Tutorial = document.getElementById("plus10Tutorial");
 
-   // fadeOutAll(plusZehnPosition);
-    fadeOut(afterGetPoints);
-    hideSingle(afterGetPoints);
+    fadeOutAll(plusZehnPosition);
+    fadeOut(realAfterGetPoints);
+    hideSingle(realAfterGetPoints);
     plus10Tutorial.style.borderStyle = "none";
     scores.style.borderStyle = "solid";
     fadeInAll(positionScore1);
@@ -1029,7 +1327,7 @@ function afterExplainPoints () {
     let scores = document.getElementById("scores");
    
     scores.style.borderStyle = "none";
-    //fadeOutAll(positionScore1);
+    fadeOutAll(positionScore1);
     fadeOut(afterExplainPoints);
     hideSingle(afterExplainPoints);
     barBox.style.borderStyle = "solid";
@@ -1050,7 +1348,7 @@ function afterExplainScore () {
         let dotStand = document.getElementById("DotsStand");
         hideSingle(dotStand);
         fadeOut(plusZehn);
-        //fadeOutAll(positionBar1);
+        fadeOutAll(positionBar1);
         fadeOut(afterExplainScore);
         hideSingle(afterExplainScore);
         fadeIn(nowPractisePoints);
@@ -1061,7 +1359,7 @@ function afterExplainScore () {
     else if (practiseTimeBool) {
         let positionRecord1 = document.getElementsByClassName("positionRecord1");
         let afterExplainScore = document.getElementById("afterExplainScore");
-        //fadeOutAll(positionRecord1);
+        fadeOutAll(positionRecord1);
         fadeOut(afterExplainScore);
         hideSingle(afterExplainScore);
         setTimeout(afterExplainBar,500);
@@ -1080,7 +1378,7 @@ function afterExplainScore () {
     barBox.style.borderStyle = "none";
     timeTutorial.style.borderStyle = "solid";
     hideSingle(barBox);
-    //fadeOutAll(positionBar1);
+    fadeOutAll(positionBar1);
     fadeOut(afterExplainScore);
    
     hideSingle(afterExplainScore);
@@ -1094,10 +1392,11 @@ function afterExplainBar () {
 
 if (practiseTimeBool) {
     let positionTime1 = document.getElementsByClassName ("positionTime1");
+    let positionRecord1 = document.getElementsByClassName ("positionRecord1");
     let afterExplainRecord = document.getElementById("afterExplainRecord");
     let scores2 = document.getElementById("scores2");
     
-    
+    hideSingle(positionRecord1); 
     scores2.style.borderStyle = "solid";
     fadeInAll(positionTime1);
     fadeIn(afterExplainRecord);
@@ -1113,6 +1412,7 @@ else {
     let scores2 = document.getElementById("scores2");
     let timeTutorial = document.getElementById("TimeTutorial");
     
+    fadeOutAll(positionRecord1);
     timeTutorial.style.borderStyle = "none";
     scores2.style.borderStyle = "solid";
     fadeOut(afterExplainBar);
@@ -1153,20 +1453,16 @@ function afterExplainRecord () {
 else {
     let afterExplainRecord = document.getElementById("afterExplainRecord");
     let positionTime1 = document.getElementsByClassName ("positionTime1");
-    let positionBar1 = document.getElementsByClassName ("positionBar1");
-    let positionScore1 = document.getElementsByClassName ("positionScore1");
-    let positionRecord1 = document.getElementsByClassName ("positionRecord1");
-    let plusZehnPosition = document.getElementsByClassName ("positionPlusZehn1");
+    
     let nowPractise = document.getElementById ("nowPractise");
     let practise2 = document.getElementById ("practise2");
     let newTimeRecord = document.getElementById("TimeTutorial");
     let plusZehn = document.getElementById("plus10Tutorial");
     let dotStand = document.getElementById("DotsStand");
-    let positionConfetti = document.getElementsByClassName("positionConfetti");
     let scores2 = document.getElementById("scores2");
 
     scores2.style.borderStyle = "none";
-     hideArray(positionConfetti);
+    
     hideSingle(dotStand);
     hideSingle(bar);
     hideSingle(barGreen);
@@ -1178,10 +1474,7 @@ else {
     hideSingle(plusZehn);
 
     fadeOutAll(positionTime1);
-    fadeOutAll(positionBar1);
-    fadeOutAll(positionScore1);
-    fadeOutAll(positionRecord1);
-    fadeOutAll(plusZehnPosition);
+   
 
     fadeOut(afterExplainRecord);
     hideSingle(afterExplainRecord);
@@ -1192,6 +1485,7 @@ else {
 }
 
 function practise2 () {
+    
     let practise2 = document.getElementById("practise2");
     let nowPractise = document.getElementById ("nowPractise");
     fadeOut(practise2);
@@ -1230,9 +1524,11 @@ function nowWithGame() {
     resetGreenBar();
     let goodJobEnableDisable = document.getElementById("goodJobEnableDisable");
     let nowWithGame = document.getElementById("nowWithGame");
-    fadeOut(goodJobEnableDisable);
-    fadeOut(nowWithGame);
-    hideSingle(nowWithGame);
+     if (allGameState == false) { //Muss nicht verschwinden wenn ich aus Cond. 4 komme, da es da nicht auf diese Weise eingeleitet wurde
+        fadeOut(goodJobEnableDisable);
+        fadeOut(nowWithGame);
+        hideSingle(nowWithGame);
+     }
     enableTest = true;
     enableDisableEndTest = true;
     countTest = 0;
@@ -1248,7 +1544,7 @@ function nowWithGame() {
 
 //START TUTORIAL MIT SELEKTION
 
-function okaySelect () {
+function okaySelect () {//Erklärt Tutorial für 4.Condition
         gameSelect = true;
         let introductionTutorialSelect = document.getElementsByClassName("introductionTutorialSelect");
         let taskExplainSelect = document.getElementsByClassName("taskExplainSelect");
@@ -1264,7 +1560,7 @@ function practiseSelect () {
    
 }
 
-function startTutorialSelect() {
+function startTutorialSelect() {//Startet Tutorial in 4.Condition für Variante ohne Game Elemente
 
     let tutorialButtonsSelect = document.getElementsByClassName("introductionTutorialSelect");
     hideArray(tutorialButtonsSelect);
@@ -1334,74 +1630,8 @@ function practiseTime () {
     set(false);
 }
 
-function beforeSelektionAppears0() {
-    beforeSelektionAppears = true;
-    let practiseSelect0 = document.getElementById("practiseSelect0");
-    let goodJobSelect0 = document.getElementById ("goodJobSelect0");
-    hideSingle(practiseSelect0);
-    fadeOut(practiseSelect0);
-    fadeOut(goodJobSelect0);
-    test = true;
-    NoGamification();
-}
 
-function beforeSelektionAppears1() {  
-    resetScore();
-    purScore = 0;
-    resetTime();
-    resetGreenBar();
-    let practiseSelect = document.getElementById("practiseSelect");
-    let goodJobSelect = document.getElementById("goodJobSelect");
-    fadeOut(goodJobSelect);
-    fadeOut(practiseSelect);
-    hideSingle(practiseSelect);
-    test= false;
-    backToSelection();
 
-   
-
-    
-
-}
-
-function backToSelection () {
-    setTimeout(resetScore,1000);
-    setTimeout(resetTime,1000);
-    setTimeout(resetGreenBar,1000);
-    purScore = 0;
-    countTest = 0;
-    let selectOptions = document.getElementsByClassName("selectOptions");
-    let practisePointButton = document.getElementById("practisePointButton");
-    let practiseTimeButton = document.getElementById("practiseTimeButton");
-    let practiseFeedbackButton = document.getElementById("practiseFeedbackButton");
-    let pointHaken = document.getElementById("pointHaken");
-    let timeHaken = document.getElementById("timeHaken");
-    let feedbackHaken = document.getElementById("feedbackHaken");
-
-    
-    
-    hideSingle(bar);
-    hideSingle(barGreen);
-    hideArray(barIndicate);
-    hideArray(points);
-    hideSingle(thePoints);
-    hideSingle(theTime);
-   
-
-    fadeInAll(selectOptions);
-    if (pointsExplained) {fadeIn(pointHaken);}
-    else {fadeIn(practisePointButton);
-          showSingle(practisePointButton);}
-
-     if (timeExplained) {fadeIn(timeHaken);}
-    else {fadeIn(practiseTimeButton);
-         showSingle(practiseTimeButton);}
-
-    if (feedbackExplained) {fadeIn(feedbackHaken);}
-    else {fadeIn(practiseFeedbackButton);
-         showSingle(practiseFeedbackButton);}
-     }
-      
 
 function showGreen () {
 
