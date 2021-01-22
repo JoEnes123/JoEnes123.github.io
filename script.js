@@ -20,14 +20,14 @@ let PunkteVideo = document.getElementById("PunkteVideo");
 let ZeitVideo = document.getElementById("ZeitVideo");
 var countTest = 0;
 var gameTut = false;
-var gameSelect = false;
+
 var gameEnDis = false;
 var test = false;
 var selectionTest = false;
 var disableTest = false;
 var enableTest = false;
 var enableDisableEndTest = false;
-var gameSelect = false;
+var gameSelect = false;  //bestimmt ob ich in der 4.Condition bin
 var punkte = false;
 var practisePointsBool = false;
 //var pointsExplained = false;
@@ -84,7 +84,7 @@ let feedbackExplained = false; //trackt ob das Feedbackelement bereits textuel e
 
 let noGameTutEnd = 0; //bestimmt wo es nach Beendigung des Tutorials ohne Game Elemente weitergeht (1-4 möglich entsprechend der 4.Conditions) -> erstmal nur 4 relevant
 let noGameTutorialWithoutBasics = false; //false wenn NoGamificaiton zur einmaligen Demonstration vor dem Tutorial gezeigt wird, sonst true
-let allGameState = true; //false wenn AllGamificaiton zur einmaligen Demonstration vor dem Tutorial gezeigt wird, sonst true
+let allGameState = false; //false wenn AllGamificaiton zur einmaligen Demonstration vor dem Tutorial gezeigt wird, sonst true
 
 //let partOfCond4 = false; //wenn true, zeigt dass Tutorial Teil der 4. Condition ist und entsprechend zu dieser Auswahl zurückgekehrt werden muss
 
@@ -351,7 +351,7 @@ function checkKeyPressForLeft(key) {
   
     if (key.keyCode =="37") {
            if (noGameTutorialWithoutBasics == true) { //dadurch dass man hier raus bricht erhält man das NoGame Tutorial ohne weitere Basic Erklärungen
-                alert("hier1");
+                
                 let practise1 = document.getElementById("practise1");
                 let goodJob = document.getElementById("goodJob");
                 fadeIn(practise1);
@@ -370,7 +370,7 @@ function checkKeyPressForLeft(key) {
            addScore(10);
            purScore += 10;
            hiddenDot[0].style.display = "none";
-           if (GameOn || feedback) {
+           if (GameOn || feedback) { //GameOn ist true wenn der Task mit Game Elementen ausgeführt wird
           
             playVideo(vidPlus);
             setTimeout(hideSingle,2300,vidPlus);
@@ -417,8 +417,8 @@ function checkKeyPressForLeft(key) {
 countTest++;
 
  //Bedingung bei Selektion
-
-  if (gameSelect && checkTest()) {
+ 
+  if (gameSelect && checkTest()) { //gameSelect true wenn ich in der 4.Condition bin, wird gerade jedoch übergangen BRAUCH ICH WSL NICHT MEHR   
    
     let goodJobSelect = document.getElementById ("goodJobSelect");
     let startTutorialGame = document.getElementById("startTutorialGame");
@@ -431,7 +431,7 @@ countTest++;
     
   }
 //Bedingung mit EnableDisable
-  else if (disableTest && checkTest()) {
+  else if (disableTest && checkTest()) { //bedeutet dass in 3. Condition der Übungsteil des NoGame Tutorials vorbei ist, leitet Game Tutorial ein
       
    
    
@@ -443,7 +443,9 @@ countTest++;
       showSingle(nowWithGame);
   }
 
-  else if (enableDisableEndTest && checkTest()) {
+  else if (enableDisableEndTest && checkTest()) { //bedeutet dass in 3.Condition der Übungsteil des Game Tutorials vorbei ist, 
+                                                 //leitet Entscheidungsscreen ein (true setzten passiert in Funktion die auch in 4.Condition genutzt wird)
+
     if (noGameTutEnd == 4) { //All Game Tutorial beendet, kehre zurück zu Select Game und weitere durchzuführen
         
         possibleFunctions.shift(); //All Game kann aus Liste der 8 entfernt werde
@@ -452,24 +454,25 @@ countTest++;
     }
     EnableDisableGamification();} //wird nur in Enable/Disbale aufgerufen
 
-  else if (test && checkTest()) {      
+  else if (test && checkTest() && !allGameState) {       
          //Bedingung ohne Game
         
         if (noGameTutEnd == 4) { //No Game Tutorial beendet, kehre zurück zu Select Game und weitere durchzuführen
-       
+      
         possibleFunctions.shift(); //No Game kann aus Liste der 8 entfernt werde
         selectWhichNext(); //nächstes Tutorial wird gestartet
         return; //Funktion kann verlassen werden
     }
 
-    else { //starte Task mit voller Gamification
+    else if (test && checkTest() && allGameState) { 
     if (noGameTutEnd == 4) {
         possibleFunctions.shift(); //All Game kann aus Liste der 8 entfernt werde
         
         removeGameStuff(); //enferne game elemente um dann selectWhichNext() aufzurufen wo das nächste Tutorial gestartet wird
+        allGameState = false; //AllGame Tutorial ist beendet
         return; //Funktion kann verlassen werden
     }
-    let startTask = document.getElementById("startTask");
+    let startTask = document.getElementById("startTask"); //starte Task mit voller Gamification
     let startText = document.getElementById("startText");
     setTimeout(showSingle,2000,startTask);
     setTimeout(fadeIn,2000,startTask);
@@ -480,11 +483,13 @@ countTest++;
           //Bedingung mit Selektion
         setTimeout(backToSelection,2000);
     }
-    else {{setTimeout(set,1000,GameOn)};
+    else {
+
+        setTimeout(set,1000,GameOn)};
 
 }
 
-}
+
 
 function checkKeyPressForRight(key) {
     
@@ -492,7 +497,7 @@ function checkKeyPressForRight(key) {
     if (key.keyCode =="39") {
 
              if (noGameTutorialWithoutBasics == true) { //dadurch dass man hier raus bricht erhält man das NoGame Tutorial ohne weitere Basic Erklärungen
-                alert("hier2");
+                
                 let practise1 = document.getElementById("practise1");
                 let goodJob = document.getElementById("goodJob");
                 fadeIn(practise1);
@@ -511,7 +516,7 @@ function checkKeyPressForRight(key) {
              addScore(10);
              purScore += 10;
              hiddenDot[1].style.display = "none";
-             if (GameOn || feedback) {
+             if (GameOn || feedback) {  //GameOn ist true wenn der Task mit Game Elementen ausgeführt wird
                 
                 playVideo(vidPlus);
                 setTimeout(hideSingle,2300,vidPlus);
@@ -556,7 +561,7 @@ function checkKeyPressForRight(key) {
    
     countTest++;
 
-    if (gameSelect && checkTest()) {
+    if (gameSelect && checkTest()) { //gameSelect true wenn ich in der 4.Condition bin, wird gerade jedoch übergangen BRAUCH ICH WSL NICHT MEHR   
         
        
         let goodJobSelect = document.getElementById ("goodJobSelect");
@@ -568,7 +573,7 @@ function checkKeyPressForRight(key) {
         
       }
 
-    else if (disableTest && checkTest()) { 
+    else if (disableTest && checkTest()) { //bedeutet dass in 3. Condition der Übungsteil des NoGame Tutorials vorbei ist, leitet Game Tutorial ein
     
                
                
@@ -579,7 +584,9 @@ function checkKeyPressForRight(key) {
                 fadeIn(nowWithGame);
                 showSingle(nowWithGame);}
 
-    else if (enableDisableEndTest && checkTest()) {
+    else if (enableDisableEndTest && checkTest()) {//bedeutet dass in 3.Condition der Übungsteil des Game Tutorials vorbei ist, 
+                                                   //leitet Entscheidungsscreen ein (true setzten passiert in Funktion die auch in 4.Condition genutzt wird)
+
         if (noGameTutEnd == 4) { //All Game Tutorial beendet, kehre zurück zu Select Game und weitere durchzuführen
                     
             possibleFunctions.shift(); //All Game kann aus Liste der 8 entfernt werde
@@ -588,35 +595,40 @@ function checkKeyPressForRight(key) {
         }
             EnableDisableGamification();} //wird nur in Enable/Disable aufgerufen
 
-    else if (test && checkTest()) {
-   
-   
-
-            if (noGameTutEnd == 4) { //No Game Tutorial beendet, kehre zurück zu Select Game und weitere durchzuführen
-                
-                possibleFunctions.shift(); //No Game kann aus Liste der 8 entfernt werde
-                selectWhichNext(); //nächstes Tutorial wird gestartet
-                return; //Funktion kann verlassen werden
-            }
-            else { //starte Task mit voller Gamification
-                if (noGameTutEnd == 4) {
-                    possibleFunctions.shift(); //All Game kann aus Liste der 8 entfernt werde
-                   
-                    removeGameStuff(); //enferne game elemente um dann selectWhichNext() aufzurufen wo das nächste Tutorial gestartet wird
-                    return; //Funktion kann verlassen werden
-                }
-            let startTask = document.getElementById("startTask");
-            let startText = document.getElementById("startText");
-            setTimeout(showSingle,2000,startTask);
-            setTimeout(fadeIn,2000,startTask);
-            setTimeout(fadeIn,2000,startText);
-            } }
+            else if (test && checkTest() && !allGameState) {       
+                //Bedingung ohne Game
+               
+               if (noGameTutEnd == 4) { //No Game Tutorial beendet, kehre zurück zu Select Game und weitere durchzuführen
+             
+               possibleFunctions.shift(); //No Game kann aus Liste der 8 entfernt werde
+               selectWhichNext(); //nächstes Tutorial wird gestartet
+               return; //Funktion kann verlassen werden
+           }
+       
+           else if (test && checkTest() && allGameState) { 
+           if (noGameTutEnd == 4) {
+               possibleFunctions.shift(); //All Game kann aus Liste der 8 entfernt werde
+               
+               removeGameStuff(); //enferne game elemente um dann selectWhichNext() aufzurufen wo das nächste Tutorial gestartet wird
+               allGameState = false; //AllGame Tutorial ist beendet
+               return; //Funktion kann verlassen werden
+           }
+           let startTask = document.getElementById("startTask"); //starte Task mit voller Gamification
+           let startText = document.getElementById("startText");
+           setTimeout(showSingle,2000,startTask);
+           setTimeout(fadeIn,2000,startTask);
+           setTimeout(fadeIn,2000,startText);
+       
+          } }
 
     else if (selectionTest && checkTest()) {
         
          setTimeout(backToSelection,2000);
      }
-     else {{setTimeout(set,1000,GameOn)};};
+     
+     else { 
+        
+            setTimeout(set,1000,GameOn);};
 }
 
 function hideArray(x) {
@@ -840,8 +852,8 @@ function selectWhichNext () { //bestimmt welche select Funktion als nächstes au
 
 alert(possibleFunctions);
 if (possibleFunctions.length == 0) {partOfCond4 = false;} else {partOfCond4 = true;} //solange true: gibt noch offene Tutorials für Bedingungen also muss in diese Auswahl zurückgekehrt werden
-setTimeout(selectNoIntro,800); //klappt
-//setTimeout(selectAllIntro,800);
+//setTimeout(selectNoIntro,800); //klappt
+setTimeout(selectAllIntro,800);
 /*if (possibleFunctions[0] == 1) {selectNoIntro();}
 if (possibleFunctions[0] == 2) {selectAllIntro();}
 if (possibleFunctions[0] == 3) {selectPointsIntro();}
@@ -923,16 +935,17 @@ function selectAllDelay () { //delay damit Kreuz nicht sofort nach Intro erschei
 
 
 function selectAll () { //select mit allen drei game elementen 
+   allGameState = true; //Damit ich bei checkTest nicht in die NoGame Condition komme
    noGameTutEnd = 4;
    gameTut = true;
    if (basicsExplained == true) { //wenn basics bereits erklärt : zeige Task einmal gefolgt von einem Übungsversuch, dann weiter
-    allGameState = false; //Zeige an dass jetzt das Tutorial kommt
+   
     nowWithGame();
     
 }
     else {  //wenn basics nicht erklärt : erkläre Basics gefolgt von einem Übungsversuch, dann weiter
       
-        allGameState = false; //Zeige an dass jetzt das Tutorial kommt
+       
         startTutorialGame();
         basicsExplained = true; //anzeigen dass Basics ab jetzt nicht mehr erklärt werden müssen
 
@@ -1150,7 +1163,7 @@ else if (key.keyCode== "39" && (practiseFeedbackBool)) {activateFeedback();}
 
 
     else if (key.keyCode =="39" && (gameTut == false)) {
-        alert("hier3");
+        
         stop();
         window.removeEventListener("keydown",checkKeyPressForRightTutorial1,false);
         let positionDot1 = document.getElementsByClassName("positionDot1");
@@ -1222,7 +1235,7 @@ function activateFeedback() {
 }
 
 function practise1 () { //Übungsphase ohne Gamification
-    alert("hier4");
+   
     let practise1 = document.getElementById("practise1");
     let goodJob = document.getElementById ("goodJob");
     hideSingle(practise1);
@@ -1520,7 +1533,7 @@ function nowWithGame() {
     resetGreenBar();
     let goodJobEnableDisable = document.getElementById("goodJobEnableDisable");
     let nowWithGame = document.getElementById("nowWithGame");
-     if (allGameState == false) { //Muss nicht verschwinden wenn ich aus Cond. 4 komme, da es da nicht auf diese Weise eingeleitet wurde
+    if (allGameState == true) { //Muss nicht verschwinden wenn ich aus Cond. 4 komme, da es da nicht auf diese Weise eingeleitet wurde
         fadeOut(goodJobEnableDisable);
         fadeOut(nowWithGame);
         hideSingle(nowWithGame);
@@ -1650,7 +1663,7 @@ barGreen.style.left = "-268.8px";
 
 function set (bool) {
     
-       GameOn = bool;
+       GameOn = bool; //bestimmt ob Task mit oder ohne Game Elemente durchgefürt wird
        setTimeout(showFirst,1300,hiddenCross,1500); //erste Zahl: wielang warten bis start zweite Zahl: wielang anzeigen
        
     }
