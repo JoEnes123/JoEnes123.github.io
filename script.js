@@ -463,7 +463,7 @@ countTest++;
         selectWhichNext(); //nächstes Tutorial wird gestartet
         return; //Funktion kann verlassen werden
     }
-
+  }
     else if (test && checkTest() && allGameState) { 
     if (noGameTutEnd == 4) {
         possibleFunctions.shift(); //All Game kann aus Liste der 8 entfernt werde
@@ -478,7 +478,7 @@ countTest++;
     setTimeout(fadeIn,2000,startTask);
     setTimeout(fadeIn,2000,startText);
 
-   } }
+    }
    else if (selectionTest && checkTest()) {  
           //Bedingung mit Selektion
         setTimeout(backToSelection,2000);
@@ -604,7 +604,7 @@ function checkKeyPressForRight(key) {
                selectWhichNext(); //nächstes Tutorial wird gestartet
                return; //Funktion kann verlassen werden
            }
-       
+        }
            else if (test && checkTest() && allGameState) { 
            if (noGameTutEnd == 4) {
                possibleFunctions.shift(); //All Game kann aus Liste der 8 entfernt werde
@@ -619,7 +619,7 @@ function checkKeyPressForRight(key) {
            setTimeout(fadeIn,2000,startTask);
            setTimeout(fadeIn,2000,startText);
        
-          } }
+          } 
 
     else if (selectionTest && checkTest()) {
         
