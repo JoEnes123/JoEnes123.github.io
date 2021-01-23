@@ -749,16 +749,17 @@ function selectWhichNext () { //bestimmt welche select Funktion als nächstes au
 
 alert(possibleFunctions);
 if (possibleFunctions.length == 0) {partOfCond4 = false;} else {partOfCond4 = true;} //solange true: gibt noch offene Tutorials für Bedingungen also muss in diese Auswahl zurückgekehrt werden
+setTimeout(selectPointsIntro(),800);
 //setTimeout(selectNoIntro,800); //klappt
 //setTimeout(selectAllIntro,800); //klappt
-if (possibleFunctions[0] == 1) {selectNoIntro();}
+/*if (possibleFunctions[0] == 1) {selectNoIntro();}
 if (possibleFunctions[0] == 2) {selectAllIntro();}
 if (possibleFunctions[0] == 3) {selectPointsIntro();}
 if (possibleFunctions[0] == 4) {selectTimeIntro();}
 if (possibleFunctions[0] == 5) {selectFeedbackIntro();}
 if (possibleFunctions[0] == 6) {selectPointsTimeIntro();}
 if (possibleFunctions[0] == 7) {selectPointsFeedbackIntro();}
-if (possibleFunctions[0] == 8) {selectTimeFeedbackIntro();}
+if (possibleFunctions[0] == 8) {selectTimeFeedbackIntro();}*/
 
 
 
@@ -842,10 +843,42 @@ function selectAll () { //select mit allen drei game elementen
     
 }
 
-function selectPoints () { //select mit punkten
-    alert("points");
-    possibleFunctions.shift();
-    selectWhichNext();
+function selectPointsIntro () { //select mit punkten
+
+        let introSelectPoints = document.getElementById("selectPointsIntro");
+        let introSelectPointsButton = document.getElementById("selectPointsIntroButton");
+
+        fadeIn(introSelectPoints);
+        fadeIn(introSelectPointsButton);
+        showSingle(introSelectPointsButton);
+}
+
+function selectPointsDelay () { //delay damit Kreuz nicht sofort nach Intro erscheint
+
+    let introSelectPoints = document.getElementById("selectPointsIntro");
+    let introSelectPointsButton = document.getElementById("selectPointsIntroButton");
+    fadeOut(introSelectPoints); //Text und Button der Intro verschwinden lassen
+    fadeOut(introSelectPointsButton);
+    hideSingle(introSelectPointsButton);
+    setTimeout(selectPoints,1000);
+}
+
+function selectPoints () {
+
+    
+    noGameTutEnd = 4;
+    
+
+    if (basicsExplained == true) { //wenn basics bereits erklärt : zeige Task einmal gefolgt von einem Übungsversuch, dann weiter
+        //nowWithGame(); 
+        
+    }
+    else {  //wenn basics nicht erklärt : erkläre Basics gefolgt von einem Übungsversuch, dann weiter
+        activatePoints();
+        //startTutorialGame(); //hier werden alle game elemente gezeigt
+      
+     }
+
 }
 
 function selectTime () { //select mit Zeit
