@@ -75,7 +75,7 @@ let Samples = [];
 let currentCorrect = null;
 let currentTime = null;
 
-let possibleFunctions = [1,2,3,1,2,3,1,2]; //Um Bedingugen im Tutorial zu shufflen
+let possibleFunctions = [1,1,1,4,4,4,1,4]; //Um Bedingugen im Tutorial zu shufflen
 
 let basicsExplained = false; //trackt ob die Grundfunktionalitäten bereits textuel erklärt wurden
 let pointsExplained = false; //trackt ob das Punkteelement bereits textuel erklärt wurde
@@ -445,37 +445,40 @@ function checkKeyPressForRight(key) {
 function proceedInterpretation () {
     
 
+
             //Bedingung mit EnableDisable
-            if (disableTest && checkTest()) { //bedeutet dass in 3. Condition der Übungsteil des NoGame Tutorials vorbei ist, leitet Game Tutorial ein
+            if (disableTest && checkTest() && noSelectives()) { //bedeutet dass in 3. Condition der Übungsteil des NoGame Tutorials vorbei ist, leitet Game Tutorial ein
                 
                 noGamePractiseOver();
 
             }
 
-            else if (enableDisableEndTest && checkTest()) { //bedeutet dass in 3.Condition der Übungsteil des Game Tutorials vorbei ist, 
+            else if (enableDisableEndTest && checkTest() && noSelectives()) { //bedeutet dass in 3.Condition der Übungsteil des Game Tutorials vorbei ist, 
                                                         //leitet Entscheidungsscreen ein (true setzten passiert in Funktion die auch in 4.Condition genutzt wird)
 
                     allGamePractiseOver();
                    
              } 
 
-            else if (test && checkTest() && !allGameState && noGameTutEnd == 4) {   //No Game Tutorial in Select beendet, kehre zurück zu Select Screen um weitere durchzuführen    
+            else if (test && checkTest() && !allGameState && (noGameTutEnd == 4) && noSelectives()) {   //No Game Tutorial in Select beendet, kehre zurück zu Select Screen um weitere durchzuführen    
               
                 noGameEndBackToSelect();
                 
             }
 
-            else if (test && checkTest() && allGameState) {  //GameTutorial beendet, entweder Task startet (mit Tracking) oder zurück zum Select Screen
+            else if (test && checkTest() && allGameState && noSelectives()) {  //GameTutorial beendet, entweder Task startet (mit Tracking) oder zurück zum Select Screen
                         
                    
                 allGameEndMaybeBackToSelect();
 
             }
 
-            else if (checkTest() && practisePointsBool) { //Punkte Übungsphase beendet, entferne GameElemente und gehe zurück zum Select Screen
+            else if (checkTest() && (practisePointsBool || practiseTimeBool || practiseFeedbackBool)) { //Punkte/Zeit/Feedback Übungsphase beendet, entferne GameElemente und gehe zurück zum Select Screen
                 practisePointsBool = false;
                 allGameEndMaybeBackToSelect(); 
             }
+
+           
 
            
             else {  //Aufruf des Task mit Game Elementen
@@ -728,6 +731,7 @@ function EnableDisableGamification() { //Entscheidung zwischen Version 1 und 2 w
 }
 
 function removeGameStuff () {
+
     setTimeout(hideSingle,1000,bar);
     setTimeout(hideSingle,1000,barGreen);
     setTimeout(hideArray,1000,barIndicate);
@@ -741,7 +745,7 @@ function removeGameStuff () {
     setTimeout(selectWhichNext,2000);
 }
 
-function SelectGamificationTut() { //startet 4. Condition mit Erklärung der Task
+function SelectGamificationTut() { //startet 4. Condition mit Erklärung der Task //haha
     shuffle(possibleFunctions);
     hideArray(buttons);
     selectWhichNext();
@@ -755,21 +759,25 @@ function SelectGamificationTut() { //startet 4. Condition mit Erklärung der Tas
 function selectWhichNext () { //bestimmt welche select Funktion als nächstes aufgerufen wird
 
 punkte = false;
+zeit = false;
 practisePointsBool = false; //damit ich da nicht nochmal reinkomme
+practiseTimeBool = false; //damit ich da nicht nochmal reinkomme
+allGameState = false;
+
 alert(possibleFunctions);
 if (possibleFunctions.length == 0) {partOfCond4 = false;} else {partOfCond4 = true;} //solange true: gibt noch offene Tutorials für Bedingungen also muss in diese Auswahl zurückgekehrt werden
-setTimeout(selectTimeIntro(),800);
+//setTimeout(selectTimeIntro(),800); //klappt
 //setTimeout(selectPointsIntro(),800);// klappt
 //setTimeout(selectNoIntro,800); //klappt
 //setTimeout(selectAllIntro,800); //klappt
-/*if (possibleFunctions[0] == 1) {selectNoIntro();}
+if (possibleFunctions[0] == 1) {selectNoIntro();}
 if (possibleFunctions[0] == 2) {selectAllIntro();}
 if (possibleFunctions[0] == 3) {selectPointsIntro();}
 if (possibleFunctions[0] == 4) {selectTimeIntro();}
 if (possibleFunctions[0] == 5) {selectFeedbackIntro();}
 if (possibleFunctions[0] == 6) {selectPointsTimeIntro();}
 if (possibleFunctions[0] == 7) {selectPointsFeedbackIntro();}
-if (possibleFunctions[0] == 8) {selectTimeFeedbackIntro();}*/
+if (possibleFunctions[0] == 8) {selectTimeFeedbackIntro();}
 
 
 
@@ -913,7 +921,7 @@ hideSingle(introSelectTimeButton);
 setTimeout(selectTime,1000);
 }
 
-function selectTime () { //haha
+function selectTime () { 
 
 enableTest = true;
 practiseTimeBool = true;
@@ -1109,7 +1117,7 @@ function checkKeyPressForRightTutorial1(key) { //Hier komme ich IMMER rein wenn 
                 let plusZehn = document.getElementById("plus10Tutorial");
                 let afterExplainConfetti = document.getElementById("afterExplainConfetti");
                 let afterGetPoints = document.getElementById("realAfterGetPoints");
-                let afterExplainRecord = document.getElementById("afterExplainRecord");
+                let afterExplainBar = document.getElementById("afterExplainBar");
                 let dotStand = document.getElementById("DotsStand");
                 let vidPlusShort = document.getElementById("plusAnimShort");
                 let positionConfetti = document.getElementsByClassName("positionConfetti");
@@ -1163,8 +1171,8 @@ function checkKeyPressForRightTutorial1(key) { //Hier komme ich IMMER rein wenn 
                     setTimeout(showSingle,1300,newTimeRecord);
                     setTimeout(fadeInAll,2000,positionRecord1);
                     TimeTutorial.style.borderStyle = "solid";
-                    setTimeout(fadeIn,2000,afterExplainRecord);
-                    showSingle(afterExplainRecord); //lässt Punkte Erklärung verschwinden und geht Tutorial weiter durch
+                    setTimeout(fadeIn,2000,afterExplainBar);
+                    showSingle(afterExplainBar); //lässt Punkte Erklärung verschwinden und geht Tutorial weiter durch
                     
 
                }
@@ -1230,7 +1238,8 @@ function okayGame() {
 }
 
 function noSelectives () {
-    return (practiseFeedbackBool && practisePointsBool && practiseTimeBool);
+    if ((practiseFeedbackBool==false) && (practisePointsBool==false) && (practiseTimeBool==false)) {return true;}
+    else {return false;}
 }
 
 function startTutorialGame () {
@@ -1379,13 +1388,18 @@ function afterExplainScore () {
 function afterExplainBar () {
 
 if (practiseTimeBool) {
+    let afterExplainBar = document.getElementById ("afterExplainBar");
     let positionTime1 = document.getElementsByClassName ("positionTime1");
     let positionRecord1 = document.getElementsByClassName ("positionRecord1");
     let afterExplainRecord = document.getElementById("afterExplainRecord");
+    let TimeTutorial = document.getElementById("TimeTutorial");
     let scores2 = document.getElementById("scores2");
     
-    hideSingle(positionRecord1); 
+    fadeOut(afterExplainBar);
+    hideSingle(afterExplainBar);
+    TimeTutorial.style.borderStyle = "none";
     scores2.style.borderStyle = "solid";
+    fadeOutAll(positionRecord1); 
     fadeInAll(positionTime1);
     fadeIn(afterExplainRecord);
     showSingle(afterExplainRecord);
@@ -1423,13 +1437,7 @@ function afterExplainRecord () {
 
         scores2.style.borderStyle = "none";
         fadeOutAll(positionTime1);
-        fadeOutAll(positionBar1);
-        fadeOutAll(positionScore1);
-        fadeOutAll(positionRecord1);
-        fadeOutAll(plusZehnPosition);
-
-
-        fadeOut(newTimeRecord);
+        hideSingle(newTimeRecord);
         fadeOut(afterExplainRecord);
         hideSingle(afterExplainRecord);
         fadeIn(nowPractisePoints);
@@ -1513,7 +1521,7 @@ function nowWithGame() { //leitet zum Gamification Tutorial ohne Basics hin (ode
                 resetGreenBar();
                 let goodJobEnableDisable = document.getElementById("goodJobEnableDisable");
                 let nowWithGame = document.getElementById("nowWithGame");
-                if (!allGameState && !practisePointsBool) { //Muss nicht verschwinden wenn ich aus Cond. 4 komme, da es da nicht auf diese Weise eingeleitet wurde
+                if (!allGameState && noSelectives()) { //Muss nicht verschwinden wenn ich aus Cond. 4 komme, da es da nicht auf diese Weise eingeleitet wurde
         
                         fadeOut(goodJobEnableDisable);
                         fadeOut(nowWithGame);
@@ -1522,12 +1530,30 @@ function nowWithGame() { //leitet zum Gamification Tutorial ohne Basics hin (ode
                 enableTest = true; //würde nach Tutorial zum EnableDisable Entscheidungsscreen weiterleiten, kann aber durch 4.Condition zuvor abgefangen werden
                 enableDisableEndTest = true;
                 countTest = 0;
-                if (practisePointsBool == false) {showSingle(theTime)}; //Wenn die Funktion als Punktetutorial ohne Basics genutzt wird, bleibt die Zeitanzeige weg
-                showSingle(bar);
-                showSingle(barGreen);
-                showArray(barIndicate);
-                showArray(points);
-                showSingle(thePoints);
+
+                if (noSelectives()) { // Wenn es kein selektives Tutorial ist zeige ich alles
+
+                    showSingle(theTime); 
+                    showSingle(bar);
+                    showSingle(barGreen);
+                    showArray(barIndicate);
+                    showArray(points);
+                    showSingle(thePoints);
+                    
+                    
+                }
+
+                if (practisePointsBool == true) { //Wenn die Funktion als Punktetutorial ohne Basics genutzt wird, bleibt die Zeitanzeige weg
+                    showSingle(bar);
+                    showSingle(barGreen);
+                    showArray(barIndicate);
+                    showArray(points);
+                    showSingle(thePoints);
+                }
+
+                if (practiseTimeBool == true) { //Wenn die Funktion als Zeittutorial genutzt wird, erscheint nur die Zeitanzeige
+                    showSingle(theTime); 
+                }
                 
                 setTimeout(showFirst,1300,hiddenCross,1500);
 }
@@ -1615,7 +1641,6 @@ function practiseTime () {
     punkte = false;
     feedback = false;
     timeExplained = true;
-    practiseTimeBool = false;
     selectionTest = true;
     set(false);
 }
