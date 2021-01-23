@@ -75,7 +75,7 @@ let Samples = [];
 let currentCorrect = null;
 let currentTime = null;
 
-let possibleFunctions = [1,2,3,4,5,6,7,8]; //Um Bedingugen im Tutorial zu shufflen
+let possibleFunctions = [2,2,1,2,1,2,1,2]; //Um Bedingugen im Tutorial zu shufflen
 
 let basicsExplained = false; //trackt ob die Grundfunktionalitäten bereits textuel erklärt wurden
 let pointsExplained = false; //trackt ob das Punkteelement bereits textuel erklärt wurde
@@ -322,8 +322,8 @@ function showSecond(x,waitTime) {
 }
 
 function showDot (x) {
-     
-    if (practisePointsBool || practiseTimeBool || practiseFeedbackBool || enableTest) {
+    
+    if (enableTest || noGameTutorialWithoutBasics) { //leitet in Tutorial Press ohne Basics weiter
         showSingle(hiddenDot[1]);
         start();
         window.addEventListener("keydown",checkKeyPressForRightTutorial1,false); //Gamification Tutorial mit Basics
@@ -347,21 +347,7 @@ function showDot (x) {
 
 function correctInput () { //richtige Eingabe
 
-                    if (noGameTutorialWithoutBasics == true) { //dadurch dass man hier raus bricht erhält man das NoGame Tutorial ohne weitere Basic Erklärungen
-                                
-                        let practise1 = document.getElementById("practise1");
-                        let goodJob = document.getElementById("goodJob");
-                        fadeIn(practise1);
-                        fadeIn(goodJob);
-                        showSingle(practise1);
-                        //wenn ich practise so aufrufe verschwindet der Hinweisetext nur sofort und wird nicht angezeigt
-                        noGameTutorialWithoutBasics = false; //beim nächsten Aufruf von NoGamification wurde das entsprechende Tutorial bereits gezeigt
-                        hideSingle(hiddenDot[0]);
-                        hideSingle(hiddenDot[1]); //Unklar welcher Dot gezeigt wurde, daher werden einfach beide entfernt
-                        return;
-                } 
-                
-                else {
+                   
                         currentCorrect = "Yes";
                         stop();
                         addScore(10);
@@ -387,7 +373,7 @@ function correctInput () { //richtige Eingabe
                             if (purScore == 1000) {addScore(50); goBonusPoints("TimeBonus50");}
                             } 
                 }
-}
+
 
 
 function wrongInput () { //falsche Eingbae
@@ -457,6 +443,7 @@ function checkKeyPressForRight(key) {
 
 
 function proceedInterpretation () {
+    
 
             //Bedingung mit EnableDisable
             if (disableTest && checkTest()) { //bedeutet dass in 3. Condition der Übungsteil des NoGame Tutorials vorbei ist, leitet Game Tutorial ein
@@ -748,7 +735,7 @@ function removeGameStuff () {
 }
 
 function SelectGamificationTut() { //startet 4. Condition mit Erklärung der Task
-    shuffle(possibleFunctions);
+    //shuffle(possibleFunctions);
     hideArray(buttons);
     selectWhichNext();
    /* let okaySelect = document.getElementById("okaySelect");      //Muss später wieder eingebunden werden, erklärt Task und Tutorial
@@ -763,15 +750,15 @@ function selectWhichNext () { //bestimmt welche select Funktion als nächstes au
 alert(possibleFunctions);
 if (possibleFunctions.length == 0) {partOfCond4 = false;} else {partOfCond4 = true;} //solange true: gibt noch offene Tutorials für Bedingungen also muss in diese Auswahl zurückgekehrt werden
 //setTimeout(selectNoIntro,800); //klappt
-setTimeout(selectAllIntro,800);
-/*if (possibleFunctions[0] == 1) {selectNoIntro();}
+//setTimeout(selectAllIntro,800); //klappt
+if (possibleFunctions[0] == 1) {selectNoIntro();}
 if (possibleFunctions[0] == 2) {selectAllIntro();}
 if (possibleFunctions[0] == 3) {selectPointsIntro();}
 if (possibleFunctions[0] == 4) {selectTimeIntro();}
 if (possibleFunctions[0] == 5) {selectFeedbackIntro();}
 if (possibleFunctions[0] == 6) {selectPointsTimeIntro();}
 if (possibleFunctions[0] == 7) {selectPointsFeedbackIntro();}
-if (possibleFunctions[0] == 8) {selectTimeFeedbackIntro();}*/
+if (possibleFunctions[0] == 8) {selectTimeFeedbackIntro();}
 
 
 
@@ -798,9 +785,6 @@ function selectNoDelay () { //delay damit Kreuz nicht sofort nach Intro erschein
 }
 
 function selectNo () {
-  
-   // let positionCross1 = document.getElementsByClassName("positionCross1");
-   // let afterCross1 = document.getElementById("afterCross1");
 
     
     noGameTutEnd = 4; //bestimmt, dass nach Beendigung des Tutorials ohne Game Elemente in die 4.Condition (Select) zurückgekehrt wird
@@ -842,10 +826,10 @@ function selectAll () { //select mit allen drei game elementen
 
             allGameState = true; //Damit ich bei checkTest nicht in die NoGame Condition komme
             noGameTutEnd = 4;
-            gameTut = true;
+            enableTest = true;
 
             if (basicsExplained == true) { //wenn basics bereits erklärt : zeige Task einmal gefolgt von einem Übungsversuch, dann weiter
-                nowWithGame();
+                nowWithGame(); 
                 
             }
             else {  //wenn basics nicht erklärt : erkläre Basics gefolgt von einem Übungsversuch, dann weiter
@@ -1027,8 +1011,10 @@ function showTutorialDots() {//erklärt Dot
 
 
 
-function checkKeyPressForRightTutorial1(key) {
-   
+function checkKeyPressForRightTutorial1(key) { //Hier komme ich IMMER rein wenn der Tastendruck für das Tutorial erfolgt
+
+    alert("enableTest "+enableTest + " gameTut "+gameTut);
+  
             if (key.keyCode == '39' && enableTest || key.keyCode =="39" && gameTut) {   
                
                 stop();
@@ -1080,8 +1066,14 @@ function checkKeyPressForRightTutorial1(key) {
                 let goodJob = document.getElementById ("goodJob");
                 addScore(10);
                 addGreenBar();
-                fadeOutAll(positionDot1);
-                fadeOut(arrowRightPic);
+                if (basicsExplained == false) {
+                    fadeOutAll(positionDot1);
+                    fadeOut(arrowRightPic);
+                    basicsExplained = true; //Basics wurden erklärt
+                    
+
+                }
+                noGameTutorialWithoutBasics = false; //noGame Tutorial ohne Baiscs wurde gezeigt, durch false setzen lande ich in der Testphase nicht wieder hier
                 hideSingle(hiddenDot[1]);
 
                 showSingle(practise1);
@@ -1456,6 +1448,7 @@ function nowWithGame() { //leitet zum Gamification Tutorial ohne Basics hin
                 showArray(barIndicate);
                 showArray(points);
                 showSingle(thePoints);
+                
                 setTimeout(showFirst,1300,hiddenCross,1500);
 }
 
