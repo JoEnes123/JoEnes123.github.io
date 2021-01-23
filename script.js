@@ -19,7 +19,7 @@ let OhneVideo = document.getElementById("OhneVideo");
 let PunkteVideo = document.getElementById("PunkteVideo");
 let ZeitVideo = document.getElementById("ZeitVideo");
 var countTest = 0;
-var gameTut = false;
+
 
 var gameEnDis = false;
 var test = false;
@@ -1013,9 +1013,9 @@ function showTutorialDots() {//erklärt Dot
 
 function checkKeyPressForRightTutorial1(key) { //Hier komme ich IMMER rein wenn der Tastendruck für das Tutorial erfolgt
 
-    alert("enableTest "+enableTest + " gameTut "+gameTut);
+    alert("enableTest "+enableTest);
   
-            if (key.keyCode == '39' && enableTest || key.keyCode =="39" && gameTut) {   
+            if (key.keyCode == '39' && enableTest) {   
                
                 stop();
                 if (enableTest) {enableTest = false;}
@@ -1056,7 +1056,7 @@ function checkKeyPressForRightTutorial1(key) { //Hier komme ich IMMER rein wenn 
         else if (key.keyCode== "39" && (practiseFeedbackBool)) {activateFeedback();}
 
 
-            else if (key.keyCode =="39" && (gameTut == false)) {
+            else if (key.keyCode =="39" && (enableTest == false)) {
                 
                 stop();
                 window.removeEventListener("keydown",checkKeyPressForRightTutorial1,false);
@@ -1148,7 +1148,7 @@ function practise1 () { //Übungsphase ohne Gamification
 //TUTORIAL MIT GAMIFICATION
 
 function okayGame() {
-    gameTut = true;
+    enableTest = true;
     let introductionTutorialGame = document.getElementsByClassName("introductionTutorialGame"); 
     let taskExplainGame = document.getElementsByClassName("taskExplainGame");
     let okayGame = document.getElementById("okayGame");
