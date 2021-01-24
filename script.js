@@ -75,7 +75,7 @@ let Samples = [];
 let currentCorrect = null;
 let currentTime = null;
 
-let possibleFunctions = [1,1,1,4,4,4,1,4]; //Um Bedingugen im Tutorial zu shufflen
+let possibleFunctions = [1,2,3,4,4,1,2,3]; //Um Bedingugen im Tutorial zu shufflen
 
 let basicsExplained = false; //trackt ob die Grundfunktionalitäten bereits textuel erklärt wurden
 let pointsExplained = false; //trackt ob das Punkteelement bereits textuel erklärt wurde
@@ -745,7 +745,7 @@ function removeGameStuff () {
     setTimeout(selectWhichNext,2000);
 }
 
-function SelectGamificationTut() { //startet 4. Condition mit Erklärung der Task //haha
+function SelectGamificationTut() { //startet 4. Condition mit Erklärung der Task 
     shuffle(possibleFunctions);
     hideArray(buttons);
     selectWhichNext();
@@ -766,18 +766,19 @@ allGameState = false;
 
 alert(possibleFunctions);
 if (possibleFunctions.length == 0) {partOfCond4 = false;} else {partOfCond4 = true;} //solange true: gibt noch offene Tutorials für Bedingungen also muss in diese Auswahl zurückgekehrt werden
+setTimeout(selectFeedbackIntro(),800);
 //setTimeout(selectTimeIntro(),800); //klappt
 //setTimeout(selectPointsIntro(),800);// klappt
 //setTimeout(selectNoIntro,800); //klappt
 //setTimeout(selectAllIntro,800); //klappt
-if (possibleFunctions[0] == 1) {selectNoIntro();}
+/*if (possibleFunctions[0] == 1) {selectNoIntro();}
 if (possibleFunctions[0] == 2) {selectAllIntro();}
 if (possibleFunctions[0] == 3) {selectPointsIntro();}
 if (possibleFunctions[0] == 4) {selectTimeIntro();}
 if (possibleFunctions[0] == 5) {selectFeedbackIntro();}
 if (possibleFunctions[0] == 6) {selectPointsTimeIntro();}
 if (possibleFunctions[0] == 7) {selectPointsFeedbackIntro();}
-if (possibleFunctions[0] == 8) {selectTimeFeedbackIntro();}
+if (possibleFunctions[0] == 8) {selectTimeFeedbackIntro();}*/
 
 
 
@@ -943,12 +944,51 @@ else {  //wenn basics nicht erklärt : erkläre Basics gefolgt von einem Übungs
 }
 
 
+function selectFeedbackIntro () { //select mit punkten
 
-function selectFeedback () { //select mit Feedback
-    alert("feedback");
-    possibleFunctions.shift();
-    selectWhichNext();
+    let introSelectFeedback = document.getElementById("selectFeedbackIntro");
+    let introSelectFeedbackButton = document.getElementById("selectFeedbackIntroButton");
+
+    fadeIn(introSelectFeedback);
+    fadeIn(introSelectFeedbackButton);
+    showSingle(introSelectFeedbackButton);
 }
+
+function selectFeedbackDelay () { //delay damit Kreuz nicht sofort nach Intro erscheint
+
+let introSelectFeedback = document.getElementById("selectFeedbackIntro");
+let introSelectFeedbackButton = document.getElementById("selectFeedbackIntroButton");
+fadeOut(introSelectFeedback); //Text und Button der Intro verschwinden lassen
+fadeOut(introSelectFeedbackButton);
+hideSingle(introSelectFeedbackButton);
+setTimeout(selectFeedback,1000);
+}
+
+function selectFeedback () { //haha
+
+enableTest = true;
+practiseFeedbackBool = true;
+noGameTutEnd = 4;
+
+
+if (basicsExplained == true) { //wenn basics bereits erklärt : zeige Task einmal gefolgt von einem Übungsversuch, dann weiter
+
+    nowWithGame();
+   
+    
+}
+else {  //wenn basics nicht erklärt : erkläre Basics gefolgt von einem Übungsversuch, dann weiter
+    
+    startTutorialGame(); //hier werden alle game elemente gezeigt
+  
+ }
+
+}
+
+
+
+
+
 
 function selectPointsTime () { //select mit Punkten und Zeit
     alert("pointstime");
@@ -1176,6 +1216,18 @@ function checkKeyPressForRightTutorial1(key) { //Hier komme ich IMMER rein wenn 
                     
 
                }
+
+               if (practiseFeedbackBool == true) {
+
+                playVideo(vidPlusShort);
+                setTimeout(showSingle,1950,dotStand);
+                setTimeout(hideSingle,2000,vidPlusShort);
+                setTimeout(fadeInAll,2000,positionConfetti);
+                dotStand.style.borderStyle = "solid";
+                setTimeout(fadeIn,2000,afterExplainConfetti);
+                showSingle(afterExplainConfetti);
+
+               }
                 
             }
 
@@ -1257,7 +1309,8 @@ function startTutorialGame () {
     hideArray(tutorialButtonsGame);
     setTimeout(explainCross,1000);  
     setTimeout(showTutorialCross,2000);
-    if (practisePointsBool == true || noSelectives()) {
+
+    if (practisePointsBool == true || noSelectives()) { //Punkteelemente nur anzeigen wenn Punkte geübt werden oder generell Game
             showSingle(bar);
             showSingle(barGreen);
             showArray(barIndicate);
@@ -1276,16 +1329,33 @@ function afterExplainConfetti () { //erklärt das Konfetti
      let plus10Tutorial = document.getElementById("plus10Tutorial");
      let afterExplainConfetti = document.getElementById("afterExplainConfetti");
      let realAfterGetPoints = document.getElementById("realAfterGetPoints");
+     let practiseFeedbackPhase = document.getElementById("practiseFeedbackPhase");
+     let nowPractisePoints = document.getElementById("nowPractisePoints");
 
-  
-     fadeOutAll(positionConfetti);
-     fadeOut(afterExplainConfetti);
-     hideSingle(afterExplainConfetti);
-     dotStand.style.borderStyle = "none";
-     plus10Tutorial.style.borderStyle = "solid";
-     fadeInAll(plusZehnPosition);
-     fadeIn(realAfterGetPoints);
-     showSingle(realAfterGetPoints);
+     if (practiseFeedbackBool) { //wenn wir in der Punkte Erklärung der 4.Condition sind, endet das Tutorial hier
+    
+        
+        dotStand.style.borderStyle = "none";
+        hideSingle(dotStand);
+        fadeOutAll(positionConfetti);
+        fadeOut(afterExplainConfetti);
+        hideSingle(afterExplainConfetti);
+        fadeIn(nowPractisePoints);
+        fadeIn(practiseFeedbackPhase);
+        showSingle(practiseFeedbackPhase); //Übungsphase für Punkte
+       
+    }
+
+  else {
+        fadeOutAll(positionConfetti);
+        fadeOut(afterExplainConfetti);
+        hideSingle(afterExplainConfetti);
+        dotStand.style.borderStyle = "none";
+        plus10Tutorial.style.borderStyle = "solid";
+        fadeInAll(plusZehnPosition);
+        fadeIn(realAfterGetPoints);
+        showSingle(realAfterGetPoints);
+  }
     
 }
 
