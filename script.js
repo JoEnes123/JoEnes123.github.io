@@ -75,7 +75,7 @@ let Samples = [];
 let currentCorrect = null;
 let currentTime = null;
 
-let possibleFunctions = [1,2,3,4,5,7,7,7]; //Um Bedingugen im Tutorial zu shufflen
+let possibleFunctions = [2,2,2,2,2,2,2,2]; //Um Bedingugen im Tutorial zu shufflen
 
 let basicsExplained = false; //trackt ob die Grundfunktionalitäten bereits textuel erklärt wurden
 let pointsExplained = false; //trackt ob das Punkteelement bereits textuel erklärt wurde
@@ -758,6 +758,7 @@ function SelectGamificationTut() { //startet 4. Condition mit Erklärung der Tas
 
 function selectWhichNext () { //bestimmt welche select Funktion als nächstes aufgerufen wird //haha
 
+let DecideScreen = document.getElementById("DecideScreen");
 punkte = false;
 zeit = false;
 feedback = false;
@@ -767,9 +768,19 @@ practiseFeedbackBool = false; //damit ich da nicht nochmal reinkomme
 allGameState = false;
 
 alert(possibleFunctions);
-if (possibleFunctions.length == 0) {partOfCond4 = false;} else {partOfCond4 = true;} //solange true: gibt noch offene Tutorials für Bedingungen also muss in diese Auswahl zurückgekehrt werden
+if (possibleFunctions.length == 0) {
+    
+    fadeIn(DecideScreen);
+    partOfCond4 = false;
 
-setTimeout(selectFeedbackTimeIntro,800);
+
+} 
+
+
+
+else {partOfCond4 = true;} //solange true: gibt noch offene Tutorials für Bedingungen also muss in diese Auswahl zurückgekehrt werden
+
+//setTimeout(selectFeedbackTimeIntro,800); //klappt
 //setTimeout(selectFeedbackPointsIntro,800); //klappt
 //setTimeout(selectTimePointsIntro,800); 
 //setTimeout(selectFeedbackIntro(),800); //klappt
@@ -793,7 +804,9 @@ if (possibleFunctions[0] == 8) {selectFeedbackTimeIntro();}
 function selectNoIntro () { //select ohne game elemente
     let introSelectNo = document.getElementById("selectNoIntro");
     let introSelectNoButton = document.getElementById("selectNoIntroButton");
+    let sliderNo = document.getElementById("sliderNo");
 
+    fadeIn(sliderNo);
     fadeIn(introSelectNo);
     fadeIn(introSelectNoButton);
     showSingle(introSelectNoButton);
@@ -830,7 +843,9 @@ function selectNo () {
 function selectAllIntro () { //select mit game elemente
     let introSelectAll = document.getElementById("selectAllIntro");
     let introSelectAllButton = document.getElementById("selectAllIntroButton");
+    let sliderAll = document.getElementById("sliderAll");
 
+    fadeIn(sliderAll);
     fadeIn(introSelectAll);
     fadeIn(introSelectAllButton);
     showSingle(introSelectAllButton);
@@ -872,7 +887,9 @@ function selectPointsIntro () { //select mit punkten
 
         let introSelectPoints = document.getElementById("selectPointsIntro");
         let introSelectPointsButton = document.getElementById("selectPointsIntroButton");
+        let sliderPoints = document.getElementById("sliderPoints");
 
+        fadeIn(sliderPoints);
         fadeIn(introSelectPoints);
         fadeIn(introSelectPointsButton);
         showSingle(introSelectPointsButton);
@@ -912,7 +929,9 @@ function selectTimeIntro () { //select mit punkten
 
     let introSelectTime = document.getElementById("selectTimeIntro");
     let introSelectTimeButton = document.getElementById("selectTimeIntroButton");
+    let sliderTime = document.getElementById("sliderTime");
 
+    fadeIn(sliderTime);
     fadeIn(introSelectTime);
     fadeIn(introSelectTimeButton);
     showSingle(introSelectTimeButton);
@@ -954,7 +973,9 @@ function selectFeedbackIntro () { //select mit punkten
 
     let introSelectFeedback = document.getElementById("selectFeedbackIntro");
     let introSelectFeedbackButton = document.getElementById("selectFeedbackIntroButton");
+    let sliderTime = document.getElementById("sliderFeedback");
 
+    fadeIn(sliderTime);
     fadeIn(introSelectFeedback);
     fadeIn(introSelectFeedbackButton);
     showSingle(introSelectFeedbackButton);
@@ -995,7 +1016,9 @@ function selectTimePointsIntro () { //select mit punkten
 
     let introSelectTimePoints= document.getElementById("selectTimePointsIntro");
     let introSelectTimePointsButton = document.getElementById("selectTimePointsIntroButton");
+    let sliderPointsTime = document.getElementById("sliderPointsTime");
 
+    fadeIn(sliderPointsTime);
     fadeIn(introSelectTimePoints);
     fadeIn(introSelectTimePointsButton);
     showSingle(introSelectTimePointsButton);
@@ -1037,7 +1060,9 @@ function selectFeedbackPointsIntro () { //select mit punkten und feedback
 
     let introSelectFeedbackPoints= document.getElementById("selectFeedbackPointsIntro");
     let introSelectFeedbackPointsButton = document.getElementById("selectFeedbackPointsIntroButton");
+    let sliderPointsFeedback = document.getElementById("sliderPointsFeedback");
 
+    fadeIn(sliderPointsFeedback);
     fadeIn(introSelectFeedbackPoints);
     fadeIn(introSelectFeedbackPointsButton);
     showSingle(introSelectFeedbackPointsButton);
@@ -1075,30 +1100,32 @@ function selectFeedbackPoints () {
 
 }
 
-function selectFeedbackTimeIntro () { //select mit punkten und feedback
+function selectFeedbackTimeIntro () { //select mit punkten und feedback haha
 
     let introSelectFeedbackTime = document.getElementById("selectFeedbackTimeIntro");
     let introSelectFeedbackTimeButton = document.getElementById("selectFeedbackTimeIntroButton");
+    let sliderTimeFeedback = document.getElementById("sliderTimeFeedback");
 
+    fadeIn(sliderTimeFeedback);
     fadeIn(introSelectFeedbackTime);
     fadeIn(introSelectFeedbackTimeButton);
     showSingle(introSelectFeedbackTimeButton);
 }
 
 function selectFeedbackTimeDelay () { //delay damit Kreuz nicht sofort nach Intro erscheint
-
+        
         let introSelectFeedbackTime = document.getElementById("selectFeedbackTimeIntro");
         let introSelectFeedbackTimeButton = document.getElementById("selectFeedbackTimeIntroButton");
         fadeOut(introSelectFeedbackTime); //Text und Button der Intro verschwinden lassen
-        fadeOut(introSelectFeedbackPointsButton);
-        hideSingle(introSelectFeedbackPointsButton);
-        setTimeout(selectFeedbackPoints,1000);
+        fadeOut(introSelectFeedbackTimeButton);
+        hideSingle(introSelectFeedbackTimeButton);
+        setTimeout(selectFeedbackTime,1000);
         }
 
-function selectFeedbackPoints () { 
+function selectFeedbackTime () { 
 
         enableTest = true;
-        practisePointsBool = true;
+        practiseTimeBool = true;
         practiseFeedbackBool = true;
         noGameTutEnd = 4;
 
@@ -1315,6 +1342,7 @@ function checkKeyPressForRightTutorial1(key) { //Hier komme ich IMMER rein wenn 
                         dotStand.style.borderStyle = "solid";
                         setTimeout(fadeIn,2000,afterExplainConfetti);
                         showSingle(afterExplainConfetti);
+                        return;
                     } //lässt Konfetti Erklärung verschwinden und geht Tutorial weiter durch
 
                
@@ -1338,6 +1366,7 @@ function checkKeyPressForRightTutorial1(key) { //Hier komme ich IMMER rein wenn 
                 return;
                } 
 
+
                if (practisePointsBool == true && practiseFeedbackBool == true) {
 
                 addScore(10);
@@ -1353,6 +1382,21 @@ function checkKeyPressForRightTutorial1(key) { //Hier komme ich IMMER rein wenn 
                 showSingle(afterExplainConfetti);
                 
                 return;
+               }
+
+               if (practiseTimeBool == true && practiseFeedbackBool == true) {
+                
+                goRecord();
+                setTimeout(showSingle,1300,newTimeRecord);
+                playVideo(vidPlusShort);
+                setTimeout(showSingle,1950,dotStand);
+                setTimeout(hideSingle,2000,vidPlusShort);
+                setTimeout(fadeInAll,2000,positionConfetti);
+                dotStand.style.borderStyle = "solid";
+                setTimeout(fadeIn,2000,afterExplainConfetti);
+                showSingle(afterExplainConfetti);
+                return;
+
                }
 
 
@@ -1387,6 +1431,8 @@ function checkKeyPressForRightTutorial1(key) { //Hier komme ich IMMER rein wenn 
 
                if (practiseFeedbackBool == true) {
 
+                
+
                     playVideo(vidPlusShort);
                     setTimeout(showSingle,1950,dotStand);
                     setTimeout(hideSingle,2000,vidPlusShort);
@@ -1408,7 +1454,10 @@ function checkKeyPressForRightTutorial1(key) { //Hier komme ich IMMER rein wenn 
                 let arrowRightPic = document.getElementById("arrowRightPic");
                 let practise1 = document.getElementById("practise1");
                 let goodJob = document.getElementById ("goodJob");
-                addScore(10);
+                let sliderNo = document.getElementById("sliderNo");
+
+                fadeOut(sliderNo);
+;               addScore(10);
                 addGreenBar();
                 if (basicsExplained == false) {
                     fadeOutAll(positionDot1);
@@ -1423,6 +1472,7 @@ function checkKeyPressForRightTutorial1(key) { //Hier komme ich IMMER rein wenn 
                 showSingle(practise1);
                 fadeIn(practise1); //Button um Übungsphase ohne Gamification zu starten
                 fadeIn(goodJob); 
+
                     
                 }
 
@@ -1437,6 +1487,9 @@ function practise1 () { //Übungsphase ohne Gamification
    
     let practise1 = document.getElementById("practise1");
     let goodJob = document.getElementById ("goodJob");
+    let sliderNo = document.getElementById("sliderNo");
+
+    fadeOut(sliderNo);
     hideSingle(practise1);
     fadeOut(practise1);
     fadeOut(goodJob);
@@ -1500,6 +1553,9 @@ function afterExplainConfetti () { //erklärt das Konfetti
      let realAfterGetPoints = document.getElementById("realAfterGetPoints");
      let practiseFeedbackPhase = document.getElementById("practiseFeedbackPhase");
      let nowPractisePoints = document.getElementById("nowPractisePoints");
+     let positionRecord1 = document.getElementsByClassName("positionRecord1");
+     let afterExplainBar = document.getElementById("afterExplainBar");
+     let TimeTutorial = document.getElementById("TimeTutorial");
 
      if (practiseFeedbackBool && !practisePointsBool && !practiseTimeBool) { //wenn wir in der Punkte Erklärung der 4.Condition sind, endet das Tutorial hier
     
@@ -1512,10 +1568,24 @@ function afterExplainConfetti () { //erklärt das Konfetti
         fadeIn(nowPractisePoints);
         fadeIn(practiseFeedbackPhase);
         showSingle(practiseFeedbackPhase); //Übungsphase für Punkte
+        return;
        
     }
 
-  else {
+    if (practiseFeedbackBool && practiseTimeBool) {
+
+        fadeOutAll(positionConfetti);
+        fadeOut(afterExplainConfetti);
+        hideSingle(afterExplainConfetti);
+        dotStand.style.borderStyle = "none";
+        TimeTutorial.style.borderStyle = "solid";
+        fadeInAll(positionRecord1);
+        fadeIn(afterExplainBar);
+        showSingle(afterExplainBar);
+        return;
+    }
+
+ 
         fadeOutAll(positionConfetti);
         fadeOut(afterExplainConfetti);
         hideSingle(afterExplainConfetti);
@@ -1524,7 +1594,7 @@ function afterExplainConfetti () { //erklärt das Konfetti
         fadeInAll(plusZehnPosition);
         fadeIn(realAfterGetPoints);
         showSingle(realAfterGetPoints);
-  }
+  
     
 }
 
@@ -1590,7 +1660,7 @@ function afterExplainScore () {
         hideSingle(afterExplainScore);
         fadeIn(nowPractisePoints);
         fadeIn(practisePointsPhase);
-        showSingle(practisePointsPhase); //Übungsphase für Punkte
+        showSingle(practisePointsPhase); //Übungsphase für Punkte maybe
        
     }
     else if (practiseTimeBool && !practisePointsBool && !practiseFeedbackBool) { 
@@ -1695,6 +1765,7 @@ else {
 function afterExplainRecord () {
 
     if (practiseTimeBool && !practisePointsBool && !practiseFeedbackBool) { //Abfangen wenn es das exklusive Zeit Tutorial ist
+
         let newTimeRecord = document.getElementById("TimeTutorial");
         let positionTime1 = document.getElementsByClassName("positionTime1");
         let afterExplainRecord = document.getElementById("afterExplainRecord");
@@ -1723,8 +1794,10 @@ else if (practiseTimeBool && practisePointsBool) { //hier
     let positionTime1 = document.getElementsByClassName ("positionTime1");
     let scores2 = document.getElementById("scores2");
     
+    
 
     scores2.style.borderStyle = "none";
+    
     
     fadeIn(nowPractisePoints);
     fadeIn(practiseTimePointsPhase);
@@ -1734,6 +1807,29 @@ else if (practiseTimeBool && practisePointsBool) { //hier
     fadeOutAll(positionTime1);
     fadeOut(afterExplainRecord);
     hideSingle(afterExplainRecord);
+}
+
+else if (practiseTimeBool && practiseFeedbackBool) { //oho
+    
+    let afterExplainRecord = document.getElementById("afterExplainRecord");
+    let practiseFeedbackTimePhase = document.getElementById("practiseFeedbackTimePhase");
+    let newTimeRecord = document.getElementById("TimeTutorial");
+    let scores2 = document.getElementById("scores2");
+    let dotStand = document.getElementById("DotsStand");
+    scores2.style.borderStyle = "none";
+    let positionTime1 = document.getElementsByClassName("positionTime1");
+    let nowPractisePoints = document.getElementById("nowPractisePoints");
+
+    hideSingle(dotStand);
+    hideSingle(newTimeRecord);
+    fadeIn(practiseFeedbackTimePhase);
+    showSingle(practiseFeedbackTimePhase);
+    fadeOut(afterExplainRecord);
+    hideSingle(afterExplainRecord);
+    fadeOutAll(positionTime1);
+    fadeIn(nowPractisePoints);
+
+
 }
 
 
@@ -1748,6 +1844,7 @@ else {
     let plusZehn = document.getElementById("plus10Tutorial");
     let dotStand = document.getElementById("DotsStand");
     let scores2 = document.getElementById("scores2");
+    
     
 
     scores2.style.borderStyle = "none";
@@ -1776,6 +1873,9 @@ function practise2 () {
     
     let practise2 = document.getElementById("practise2");
     let nowPractise = document.getElementById ("nowPractise");
+    let sliderAll = document.getElementById("sliderAll");
+
+    fadeOut(sliderAll);
     fadeOut(practise2);
     hideSingle(practise2);
     fadeOut(nowPractise);
@@ -1884,6 +1984,9 @@ function startTutorialSelect() {//Startet Tutorial in 4.Condition für Variante 
 function practisePointsPhase () {
     let nowPractisePoints = document.getElementById("nowPractisePoints");
     let practisePointsPhase = document.getElementById("practisePointsPhase");
+    let sliderPoints = document.getElementById("sliderPoints");
+
+    fadeOut(sliderPoints);
     fadeOut(nowPractisePoints);
     fadeOut(practisePointsPhase);
     hideSingle(practisePointsPhase);
@@ -1899,8 +2002,12 @@ function practisePointsPhase () {
 
 
  function practiseTimePhase () {
+   
     let nowPractisePoints = document.getElementById("nowPractisePoints");
     let practiseTimePhase = document.getElementById("practiseTimePhase");
+    let sliderTime = document.getElementById("sliderTime");
+
+    fadeOut(sliderTime);
     fadeOut(nowPractisePoints);
     fadeOut(practiseTimePhase);
     hideSingle(practiseTimePhase);
@@ -1914,12 +2021,15 @@ function practisePointsPhase () {
 }
 
 function practiseFeedbackPhase () {
+    
     let nowPractisePoints = document.getElementById("nowPractisePoints");
     let practiseFeedbackPhase = document.getElementById("practiseFeedbackPhase");
     fadeOut(nowPractisePoints);
     fadeOut(practiseFeedbackPhase);
     hideSingle(practiseFeedbackPhase);
-   
+    let sliderFeedback = document.getElementById("sliderFeedback");
+
+    fadeOut(sliderFeedback);
     zeit = false;
     punkte = false;
     feedback = true;
@@ -1929,12 +2039,15 @@ function practiseFeedbackPhase () {
 }
 
 function practiseTimePointsPhase () {
+    
     let nowPractisePoints = document.getElementById("nowPractisePoints");
     let practiseTimePointsPhase = document.getElementById("practiseTimePointsPhase");
     fadeOut(nowPractisePoints);
     fadeOut(practiseTimePointsPhase);
     hideSingle(practiseTimePointsPhase);
-   
+    let sliderPointsTime = document.getElementById("sliderPointsTime");
+
+    fadeOut(sliderPointsTime);
     zeit = true;
     punkte = true;
     feedback = false;
@@ -1944,17 +2057,38 @@ function practiseTimePointsPhase () {
     set(false);
 }
 
-function practiseFeedbackPointsPhase () {
+function practiseFeedbackPointsPhase () { 
     let nowPractisePoints = document.getElementById("nowPractisePoints");
     let practiseFeedbackPointsPhase = document.getElementById("practiseFeedbackPointsPhase");
     fadeOut(nowPractisePoints);
     fadeOut(practiseFeedbackPointsPhase);
     hideSingle(practiseFeedbackPointsPhase);
-   
+    let sliderPointsFeedback = document.getElementById("sliderPointsFeedback");
+
+    fadeOut(sliderPointsFeedback);
     zeit = false;
     punkte = true;
     feedback = true;
     pointsExplained = true;
+    feedbackExplained = true;
+    selectionTest = true;
+    set(false);
+}
+
+function practiseFeedbackTimePhase () { 
+    
+    let nowPractisePoints = document.getElementById("nowPractisePoints");
+    let practiseFeedbackTimePhase = document.getElementById("practiseFeedbackTimePhase");
+    fadeOut(nowPractisePoints);
+    fadeOut(practiseFeedbackTimePhase);
+    hideSingle(practiseFeedbackTimePhase);
+    let sliderTimeFeedback = document.getElementById("sliderTimeFeedback");
+
+    fadeOut(sliderTimeFeedback);
+    zeit = true;
+    punkte = false;
+    feedback = true;
+    timeExplained = true;
     feedbackExplained = true;
     selectionTest = true;
     set(false);
