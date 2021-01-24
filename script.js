@@ -769,6 +769,7 @@ allGameState = false;
 alert(possibleFunctions);
 if (possibleFunctions.length == 0) {partOfCond4 = false;} else {partOfCond4 = true;} //solange true: gibt noch offene Tutorials für Bedingungen also muss in diese Auswahl zurückgekehrt werden
 
+setTimeout(selectFeedbackTimeIntro,800);
 //setTimeout(selectFeedbackPointsIntro,800); //klappt
 //setTimeout(selectTimePointsIntro,800); 
 //setTimeout(selectFeedbackIntro(),800); //klappt
@@ -1047,6 +1048,48 @@ function selectFeedbackPointsDelay () { //delay damit Kreuz nicht sofort nach In
         let introSelectFeedbackPoints = document.getElementById("selectFeedbackPointsIntro");
         let introSelectFeedbackPointsButton = document.getElementById("selectFeedbackPointsIntroButton");
         fadeOut(introSelectFeedbackPoints); //Text und Button der Intro verschwinden lassen
+        fadeOut(introSelectFeedbackPointsButton);
+        hideSingle(introSelectFeedbackPointsButton);
+        setTimeout(selectFeedbackPoints,1000);
+        }
+
+function selectFeedbackPoints () { 
+
+        enableTest = true;
+        practisePointsBool = true;
+        practiseFeedbackBool = true;
+        noGameTutEnd = 4;
+
+
+        if (basicsExplained == true) { //wenn basics bereits erklärt : zeige Task einmal gefolgt von einem Übungsversuch, dann weiter
+
+            nowWithGame();
+        
+            
+        }
+        else {  //wenn basics nicht erklärt : erkläre Basics gefolgt von einem Übungsversuch, dann weiter
+            
+            startTutorialGame(); //hier werden alle game elemente gezeigt
+        
+        }
+
+}
+
+function selectFeedbackTimeIntro () { //select mit punkten und feedback
+
+    let introSelectFeedbackTime = document.getElementById("selectFeedbackTimeIntro");
+    let introSelectFeedbackTimeButton = document.getElementById("selectFeedbackTimeIntroButton");
+
+    fadeIn(introSelectFeedbackTime);
+    fadeIn(introSelectFeedbackTimeButton);
+    showSingle(introSelectFeedbackTimeButton);
+}
+
+function selectFeedbackTimeDelay () { //delay damit Kreuz nicht sofort nach Intro erscheint
+
+        let introSelectFeedbackTime = document.getElementById("selectFeedbackTimeIntro");
+        let introSelectFeedbackTimeButton = document.getElementById("selectFeedbackTimeIntroButton");
+        fadeOut(introSelectFeedbackTime); //Text und Button der Intro verschwinden lassen
         fadeOut(introSelectFeedbackPointsButton);
         hideSingle(introSelectFeedbackPointsButton);
         setTimeout(selectFeedbackPoints,1000);
