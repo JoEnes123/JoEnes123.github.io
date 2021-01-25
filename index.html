@@ -36,11 +36,11 @@
                
                 <div class = "selectNames selectOptions">Points</div>
 
-                <button  class = "selectOptions selectButton" id = "practisePointButton" onclick="practisePoints()">Practise Points</button>
+               
 
-                <img  class="haken" id = "pointHaken" src="haken.jpg" width=200px height=200px> 
+                <input type="checkbox" id="timeSelectScreen" class ="selectOptions " name="time"> <label class = "selectOptions" for="time">Time</label>
 
-                <img  class="selectPic selectOptions" src="icons8-10-circled-100.png" width=100px height=100px> 
+               
 
                 
                  <img id="picture11" class="picture1 pictureLeft hide" src="1.1.png" width=260px height=390px> 
@@ -54,10 +54,23 @@
 
         <div class = "posCross cross" id = "cross1"></div> 
         <div class = "posCross2 cross" id = "cross2"></div>  
+
+        <img id="sliderAll" class = "sliders"  src="All.jpeg" width = 300px> 
+        <img id="sliderNo" class = "sliders"  src="No.jpeg" width = 300px> 
+        <img id="sliderPoints" class = "sliders"  src="Points.jpeg" width = 300px> 
+        <img id="sliderTime" class = "sliders"  src="Time.jpeg" width = 300px> 
+        <img id="sliderFeedback" class = "sliders"  src="Feedback.jpeg" width = 300px> 
+        <img id="sliderPointsTime" class = "sliders"  src="PointsTime.jpeg" width = 300px> 
+        <img id="sliderPointsFeedback" class = "sliders"  src="PointsFeedback.jpeg" width = 300px> 
+        <img id="sliderTimeFeedback" class = "sliders"  src="TimeFeedback.jpeg" width = 300px> 
+
         <video plays-inline id="plusAnim" class = "hide"  width ="650" autoplay><source src="NewpositiveDots.mp4" type ="video/mp4"></video>
-          <video plays-inline id="plusAnimShort" class = "hide"  width ="650" autoplay><source src="postiveDotsShort.mp4" type ="video/mp4"></video>
+        <video id="plusAnimShort" class="hide"  width="650" autoplay="false" preload="auto">  <source src="NewpositiveDots.mp4" type ="video/mp4"> </video>
         <img src="DotsStand.png" id = "DotsStand"class="hide" width="650"> 
-        <video plays-inline id="minusAnim" class = "hide"  width ="650" autoplay><source src="negativeDots.mp4" type ="video/mp4"></video>
+        <video plays-inline id="minusAnim" class = "hide"  width ="650" autoplay><source src="NewpositiveDots.mp4" type ="video/mp4"></video>
+
+        <img src="BeispielCond4.001.jpeg" id = "DecideScreen" width="1200"> 
+    
           
         <div id= "plus10">+10</div>
         <div id= "plus10Tutorial">+10</div>
@@ -78,15 +91,45 @@
           <button class = "nextButton" id="afterPicture1"  onclick="afterPicture1()">Next</button>
 
 
-          <div id = "goodJob">Good! Now practise a while</div>
+          <div id = "goodJob">Good! Now practise one more time (1)</div>
 
           <div id = "startText">Good! Now you can start the task!</div>
 
-          <button class = "nextButton" id="practiseSelect"  onclick="beforeSelektionAppears1()">Next</button>
 
-          <button class = "nextButton" id="practiseSelect0"  onclick="beforeSelektionAppears0()">Next</button>
+          <div id = "selectNoIntro" class = "selectElementsText"> Now you will experience the task without any additional features</div>
 
-          <div id = "goodJobSelect0">Good! Now practise a while</div>
+          <div id = "selectAllIntro" class = "selectElementsText"> Now you will experience the task with all additional features</div>
+
+          <div id = "selectPointsIntro" class = "selectElementsText"> Now you will experience the task with points</div>
+
+          <div id = "selectTimeIntro" class = "selectElementsText"> Now you will experience the task with timing</div>
+
+          <div id = "selectFeedbackIntro" class = "selectElementsText"> Now you will experience the task with feedback</div>
+
+          <div id = "selectTimePointsIntro" class = "selectElementsText"> Now you will experience the task with points and timing</div>
+
+          <div id = "selectFeedbackPointsIntro" class = "selectElementsText"> Now you will experience the task with points and feedback</div>
+
+          <div id = "selectFeedbackTimeIntro" class = "selectElementsText"> Now you will experience the task with timing and feedback</div>
+
+          <button class = "nextButton" id= "selectNoIntroButton"  onclick="selectNoDelay()">Next</button>
+
+          <button class = "nextButton" id= "selectAllIntroButton"  onclick="selectAllDelay()">Next</button>
+
+          <button class = "nextButton" id= "selectPointsIntroButton"  onclick="selectPointsDelay()">Next</button>
+
+          <button class = "nextButton" id= "selectTimeIntroButton"  onclick="selectTimeDelay()">Next</button>
+
+          <button class = "nextButton" id= "selectFeedbackIntroButton"  onclick="selectFeedbackDelay()">Next</button>
+
+          <button class = "nextButton" id= "selectTimePointsIntroButton"  onclick="selectTimePointsDelay()">Next</button>
+
+          <button class = "nextButton" id= "selectFeedbackPointsIntroButton"  onclick="selectFeedbackPointsDelay()">Next</button>
+
+          <button class = "nextButton" id= "selectFeedbackTimeIntroButton"  onclick="selectFeedbackTimeDelay()">Next</button>
+
+
+          <div id = "goodJobSelect0">Good! Now practise one more time (2)</div>
 
           <div id = "goodJobSelect">Good! Now you will experience the different game elements</div>
 
@@ -110,7 +153,7 @@
             Confetti will celebreate your correct input!
           </div>
 
-          <button class = "nextButton" id="afterGetPoints"  onclick="beforeAfterGetPoints()">Next</button>
+          <button class = "nextButton" id="afterExplainConfetti"  onclick="afterExplainConfetti()">Next</button>
 
           <button class = "nextButton" id="realAfterGetPoints"  onclick="afterGetPoints()">Next</button>
 
@@ -138,9 +181,9 @@
 
           <button class = "nextButton" id="afterExplainRecord"  onclick="afterExplainRecord()">Next</button>
 
-          <div id = "nowPractise">Now practise a while</div>
+          <div id = "nowPractise">Now practise one more time (3)</div>
 
-          <div id = "nowPractisePoints">Now you can practise this configuration a while</div>
+          <div id = "nowPractisePoints">Now you can practise this configuration one more time</div>
 
           <button class = "nextButton" id="practise2"  onclick="practise2()">Practise</button>
 
@@ -149,6 +192,12 @@
           <button class = "nextButton" id="practiseTimePhase"  onclick="practiseTimePhase()">Practise</button>
 
           <button class = "nextButton" id="practiseFeedbackPhase"  onclick="practiseFeedbackPhase()">Practise</button>
+
+          <button class = "nextButton" id="practiseTimePointsPhase"  onclick="practiseTimePointsPhase()">Practise</button>
+
+          <button class = "nextButton" id="practiseFeedbackPointsPhase"  onclick="practiseFeedbackPointsPhase()">Practise</button>
+
+          <button class = "nextButton" id="practiseFeedbackTimePhase"  onclick="practiseFeedbackTimePhase()">Practise</button>
 
          
       
@@ -168,11 +217,13 @@
         
         <div class = "selectNames selectOptions">Time</div>
 
-        <button  class = "selectOptions selectButton" id = "practiseTimeButton"onclick="practiseTime()">Practise Time</button>
+        
+
+        <input type="checkbox" id="time" class ="selectOptions " name="time"> <label class = "selectOptions" for="time">Time</label>
 
        
 
-        <img  class="selectPic selectOptions" src="icons8-uhr-512.png" width=100px height=100px> 
+        
 
        
         
@@ -226,12 +277,12 @@
 
        <div class = "taskExplainSelect IntroText2">
         In the following you will absolve a cognitive reaction task. You have to use the arrow keys on the keyboard to react 
-        as fast as possible to appearing dots. You can choose between two different versons of the task. The tutorial will explain you how both versions work in detail.</div>
+        as fast as possible to appearing dots. For the absolvation of the task, you can choose between several configurations. The tutorial will explain you all configurations in detail.</div>
 
          <div class = "introductionTutorialSelect Tutorial">Tutorial</div>
 
        <div class = "introductionTutorialSelect IntroText2">
-                Hier wird erklaert wie das Tutorial mit Selection aufgebaut ist</div>
+                Now you will be introduced into the eight possible configurations, before you can make a choice which one to use for the actual task</div>
 
         <div class = "taskExplainEnableDisable IntroText4">
           In the following you will absolve a cognitive reaction task. You have to use the arrow keys on the keyboard to react 
@@ -273,9 +324,12 @@
 
     <div class="RightMain">
         <button style="height:100px;width:200px"  class = "GameButtons buttons" onclick="EnableDisableGamificationTut()">Enable/Disable Gamification</button>
-        <button style="height:100px;width:200px" class = "GameButtons buttons" onclick="SelectGamificationTut()">Choose Game Elements</button>
+        <button style="height:100px;width:200px" class = "GameButtons buttons" onclick="SelectGamificationTut1()">Choose Game Elements</button>
         <button style="height:100px;width:200px" class = "EnableDisableButtons DecideScreen" onclick="DisableGamification()">Version 1</button>
         <div class = "posDot2 dot" id = "dot"></div>
+
+       
+
         <div class="boxCross1 positionDot1 arrow-right ">
             On the left or right a dot appears. React as fast as possible by clicking the correct button on the keyboard.
           </div>
@@ -286,11 +340,10 @@
 
         <div class = "selectNames selectOptions">Feedback</div>
 
-        <button  class = "selectOptions selectButton" id = "practiseFeedbackButton"onclick="practiseFeedback()">Practise Feedback</button>
+        <input type="checkbox" id="time" class ="selectOptions " name="feedback"> <label class = "selectOptions" for="time">Feedback</label>
 
-        <img  class="haken" id = "feedbackHaken" src="haken.jpg" width=200px height=200px> 
 
-        <img  class="selectPic selectOptions" src="icons8-konfetti-100.png" width=100px height=100px> 
+       
 
         
         
