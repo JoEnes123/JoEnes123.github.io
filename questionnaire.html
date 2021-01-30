@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+  
+    <head>
+        <title>Dot probe task</title>
+        <link rel="stylesheet" href="questStyle.css">  
+         
+    </head>
+<body>    
+
+
+    <div class="grid-container">
+
+
+      <div class="topBar">
+
+            <div id ="logo">Art and Attention Study</div>
+            <button style = "height:25px;width:150px"id = "legalInformation" class = "infoButton" onclick="legalInformation()">Legal Information</button>
+            <button style = "height:25px;width:200px"id = "dataInformation" class = "infoButton" onclick="dataInformation()">Data Protection Information</button>
+
+        </div>
+        <div class="surveyType">
+
+               <div class ="demoHeader demoStuff">Demographic questions</div>
+               <div class ="demoIntro demoStuff"> Hier werden einige demographische Fragen gestellt :)</div>
+
+               <div class ="demoHeader imiStuff">Intrinsic motivation inventory</div>
+               <div class ="demoIntro imiStuff"> Hier wird die intrinsic moitvation inventory durchgefuehrt :)</div>
+
+               <div class ="demoHeader openStuff">Open optional questions</div>
+               <div class ="demoIntro openStuff"> Hier koennen optional Antworten in freien Textfeldern gegeben werden :)</div>
+
+               
+
+        </div>
+
+        
+
+        <div class="survey">
+
+            <div class = "end">Thanks for your participation!</div>
+
+            <div class = "demoStuff">
+            
+            <label for="Age" class="question">1.Whats your age</label>
+            <p class = "answers">
+                <input  type="radio" name="age" value="young">&nbsp 18 - 25<br>
+                 <input type="radio" name="age" value="middle">&nbsp 25 - 35<br>
+                <input  type="radio" name="age" value="old">&nbsp > 45
+            </p>
+
+            <label for="Gender" class="question">2.What gender do you identify with?</label>
+            <p class = "answers">
+                <input type="radio" name="gender" value="male">&nbsp Male<br>
+                 <input type="radio" name="gender" value="female">&nbsp Female<br>
+                <input type="radio" name="gender" value="other">&nbsp Other
+            </p>
+
+            <label for="Eth1" class="question">3.Whats your ethnicity?</label>
+            <p class = "answers">
+                <input type="radio" name="ethA" value="eth1">&nbsp Schach<br>
+                 <input type="radio" name="ethA" value="eth2">&nbsp Matt <br>
+                
+            </p>
+
+            <label for="Eth2" class="question">4.Whats your ethnicity?</label>
+            <p class = "answers">
+                <input type="radio" name="ethB" value="eth1">&nbsp Schach<br>
+                 <input type="radio" name="ethB" value="eth2">&nbsp Matt <br>
+                
+            </p>
+
+            <label for="Eth3" class="question">5.Whats your ethnicity?</label>
+            <p class = "answers"> 
+                <input type="radio" name="ethC" value="eth1">&nbsp Schach<br>
+                 <input type="radio" name="ethC" value="eth2">&nbsp Matt <br>
+                
+            </p>
+        </div>
+
+
+
+        <div class = "imiStuff">
+            
+
+            <label for="FirstIMI" class="question">1. I enjoyed doing this activity very much</label>
+            <div class = "numbersForScale"> 1 &nbsp 2 &nbsp 3 &nbsp 4 &nbsp 5 &nbsp 6 &nbsp 7</div>
+            <ul class="likert"> 
+                <li> &nbsp&nbsp&nbsp&nbsp&nbspNot at all true &nbsp&nbsp</li>
+                <li><input type="radio" name="one" value="1" />&nbsp&nbsp</li>
+                <li><input type="radio" name="two" value="2" />&nbsp&nbsp</li>
+                <li><input type="radio" name="three" value="3" />&nbsp&nbsp</li>
+                <li><input type="radio" name="four" value="4" />&nbsp&nbsp</li>
+                <li><input type="radio" name="five" value="5" />&nbsp&nbsp</li>
+                <li><input type="radio" name="six" value="6" />&nbsp&nbsp</li>
+                <li><input type="radio" name="seven" value="7" />&nbsp&nbsp</li>
+                <li> &nbsp&nbsp Very true</li> <br><br><br>
+            </ul>
+
+            <label for="SecondIMI" class="question">2. This activity was fun to do.</label> 
+            <div class = "numbersForScale"> 1 &nbsp 2 &nbsp 3 &nbsp 4 &nbsp 5 &nbsp 6 &nbsp 7</div>
+            <ul class="likert"> 
+                <li> &nbsp&nbsp&nbsp&nbsp&nbspNot at all true &nbsp&nbsp</li>
+                <li><input type="radio" name="one" value="1" />&nbsp&nbsp</li>
+                <li><input type="radio" name="two" value="2" />&nbsp&nbsp</li>
+                <li><input type="radio" name="three" value="3" />&nbsp&nbsp</li>
+                <li><input type="radio" name="four" value="4" />&nbsp&nbsp</li>
+                <li><input type="radio" name="five" value="5" />&nbsp&nbsp</li>
+                <li><input type="radio" name="six" value="6" />&nbsp&nbsp</li>
+                <li><input type="radio" name="seven" value="7" />&nbsp&nbsp</li>
+                <li> &nbsp&nbsp Very true</li> <br><br><br>
+            </ul>
+
+            <label for="ThirdIMI" class="question">3. I thought this was a boring activity.</label>
+            <div class = "numbersForScale"> 1 &nbsp 2 &nbsp 3 &nbsp 4 &nbsp 5 &nbsp 6 &nbsp 7</div>
+            <ul class="likert"> 
+                <li> &nbsp&nbsp&nbsp&nbsp&nbspNot at all true &nbsp&nbsp</li>
+                <li><input type="radio" name="one" value="1" />&nbsp&nbsp</li>
+                <li><input type="radio" name="two" value="2" />&nbsp&nbsp</li>
+                <li><input type="radio" name="three" value="3" />&nbsp&nbsp</li>
+                <li><input type="radio" name="four" value="4" />&nbsp&nbsp</li>
+                <li><input type="radio" name="five" value="5" />&nbsp&nbsp</li>
+                <li><input type="radio" name="six" value="6" />&nbsp&nbsp</li>
+                <li><input type="radio" name="seven" value="7" />&nbsp&nbsp</li>
+                <li> &nbsp&nbsp Very true</li> <br><br><br>
+            </ul>
+
+            <label for="FourthIMI" class="question">4. This activity did not hold my attention at all.</label>
+            <div class = "numbersForScale"> 1 &nbsp 2 &nbsp 3 &nbsp 4 &nbsp 5 &nbsp 6 &nbsp 7</div>
+            <ul class="likert"> 
+                <li> &nbsp&nbsp&nbsp&nbsp&nbspNot at all true &nbsp&nbsp</li>
+                <li><input type="radio" name="one" value="1" />&nbsp&nbsp</li>
+                <li><input type="radio" name="two" value="2" />&nbsp&nbsp</li>
+                <li><input type="radio" name="three" value="3" />&nbsp&nbsp</li>
+                <li><input type="radio" name="four" value="4" />&nbsp&nbsp</li>
+                <li><input type="radio" name="five" value="5" />&nbsp&nbsp</li>
+                <li><input type="radio" name="six" value="6" />&nbsp&nbsp</li>
+                <li><input type="radio" name="seven" value="7" />&nbsp&nbsp</li>
+                <li> &nbsp&nbsp Very true</li> <br><br><br>
+            </ul>
+
+            <label for="FifthIMI" class="question">5. I would describe this activity as very interesting.</label>
+            <div class = "numbersForScale"> 1 &nbsp 2 &nbsp 3 &nbsp 4 &nbsp 5 &nbsp 6 &nbsp 7</div>
+            <ul class="likert"> 
+                <li> &nbsp&nbsp&nbsp&nbsp&nbspNot at all true &nbsp&nbsp</li>
+                <li><input type="radio" name="one" value="1" />&nbsp&nbsp</li>
+                <li><input type="radio" name="two" value="2" />&nbsp&nbsp</li>
+                <li><input type="radio" name="three" value="3" />&nbsp&nbsp</li>
+                <li><input type="radio" name="four" value="4" />&nbsp&nbsp</li>
+                <li><input type="radio" name="five" value="5" />&nbsp&nbsp</li>
+                <li><input type="radio" name="six" value="6" />&nbsp&nbsp</li>
+                <li><input type="radio" name="seven" value="7" />&nbsp&nbsp</li>
+                <li> &nbsp&nbsp Very true</li>
+            </ul>
+            
+        
+            
+        </div>
+
+
+            <div class = "openStuff">
+
+                <label for="msg"></label>
+                <p class = "question"> What kind of choice did you miss here?</p>
+               <div class = "textAnswers"> <textarea id="msg"  name="user_message" rows="4" cols="50" placeholder="Enter Text Here"></textarea>  </div> </div>
+
+            </div>
+
+    
+        </div>
+
+
+     <div class ="bottomBar">
+
+          <button style="height:50px;width:100px" class = "nextButton demoStuff" onclick="afterDemo()" >Next</button>
+          <button style="height:50px;width:100px" class = "nextButton imiStuff" onclick="afterImi()" >Next</button>
+          <button style="height:50px;width:100px" class = "nextButton openStuff" onclick="afterOpen()" >Next</button>
+     </div>
+        
+    </div>
+        
+        
+    <script type="text/javascript" src="questScript.js"></script>
+
+</body>
+
+</html>
+</DOCTYPE>
+
+
+
+
+
+
+
+
