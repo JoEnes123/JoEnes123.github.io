@@ -5,6 +5,7 @@
 //CSS Grid Layout Generator
 //MDN 
 //jQuery
+
 let hiddenCross = document.getElementsByClassName("cross");
 let hiddenDot = document.getElementsByClassName("dot");
 let cover = document.getElementsByClassName("cover");
@@ -19,7 +20,10 @@ let OhneVideo = document.getElementById("OhneVideo");
 let PunkteVideo = document.getElementById("PunkteVideo");
 let ZeitVideo = document.getElementById("ZeitVideo");
 var countTest = 0;
-
+let initalCondition = "0";
+let correctColumn = "Correct"; //Spaltenname Correct
+let timeColum  = "Time"; //Spaltenname Time
+let increaseColumnName = 1; //erhöhe Spaltenname
 
 var gameEnDis = false;
 var test = false;
@@ -63,19 +67,20 @@ var startTime, interval, endTime, timi, zeit, feedback;
 let counterTaskEnds = 0;
 
 let trackData = false;
-let NoGamificationOn = false;
-let AllGamificationOn = false;
+
 let EnableGamificationOn = false;
-let DisableGamificationOn = false;
-let SelectGameFeature1On = false;
-let SelectGameFeature2On = false;
-let SelectGameFeature3On = false;
+
+
+// Wird später ein integer von, sagen wir mal 0-11, der alle möglichen Bedingungen repräsentiert.
+let GameCondition;
 
 let Samples = [];
+let Questionnaire = [];
+
 let currentCorrect = null;
 let currentTime = null;
 
-let possibleFunctions = [2,2,2,2,2,2,2,2]; //Um Bedingugen im Tutorial zu shufflen
+let possibleFunctions = [1,2,3,4,5,6,7,8]; //Um Bedingugen im Tutorial zu shufflen
 
 let basicsExplained = false; //trackt ob die Grundfunktionalitäten bereits textuel erklärt wurden
 let pointsExplained = false; //trackt ob das Punkteelement bereits textuel erklärt wurde
@@ -88,12 +93,54 @@ let allGameState = false; //false wenn AllGamificaiton zur einmaligen Demonstrat
 
 //let partOfCond4 = false; //wenn true, zeigt dass Tutorial Teil der 4. Condition ist und entsprechend zu dieser Auswahl zurückgekehrt werden muss
 
-/*class xPictures {
-    constructor() {
-        this.hiddenPicture1 = document.getElementsByClassName("picture1");
+
+
+
+
+function testPhpReal (tupel) {
+
+  
+    
+    if (window.XMLHttpRequest)
+    {
+    // AJAX nutzen mit IE7+, Chrome, Firefox, Safari, Opera
+    xmlhttp=new XMLHttpRequest();
     }
+    else
+    {
+    // AJAX mit IE6, IE5
+    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+
+    xmlhttp.onreadystatechange=function()
+    {
+    if (xmlhttp.readyState==4 && xmlhttp.status==200) //wird zu true ausgewertet wenn der Kontakt zum Server erfolgreich hergestellt wurde
+    {
+    
+        if (initalCondition == "0") {
+            initalCondition = (xmlhttp.responseText).toString(); //liefert die User_ID per php echo von der Datenbank (dem Server) zurück, muss eig nicht immer zurückgeliefert werden
+            convertIt(initalCondition);
+            alert(initalCondition);
+        }
+    }
+    }
+
+    
+    xmlhttp.open("POST", "insertData.php", true);   //Aufruf des php script
+    xmlhttp.send(tupel); //sende Daten die in die Datenban eingetragen werden sollen 
+    
+   // testPhpReal("Correct01 1 1"+initalCondition);
+    
 }
-*/
+
+// Conversion: Needs to be optimized
+function convertIt (x) {
+    for(var i=0;i!=1000;i++) {
+
+        if (x == i) {initalCondition = i.toString();}
+}
+
+}
 
 
 
@@ -109,7 +156,7 @@ function resetScore () {
 
 function checkTest () {
    
-    if (countTest >0) {return true;}
+    if (countTest > 0) {return true;}
     else {return false;}
 }
 
@@ -273,7 +320,16 @@ function stop () {
      showArrayInline(cover);
      if (trackData) {
         counterTaskEnds++;
-        writeData(currentCorrect,timi/1000);}
+      //  writeData(currentCorrect,timi/1000); //Hier trage ich Ergebnisse in die Datenbank ein 
+      testPhpReal("Correct"+increaseColumnName.toString()+" "+currentCorrect+" 1 "+initalCondition); //trägt CorrectValue ein
+      testPhpReal("Time"+increaseColumnName.toString()+" "+(timi/1000).toString()+ " 1 "+initalCondition); //trägt CorrectValue ein
+      increaseColumnName++; //gibt Spaltennamen der nächsten Eingabe an
+      
+    
+
+
+    
+    } 
     
     if (document.getElementById("Fasttime").innerHTML > timi/1000 || document.getElementById("Fasttime").innerHTML == 0) {
         if (((GameOn || zeit)&& !practisePointsBool) || (zeit && punkte)) {
@@ -289,12 +345,26 @@ function stop () {
 
 }
 
-           
+
+
 function showFirst(x,waitTime) {
-    if (counterTaskEnds > 4) {
+    
+    if (counterTaskEnds > 1) {
+        let toQuestionnaire = document.getElementById("toQuestionnaire");
+        localStorage.clear();
+       localStorage.setItem("User_ID",initalCondition);
+
+       
+      
+       
+       
+        
         let theEnd = document.getElementById("theEnd");
         setTimeout(fadeIn,2000,theEnd);
-        sendJson();}
+        setTimeout(showSingle,2000,toQuestionnaire);
+        setTimeout(fadeIn,2000,toQuestionnaire);
+       // sendJson(); Daten werden nicht mehr am Ende auf diesem Weg an Server geschickt
+    }
     else {
      vidPlus.load();
      vidMinus.load();
@@ -345,10 +415,10 @@ function showDot (x) {
         }
 
 
-function correctInput () { //richtige Eingabe mom
+function correctInput () { //richtige Eingabe 
 
                    
-                        currentCorrect = "Yes";
+                        currentCorrect = "1";
                         stop();
                         addScore(10);
                         purScore += 10;
@@ -378,11 +448,13 @@ function correctInput () { //richtige Eingabe mom
 
 function wrongInput () { //falsche Eingbae
 
-            currentCorrect = "No";
+            currentCorrect = "0";
                     currentTime = 0;
                     if (trackData) {
                         counterTaskEnds++;
-                        writeData(currentCorrect,currentTime);}
+                        testPhpReal("Correct"+increaseColumnName.toString()+" "+currentCorrect+" 1 "+initalCondition); //trägt CorrectValue ein
+                        testPhpReal("Time"+increaseColumnName.toString()+" NULL 1 "+initalCondition); //trägt CorrectValue ein
+                    increaseColumnName++; //gibt Spaltenname der nächsten Eingabe an
                     subtractScore();
                     subtractGreenBar();
                     purScore -= 10;
@@ -397,6 +469,8 @@ function wrongInput () { //falsche Eingbae
                     subtractGreenBar();
 
                 }
+}
+
 }
 
 
@@ -444,7 +518,11 @@ function checkKeyPressForRight(key) {
 
 function proceedInterpretation () {
     
-
+            if (trackData) { //TODO geht aktuell nur mit NoGamification Bedingung
+                
+               
+                set(false);
+            }
 
             //Bedingung mit EnableDisable
             if (disableTest && checkTest() && noSelectives()) { //bedeutet dass in 3. Condition der Übungsteil des NoGame Tutorials vorbei ist, leitet Game Tutorial ein
@@ -455,20 +533,20 @@ function proceedInterpretation () {
 
             else if (enableDisableEndTest && checkTest() && noSelectives()) { //bedeutet dass in 3.Condition der Übungsteil des Game Tutorials vorbei ist, 
                                                         //leitet Entscheidungsscreen ein (true setzten passiert in Funktion die auch in 4.Condition genutzt wird)
-
+                                                        
                     allGamePractiseOver();
                    
              } 
 
             else if (test && checkTest() && !allGameState && (noGameTutEnd == 4) && noSelectives()) {   //No Game Tutorial in Select beendet, kehre zurück zu Select Screen um weitere durchzuführen    
-              
+               
                 noGameEndBackToSelect();
                 
             }
 
             else if (test && checkTest() && allGameState && noSelectives()) {  //GameTutorial beendet, entweder Task startet (mit Tracking) oder zurück zum Select Screen
                         
-                   
+                
                 allGameEndMaybeBackToSelect();
 
             }
@@ -476,14 +554,27 @@ function proceedInterpretation () {
             else if (checkTest() && (practisePointsBool || practiseTimeBool || practiseFeedbackBool)) { //Punkte/Zeit/Feedback Übungsphase beendet, entferne GameElemente und gehe zurück zum Select Screen
                 practisePointsBool = false;
                 allGameEndMaybeBackToSelect(); 
+               
             }
 
            
+            else if (checkTest() && !trackData) 
+            {
+                
+                let startTask = document.getElementById("startTask"); //starte Task mit voller Gamification
+                let startText = document.getElementById("startText");
+                setTimeout(showSingle,2000,startTask);
+                setTimeout(fadeIn,2000,startTask);
+                setTimeout(fadeIn,2000,startText);
 
+            }
+
+            
            
-            else {  //Aufruf des Task mit Game Elementen
+            else if (!trackData) {  //Aufruf des Task  TODO: Hier muss ich noch was abfangen 
 
-                setTimeout(set,1000,GameOn)};
+               setTimeout(set,1000,GameOn)}; //Heißt nicht dass Game Elemente an sind (nur Variablenbezeichnung) -> Für Übungsphase
+                
 
 
 }
@@ -611,7 +702,9 @@ function resetGreenBar () {
 }
 
 function NoGamificationTut() {
-    NoGamificationOn = true; //indicates the condition for later tracking
+    // TODO 0 ist nur vorläufiger Dummy Wert, bedeutet: keine Gamification
+    GameCondition = "0"; // indicates the condition for later tracking -> Kann bereits in Datenbank eingetragen werden -> Neuer Eintrag wird generiert
+    testPhpReal ("ExperimentalCond " +GameCondition+ " 0 0"); //Eintrag in Datenbak : letzte Variable 0, da die User_ID noch nicht bekannt ist (da der Eintrag jetzt erst generiert wird)
     let okay = document.getElementById("okay");
     let taskExplain = document.getElementsByClassName("taskExplain");
     fadeInAll(taskExplain);
@@ -640,9 +733,13 @@ function NoGamification() {
   set(false);
 }
 
+
+
+
 function AllGamificationTut() {
   
-   if (!EnableGamificationOn)  {AllGamificationOn = true;} //indicates the condition for later tracking
+    // TODO 11 ist Dummy Wert für alles 
+   if (!EnableGamificationOn)  {GameCondition = 11;} //indicates the condition for later tracking
   
     
     let okayGame = document.getElementById("okayGame");
@@ -653,19 +750,47 @@ function AllGamificationTut() {
     
 }
 
-function sendJson () {
-  
-   // Sending and receiving data in JSON format using POST method
-    var data = JSON.stringify({
-        WithoutGamification: NoGamificationOn,
-        WithGamificaion: AllGamificationOn,
-        EnableGamification: EnableGamificationOn,
-        DisableGamification: DisableGamificationOn,
-        GamificationFeature1: SelectGameFeature1On,
-        GamificationFeature2: SelectGameFeature2On,
-        GamificationFeature3: SelectGameFeature3On,
-        Samples: Samples
-    });
+
+/*function TestSimulation() {
+    
+    // Wir erzeugen hier erstmal Dummy Daten.
+    GameCondition = 7;
+   /* for (var i = 0; i < 140; i++) {
+        writeData((i % 2) == 0, 0.400 + (i / 1000));
+    }*/
+  /*  Questionnaire = [
+        "gender_option", "Female",
+        "gender_value", null,
+        "gaming_experience", "12"
+    ];*/
+    // Und jetzt senden wir die zum Server.
+   // sendJson();
+//}
+
+/*function sendJson() {
+    
+    Questionnaire = [
+        "gender_option", "Female",
+        "gender_value", null,
+        "gaming_experience", "12"
+    ];
+
+    // Sending and receiving data in JSON format using POST method
+    let data_array = [];
+    data_array.push("GameCondition");
+    data_array.push(GameCondition);
+    for (var i = 0; i < Samples.length; i++) {
+        var sample = Samples[i];
+        data_array.push("SampleCorrect" + i);
+        data_array.push(sample[0]);
+        data_array.push("SampleDuration" + i);
+        var time_value = sample[1];
+        // Rune auf 4 Stellen nach Komma.
+        time_value  = Math.round(time_value * 10000) / 10000;
+        data_array.push(time_value);
+    }
+    data_array = data_array.concat(Questionnaire);
+    var data = JSON.stringify(data_array);
 
     var xhr = new XMLHttpRequest();
     var url = "http://dotprobetask.de/receiver.php";
@@ -677,14 +802,14 @@ function sendJson () {
             if (xhr.status === 200) {
                 alert("geht");
             } else {
-                alert("ging nicht");
+                alert("ging nicht, mail bitte das an jonas.wallach: " + data_array);
             }
         }
     };
     console.log("Sent");
 
     xhr.send(data);
-}
+}*/
 
 function writeData(x,y) {
     Samples.push([x,y]);
@@ -745,15 +870,23 @@ function removeGameStuff () {
     setTimeout(selectWhichNext,2000);
 }
 
-function SelectGamificationTut() { //startet 4. Condition mit Erklärung der Task 
+function SelectGamificationTut1 () { //Einleitung Select Tutorial
+
+    let okaySelect = document.getElementById("okaySelect");      //Muss später wieder eingebunden werden, erklärt Task und Tutorial
+    let taskExplainSelect = document.getElementsByClassName("taskExplainSelect");
+    let GameButtons = document.getElementsByClassName("GameButtons");
+    fadeOutAll(GameButtons);
+    hideArray(GameButtons);
+    fadeInAll(taskExplainSelect);
+    showSingle(okaySelect);
+}
+
+function SelectGamificationTut2() { //startet 4. Condition mit Erklärung der Task 
     shuffle(possibleFunctions);
     hideArray(buttons);
     selectWhichNext();
-   /* let okaySelect = document.getElementById("okaySelect");      //Muss später wieder eingebunden werden, erklärt Task und Tutorial
-    let taskExplainSelect = document.getElementsByClassName("taskExplainSelect");
-    fadeInAll(taskExplainSelect);
-    showSingle(okaySelect);
-   */
+  
+   
 }
 
 function selectWhichNext () { //bestimmt welche select Funktion als nächstes aufgerufen wird //haha
@@ -767,7 +900,7 @@ practiseTimeBool = false; //damit ich da nicht nochmal reinkomme
 practiseFeedbackBool = false; //damit ich da nicht nochmal reinkomme
 allGameState = false;
 
-alert(possibleFunctions);
+
 if (possibleFunctions.length == 0) {
     
     fadeIn(DecideScreen);
@@ -804,9 +937,7 @@ if (possibleFunctions[0] == 8) {selectFeedbackTimeIntro();}
 function selectNoIntro () { //select ohne game elemente
     let introSelectNo = document.getElementById("selectNoIntro");
     let introSelectNoButton = document.getElementById("selectNoIntroButton");
-    let sliderNo = document.getElementById("sliderNo");
-
-    fadeIn(sliderNo);
+   
     fadeIn(introSelectNo);
     fadeIn(introSelectNoButton);
     showSingle(introSelectNoButton);
@@ -843,9 +974,7 @@ function selectNo () {
 function selectAllIntro () { //select mit game elemente
     let introSelectAll = document.getElementById("selectAllIntro");
     let introSelectAllButton = document.getElementById("selectAllIntroButton");
-    let sliderAll = document.getElementById("sliderAll");
-
-    fadeIn(sliderAll);
+   
     fadeIn(introSelectAll);
     fadeIn(introSelectAllButton);
     showSingle(introSelectAllButton);
@@ -887,9 +1016,7 @@ function selectPointsIntro () { //select mit punkten
 
         let introSelectPoints = document.getElementById("selectPointsIntro");
         let introSelectPointsButton = document.getElementById("selectPointsIntroButton");
-        let sliderPoints = document.getElementById("sliderPoints");
-
-        fadeIn(sliderPoints);
+       
         fadeIn(introSelectPoints);
         fadeIn(introSelectPointsButton);
         showSingle(introSelectPointsButton);
@@ -929,9 +1056,7 @@ function selectTimeIntro () { //select mit punkten
 
     let introSelectTime = document.getElementById("selectTimeIntro");
     let introSelectTimeButton = document.getElementById("selectTimeIntroButton");
-    let sliderTime = document.getElementById("sliderTime");
-
-    fadeIn(sliderTime);
+   
     fadeIn(introSelectTime);
     fadeIn(introSelectTimeButton);
     showSingle(introSelectTimeButton);
@@ -973,9 +1098,7 @@ function selectFeedbackIntro () { //select mit punkten
 
     let introSelectFeedback = document.getElementById("selectFeedbackIntro");
     let introSelectFeedbackButton = document.getElementById("selectFeedbackIntroButton");
-    let sliderTime = document.getElementById("sliderFeedback");
-
-    fadeIn(sliderTime);
+  
     fadeIn(introSelectFeedback);
     fadeIn(introSelectFeedbackButton);
     showSingle(introSelectFeedbackButton);
@@ -1016,9 +1139,7 @@ function selectTimePointsIntro () { //select mit punkten
 
     let introSelectTimePoints= document.getElementById("selectTimePointsIntro");
     let introSelectTimePointsButton = document.getElementById("selectTimePointsIntroButton");
-    let sliderPointsTime = document.getElementById("sliderPointsTime");
-
-    fadeIn(sliderPointsTime);
+   
     fadeIn(introSelectTimePoints);
     fadeIn(introSelectTimePointsButton);
     showSingle(introSelectTimePointsButton);
@@ -1060,9 +1181,7 @@ function selectFeedbackPointsIntro () { //select mit punkten und feedback
 
     let introSelectFeedbackPoints= document.getElementById("selectFeedbackPointsIntro");
     let introSelectFeedbackPointsButton = document.getElementById("selectFeedbackPointsIntroButton");
-    let sliderPointsFeedback = document.getElementById("sliderPointsFeedback");
-
-    fadeIn(sliderPointsFeedback);
+    
     fadeIn(introSelectFeedbackPoints);
     fadeIn(introSelectFeedbackPointsButton);
     showSingle(introSelectFeedbackPointsButton);
@@ -1104,9 +1223,7 @@ function selectFeedbackTimeIntro () { //select mit punkten und feedback haha
 
     let introSelectFeedbackTime = document.getElementById("selectFeedbackTimeIntro");
     let introSelectFeedbackTimeButton = document.getElementById("selectFeedbackTimeIntroButton");
-    let sliderTimeFeedback = document.getElementById("sliderTimeFeedback");
-
-    fadeIn(sliderTimeFeedback);
+  
     fadeIn(introSelectFeedbackTime);
     fadeIn(introSelectFeedbackTimeButton);
     showSingle(introSelectFeedbackTimeButton);
@@ -1201,7 +1318,8 @@ function EnableGamification() {
 
 function DisableGamification() {
     trackData = true;
-    DisableGamificationOn = true; //indicates the condition for later tracking
+    // TODO 8 ist Dummy Wert
+    GameCondition = 8; //indicates the condition for later tracking
     hideArray(buttonsEnableDisable);
     fadeOutAll(buttonsEnableDisable);
     NoGamification();
@@ -1210,6 +1328,7 @@ function DisableGamification() {
 //TUTORIAL OHNE GAMIFICATION 
 
 function okay() {
+    
     let introductionTutorial = document.getElementsByClassName("introductionTutorial");
     let taskExplain = document.getElementsByClassName("taskExplain");
     let okay = document.getElementById("okay");
@@ -1281,6 +1400,7 @@ function explainDots () {
 }
 
 function showTutorialDots() {//erklärt Dot
+    
     let positionDot1 = document.getElementsByClassName("positionDot1");
     let arrowRightPic = document.getElementById("arrowRightPic");
     showArray(positionDot1); //Text erklärt Funktion des Dots
@@ -1454,10 +1574,8 @@ function checkKeyPressForRightTutorial1(key) { //Hier komme ich IMMER rein wenn 
                 let arrowRightPic = document.getElementById("arrowRightPic");
                 let practise1 = document.getElementById("practise1");
                 let goodJob = document.getElementById ("goodJob");
-                let sliderNo = document.getElementById("sliderNo");
-
-                fadeOut(sliderNo);
-;               addScore(10);
+                
+                addScore(10);
                 addGreenBar();
                 if (basicsExplained == false) {
                     fadeOutAll(positionDot1);
@@ -1484,12 +1602,10 @@ function checkKeyPressForRightTutorial1(key) { //Hier komme ich IMMER rein wenn 
 
 
 function practise1 () { //Übungsphase ohne Gamification
-   
+    
     let practise1 = document.getElementById("practise1");
     let goodJob = document.getElementById ("goodJob");
-    let sliderNo = document.getElementById("sliderNo");
-
-    fadeOut(sliderNo);
+   
     hideSingle(practise1);
     fadeOut(practise1);
     fadeOut(goodJob);
@@ -1873,9 +1989,7 @@ function practise2 () {
     
     let practise2 = document.getElementById("practise2");
     let nowPractise = document.getElementById ("nowPractise");
-    let sliderAll = document.getElementById("sliderAll");
-
-    fadeOut(sliderAll);
+   
     fadeOut(practise2);
     hideSingle(practise2);
     fadeOut(nowPractise);
@@ -1967,16 +2081,13 @@ function okaySelect () {//Erklärt Tutorial für 4.Condition
         fadeOutAll(taskExplainSelect);
 }
 
-function practiseSelect () {
-   
-}
+
 
 function startTutorialSelect() {//Startet Tutorial in 4.Condition für Variante ohne Game Elemente
 
     let tutorialButtonsSelect = document.getElementsByClassName("introductionTutorialSelect");
     hideArray(tutorialButtonsSelect);
-    setTimeout(explainCross,1000);  
-    setTimeout(showTutorialCross,2000);
+    SelectGamificationTut2();
 }
 
 
@@ -1984,9 +2095,7 @@ function startTutorialSelect() {//Startet Tutorial in 4.Condition für Variante 
 function practisePointsPhase () {
     let nowPractisePoints = document.getElementById("nowPractisePoints");
     let practisePointsPhase = document.getElementById("practisePointsPhase");
-    let sliderPoints = document.getElementById("sliderPoints");
-
-    fadeOut(sliderPoints);
+   
     fadeOut(nowPractisePoints);
     fadeOut(practisePointsPhase);
     hideSingle(practisePointsPhase);
@@ -2005,9 +2114,7 @@ function practisePointsPhase () {
    
     let nowPractisePoints = document.getElementById("nowPractisePoints");
     let practiseTimePhase = document.getElementById("practiseTimePhase");
-    let sliderTime = document.getElementById("sliderTime");
-
-    fadeOut(sliderTime);
+    
     fadeOut(nowPractisePoints);
     fadeOut(practiseTimePhase);
     hideSingle(practiseTimePhase);
@@ -2027,9 +2134,7 @@ function practiseFeedbackPhase () {
     fadeOut(nowPractisePoints);
     fadeOut(practiseFeedbackPhase);
     hideSingle(practiseFeedbackPhase);
-    let sliderFeedback = document.getElementById("sliderFeedback");
-
-    fadeOut(sliderFeedback);
+   
     zeit = false;
     punkte = false;
     feedback = true;
@@ -2045,9 +2150,7 @@ function practiseTimePointsPhase () {
     fadeOut(nowPractisePoints);
     fadeOut(practiseTimePointsPhase);
     hideSingle(practiseTimePointsPhase);
-    let sliderPointsTime = document.getElementById("sliderPointsTime");
-
-    fadeOut(sliderPointsTime);
+    
     zeit = true;
     punkte = true;
     feedback = false;
@@ -2063,9 +2166,7 @@ function practiseFeedbackPointsPhase () {
     fadeOut(nowPractisePoints);
     fadeOut(practiseFeedbackPointsPhase);
     hideSingle(practiseFeedbackPointsPhase);
-    let sliderPointsFeedback = document.getElementById("sliderPointsFeedback");
-
-    fadeOut(sliderPointsFeedback);
+    
     zeit = false;
     punkte = true;
     feedback = true;
@@ -2082,9 +2183,7 @@ function practiseFeedbackTimePhase () {
     fadeOut(nowPractisePoints);
     fadeOut(practiseFeedbackTimePhase);
     hideSingle(practiseFeedbackTimePhase);
-    let sliderTimeFeedback = document.getElementById("sliderTimeFeedback");
-
-    fadeOut(sliderTimeFeedback);
+   
     zeit = true;
     punkte = false;
     feedback = true;
@@ -2117,6 +2216,77 @@ barGreen.style.left = "-268.8px";
 }
 
 
+
+
+
+
+//////// LEGAL INFORMATION ///////////
+
+
+var modalLegal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+var btnLegal = document.getElementById("legalInformation");
+
+// Get the <span> element that closes the modal
+var spanLegal = document.getElementsByClassName("closeLegal")[0];
+
+
+// When the user clicks on the button, open the modal
+btnLegal.onclick = function() {
+  modalLegal.style.display = "block";
+
+  
+}
+
+// When the user clicks on <span> (x), close the modal
+spanLegal.onclick = function() {
+  modalLegal.style.display = "none";
+  
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modalLegal) {
+    modalLegal.style.display = "none";
+    
+   
+  }
+
+  else if (event.target == modalProtect) {
+    modalProtect.style.display = "none";
+ }
+}
+
+///////////// DATA PROTECTION ////////////
+
+var modalProtect = document.getElementById("yourModal");
+
+// Get the button that opens the modal
+var btnProtect = document.getElementById("dataInformation");
+
+// Get the <span> element that closes the modal
+var spanProtect = document.getElementsByClassName("closeProtect")[0];
+
+
+// When the user clicks on the button, open the modal
+btnProtect.onclick = function() {
+  modalProtect.style.display = "block";
+
+  
+}
+
+// When the user clicks on <span> (x), close the modal
+spanProtect.onclick = function() {
+  modalProtect.style.display = "none";
+  
+}
+
+function toQuestionnaire() {
+    window.location ="http://mydotprobetask.de/questionnaire.html";
+}
+
+
 function set (bool) {
     
        GameOn = bool; //bestimmt ob Task mit oder ohne Game Elemente durchgefürt wird
@@ -2131,4 +2301,5 @@ function set (bool) {
 //AIzaSyBfz67Qoq8tPbNnuOKNs2Fm90c8bCh0ndY :API KEY
 
 //1J-uhJHFRqqYK5Z8uMD4JBm9YJE881eEcTgUsoh9iDvw :SPREADSHEET ID 
+
 
