@@ -20,7 +20,8 @@ let OhneVideo = document.getElementById("OhneVideo");
 let PunkteVideo = document.getElementById("PunkteVideo");
 let ZeitVideo = document.getElementById("ZeitVideo");
 var countTest = 0;
-let initalCondition = "0";
+let firstEntry = true;
+let user_id;
 let correctColumn = "Correct"; //Spaltenname Correct
 let timeColum  = "Time"; //Spaltenname Time
 let increaseColumnName = 1; //erhöhe Spaltenname
@@ -95,49 +96,84 @@ let allGameState = false; //false wenn AllGamificaiton zur einmaligen Demonstrat
 
 
 
+function theRequest (column,value) {
+    
+    $.ajax({
+        type: "POST",
+        url: "myTest.php",
+        data: {
+        col: column,
+        val: value,
+       
+        },
+        cache: false,
+        success: function(data) {
+        //alert(data);
+        },
+        error: function(xhr, status, error) {
+        console.error(xhr);
+        }
+        });
+       
+        }
 
 
-function testPhpReal (tupel) {
+//lösche session variable mit user id
+
+function clearSession () {
+    
+    $.ajax({
+        type: "POST",
+        url: "clearSession.php",
+        data: { },
+        cache: false,
+        success: function(data) {
+        },
+        error: function(xhr, status, error) {
+        console.error(xhr);
+        }
+        });
+       
+        }
+
+
+
+function sendData (tupel) {
 
   
     
-    if (window.XMLHttpRequest)
-    {
-    // AJAX nutzen mit IE7+, Chrome, Firefox, Safari, Opera
-    xmlhttp=new XMLHttpRequest();
-    }
-    else
-    {
-    // AJAX mit IE6, IE5
-    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-    }
-
-    xmlhttp.onreadystatechange=function()
-    {
-    if (xmlhttp.readyState==4 && xmlhttp.status==200) //wird zu true ausgewertet wenn der Kontakt zum Server erfolgreich hergestellt wurde
-    {
-    
-        if (initalCondition == "0") {
-            initalCondition = (xmlhttp.responseText).toString(); //liefert die User_ID per php echo von der Datenbank (dem Server) zurück, muss eig nicht immer zurückgeliefert werden
-            convertIt(initalCondition);
-            alert(initalCondition);
+if (window.XMLHttpRequest)
+        {
+        // AJAX nutzen mit IE7+, Chrome, Firefox, Safari, Opera
+        xmlhttp=new XMLHttpRequest();
         }
-    }
-    }
-
-    
-    xmlhttp.open("POST", "insertData.php", true);   //Aufruf des php script
-    xmlhttp.send(tupel); //sende Daten die in die Datenban eingetragen werden sollen 
-    
-   // testPhpReal("Correct01 1 1"+initalCondition);
+else
+        {
+        // AJAX mit IE6, IE5
+        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+        }
+xmlhttp.onreadystatechange=function(){
+         
+    if (xmlhttp.readyState==4 && xmlhttp.status==200) { //wird zu true ausgewertet wenn der Kontakt zum Server erfolgreich hergestellt wurde
+                
+                user_id = (xmlhttp.responseText).toString(); //liefert die User_ID per php echo von der Datenbank (dem Server) zurück, muss eig nicht immer zurückgeliefert werden
+                convertIt(user_id);
+                alert(user_id);
+                
+                }
+         }
+xmlhttp.open("POST", "insertData.php", true);   //Aufruf des php script
+xmlhttp.send(tupel); //sende Daten die in die Datenban eingetragen werden sollen 
     
 }
+
+
 
 // Conversion: Needs to be optimized
 function convertIt (x) {
     for(var i=0;i!=1000;i++) {
 
-        if (x == i) {initalCondition = i.toString();}
+        if (x == i) {user_id = i.toString();}
 }
 
 }
@@ -321,8 +357,8 @@ function stop () {
      if (trackData) {
         counterTaskEnds++;
       //  writeData(currentCorrect,timi/1000); //Hier trage ich Ergebnisse in die Datenbank ein 
-      testPhpReal("Correct"+increaseColumnName.toString()+" "+currentCorrect+" 1 "+initalCondition); //trägt CorrectValue ein
-      testPhpReal("Time"+increaseColumnName.toString()+" "+(timi/1000).toString()+ " 1 "+initalCondition); //trägt CorrectValue ein
+      theRequest("Correct"+increaseColumnName.toString(),currentCorrect); //trägt CorrectValue ein
+      theRequest("Time"+increaseColumnName.toString(),(timi/1000).toString()); //trägt CorrectValue ein
       increaseColumnName++; //gibt Spaltennamen der nächsten Eingabe an
       
     
@@ -351,14 +387,7 @@ function showFirst(x,waitTime) {
     
     if (counterTaskEnds > 1) {
         let toQuestionnaire = document.getElementById("toQuestionnaire");
-        localStorage.clear();
-       localStorage.setItem("User_ID",initalCondition);
-
-       
-      
-       
-       
-        
+        clearSession(); 
         let theEnd = document.getElementById("theEnd");
         setTimeout(fadeIn,2000,theEnd);
         setTimeout(showSingle,2000,toQuestionnaire);
@@ -452,8 +481,8 @@ function wrongInput () { //falsche Eingbae
                     currentTime = 0;
                     if (trackData) {
                         counterTaskEnds++;
-                        testPhpReal("Correct"+increaseColumnName.toString()+" "+currentCorrect+" 1 "+initalCondition); //trägt CorrectValue ein
-                        testPhpReal("Time"+increaseColumnName.toString()+" NULL 1 "+initalCondition); //trägt CorrectValue ein
+                        sendData("Correct"+increaseColumnName.toString()+" "+currentCorrect+" "+user_id); //trägt CorrectValue ein
+                        sendData("Time"+increaseColumnName.toString()+" NULL "+user_id); //trägt CorrectValue ein
                     increaseColumnName++; //gibt Spaltenname der nächsten Eingabe an
                     subtractScore();
                     subtractGreenBar();
@@ -703,8 +732,8 @@ function resetGreenBar () {
 
 function NoGamificationTut() {
     // TODO 0 ist nur vorläufiger Dummy Wert, bedeutet: keine Gamification
-    GameCondition = "0"; // indicates the condition for later tracking -> Kann bereits in Datenbank eingetragen werden -> Neuer Eintrag wird generiert
-    testPhpReal ("ExperimentalCond " +GameCondition+ " 0 0"); //Eintrag in Datenbak : letzte Variable 0, da die User_ID noch nicht bekannt ist (da der Eintrag jetzt erst generiert wird)
+    GameCondition = 0; // indicates the condition for later tracking -> Kann bereits in Datenbank eingetragen werden -> Neuer Eintrag wird generiert
+    theRequest  ("ExperimentalCond",GameCondition.toString()); //Eintrag in Datenbak : letzte Variable 0, da die User_ID noch nicht bekannt ist (da der Eintrag jetzt erst generiert wird)
     let okay = document.getElementById("okay");
     let taskExplain = document.getElementsByClassName("taskExplain");
     fadeInAll(taskExplain);
